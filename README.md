@@ -1,6 +1,6 @@
 # AI Trajectory
 
-**[ai-trajectory.vercel.app](https://ai-trajectory.vercel.app)**
+**[ai-trajectory-tracker.vercel.app](https://ai-trajectory-tracker.vercel.app)**
 
 Where is AI headed? This beginner-friendly evidence map follows what labs can build, what systems
 can do, whether progress is compounding, and whether safeguards can keep pace. It compares like-for-like
