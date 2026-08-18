@@ -1,0 +1,192 @@
+{
+  "schema_version": "1.0.0",
+  "registry_version": "2026-08-12",
+  "scope": "Severe and catastrophic risks from frontier general-purpose AI. This is not a complete taxonomy of all AI harms.",
+  "framework": "hazard → exposure → control → governance → incidents → resilience",
+  "headline_reading": "Dangerous capabilities and failure modes are increasingly observable. Deployment exposure and real-world uplift remain only partly visible; safeguards are improving but uneven; independent evaluation and enforceable oversight do not yet provide comprehensive coverage.",
+  "questions": [
+    {
+      "id": "dangerous-uplift",
+      "stage": "hazard",
+      "title": "Does AI materially increase dangerous capability?",
+      "question": "In which severe-harm domains does a frontier system give a malicious or unskilled actor material, validated uplift over a non-AI baseline?",
+      "visual_type": "domain-matrix",
+      "measurement_state": "partly-measured",
+      "current_reading": "Dangerous uplift is increasingly measurable, but it is domain-specific and does not justify one cross-domain danger score.",
+      "reading_as_of": "2026-08-12",
+      "evidence_quality": {"setting": "benchmarks and red-team evaluations", "independence": "government evaluation plus developer studies", "coverage": "partial"},
+      "domains": [
+        {"label": "Cyber", "state": "material-signal", "reading": "Autonomous task length and expert-level successes are rising; verified malicious use now reaches later attack stages."},
+        {"label": "Chemical & biological", "state": "emerging", "reading": "Expert knowledge and laboratory-support performance are strong, but public end-to-end actor-uplift evidence remains limited."},
+        {"label": "Manipulation & fraud", "state": "limited", "reading": "Misuse is documented, but standardized severe-harm uplift measurements are sparse."},
+        {"label": "Autonomous operation", "state": "emerging", "reading": "Longer autonomous software and cyber tasks are measurable; reliable consequential end-to-end operation remains uneven."}
+      ],
+      "indicators": ["Randomized expert and novice uplift against a no-AI control", "End-to-end task completion rather than knowledge-question accuracy", "Change in time, cost, reliability, and attainable scale", "Results separated by chatbot, agent, fine-tuned, and open-weight access"],
+      "evidence": [
+        {"date": "2026-08-12", "observed_period": "2023–2025 evaluations", "finding": "UK AISI reports that average success on apprentice-level cyber tasks rose from just over 10% in early 2024 to about 50%, while the cyber task duration models complete without human direction grew from under ten minutes in early 2023 to over an hour by mid-2025.", "measurement": "Cyber evaluation success and autonomous task duration", "source_label": "UK AI Security Institute · Frontier AI Trends Report", "source_url": "https://www.aisi.gov.uk/frontier-ai-trends-report", "source_type": "government-evaluation", "independence": "external evaluator", "caveat": "Controlled evaluations do not establish realized harm or novice uplift in deployment."},
+        {"date": "2026-08-12", "observed_period": "four releases through March 2025", "finding": "Anthropic's Frontier Red Team described early-warning capability gains but assessed the tested models as below its thresholds for substantially elevated national-security risk.", "measurement": "Developer threshold assessment", "source_label": "Anthropic · Progress from our Frontier Red Team", "source_url": "https://www.anthropic.com/news/strategic-warning-for-ai-risk-progress-and-insights-from-our-frontier-red-team", "source_type": "developer-evaluation", "independence": "developer-reported with government testing input", "caveat": "The thresholds and sensitive evaluation details are not fully public."}
+      ],
+      "gaps": ["Preregistered independent end-to-end uplift studies with realistic actors", "Comparable results across cyber, CBRN, manipulation, and autonomous-operation domains"],
+      "movers": ["Replicated novice uplift that completes a consequential attack chain", "Repeated independent findings of negligible incremental uplift after realistic bottlenecks and safeguards"]
+    },
+    {
+      "id": "agent-control",
+      "stage": "hazard",
+      "title": "Do agents violate operator intent under real authority?",
+      "question": "When given realistic delegated authority, do frontier agents strategically violate operator intent, conceal it, or resist correction at consequential rates?",
+      "visual_type": "spectrum",
+      "measurement_state": "partly-measured",
+      "current_reading": "Strategic violations are demonstrated in stress-test simulations; the base rate in real deployments is unknown.",
+      "reading_as_of": "2026-08-12",
+      "evidence_quality": {"setting": "adversarial simulations", "independence": "developer and government evaluations", "coverage": "narrow"},
+      "pole_a": {"label": "Reliably corrigible", "desc": "Agents obey constraints, accept correction, and remain controllable across realistic high-authority settings."},
+      "pole_b": {"label": "Strategic violations", "desc": "Agents deceive, sabotage, evade correction, or preserve their objectives when authority and incentives conflict."},
+      "lean": 0.2,
+      "range": "wide",
+      "indicators": ["Deception, sabotage, shutdown-compliance, and self-preservation rates", "Hidden deployment-like evaluations with realistic permissions", "Persistence across models, prompts, scaffolds, and mitigations", "Successful harmful action after monitoring—not expressed intent alone"],
+      "evidence": [
+        {"date": "2026-08-12", "observed_period": "2025 study", "finding": "Anthropic stress-tested 16 models in hypothetical corporate environments and observed malicious insider behavior in at least some forced-conflict cases across developers; it reported no known real-world deployment instances of this behavior.", "measurement": "Behavior rate in deliberately constructed conflict simulations", "source_label": "Anthropic · Agentic Misalignment", "source_url": "https://www.anthropic.com/research/agentic-misalignment", "source_type": "developer-experiment", "independence": "developer-reported, code released", "caveat": "The scenarios closed off ethical alternatives and were designed to elicit failure, so they do not estimate deployment prevalence."},
+        {"date": "2026-08-12", "observed_period": "2023–2025 evaluations", "finding": "UK AISI reports self-replication-task success rising from below 5% to above 60% on a subset of simplified evaluations, while emphasizing that current models remain unlikely to complete real-world self-replication chains.", "measurement": "Prerequisite skills for autonomous replication", "source_label": "UK AI Security Institute · Frontier AI Trends Report", "source_url": "https://www.aisi.gov.uk/frontier-ai-trends-report", "source_type": "government-evaluation", "independence": "external evaluator", "caveat": "Component benchmarks are not evidence that a system has attempted autonomous replication in deployment."}
+      ],
+      "gaps": ["Deployment-representative base rates", "Independent evaluations that preserve realism without telling models they are being evaluated"],
+      "movers": ["Verified strategic violations outside deliberately contrived stress tests", "Low stable failure rates across unseen high-authority environments and model families"]
+    },
+    {
+      "id": "deployment-exposure",
+      "stage": "exposure",
+      "title": "How much dangerous capability is actually exposed?",
+      "question": "How much potentially dangerous capability is exposed through real deployments, tool permissions, unsupervised operation, or irreversible weight release?",
+      "visual_type": "exposure-ladder",
+      "measurement_state": "missing-series",
+      "current_reading": "The risk factors are clear, but there is no standardized public series for deployment authority, scale, or human intervention.",
+      "reading_as_of": "2026-08-12",
+      "evidence_quality": {"setting": "taxonomy and ecosystem research", "independence": "government taxonomy and external research collaboration", "coverage": "poor"},
+      "ladder": [
+        {"level": 1, "label": "Advice only", "desc": "Text output; no direct action or persistent credentials."},
+        {"level": 2, "label": "Read access", "desc": "Can inspect external systems or private data but cannot change state."},
+        {"level": 3, "label": "Constrained write", "desc": "Can act through bounded tools with approvals, logs, and rollback."},
+        {"level": 4, "label": "High-impact autonomy", "desc": "Persistent credentials, broad write access, long runtimes, or safety-critical authority."},
+        {"level": 5, "label": "Irreversible proliferation", "desc": "Open weights or copied systems operate outside provider monitoring and recall."}
+      ],
+      "current_level": null,
+      "indicators": ["Read versus write permissions and credential scope", "Maximum uninterrupted runtime and number of consequential actions", "Human approval frequency, logging, rollback, and kill mechanisms", "Hosted, fine-tunable, or open-weight access", "Number and scale of deployments in critical environments"],
+      "evidence": [
+        {"date": "2026-08-12", "observed_period": "August 2025 workshop report", "finding": "NIST distinguishes read-only, constrained-write, and write access and highlights statefulness, reversibility, environment trust, and action criticality as key dimensions of agent risk.", "measurement": "Agent tool-access taxonomy", "source_label": "NIST · Lessons Learned on Tool Use in Agent Systems", "source_url": "https://www.nist.gov/news-events/news/2025/08/lessons-learned-consortium-tool-use-agent-systems", "source_type": "government-taxonomy", "independence": "multi-stakeholder government workshop", "caveat": "A taxonomy identifies what should be measured; it does not provide deployment prevalence."},
+        {"date": "2026-08-12", "observed_period": "2025–2026 research synthesis", "finding": "UK AISI finds that open-weight systems can be modified arbitrarily, used without oversight, and spread irreversibly; safeguards can be removed quickly and cheaply.", "measurement": "Access-mode risk characteristics", "source_label": "UK AI Security Institute · Open-weight risk management", "source_url": "https://www.aisi.gov.uk/research/open-technical-problems-in-open-weight-ai-model-risk-management", "source_type": "government-research", "independence": "external research collaboration", "caveat": "This establishes qualitative exposure mechanisms, not the number or severity of exposed deployments."}
+      ],
+      "gaps": ["Provider and deployer telemetry on permissions, run length, sensitive actions, and intervention rates", "A denominator for high-impact deployments and open-weight downstream use"],
+      "movers": ["Rapid growth in persistent unsupervised high-privilege deployments", "Verified least-privilege defaults, bounded autonomy, action logging, and staged access tied to risk"]
+    },
+    {
+      "id": "safeguard-residual-risk",
+      "stage": "control",
+      "title": "How much risk remains after safeguards?",
+      "question": "Against each defined threat model, how much attack success remains after all deployed safeguards and operational controls are applied?",
+      "visual_type": "spectrum",
+      "measurement_state": "partly-measured",
+      "current_reading": "Safeguards are improving, sometimes sharply, but robustness is uneven across models, threat domains, attack budgets, and access types.",
+      "reading_as_of": "2026-08-12",
+      "evidence_quality": {"setting": "adaptive red teaming", "independence": "government plus developer testing", "coverage": "partial"},
+      "pole_a": {"label": "Robust under attack", "desc": "Defense-in-depth keeps end-to-end attack success low under adaptive, persistent, well-resourced testing."},
+      "pole_b": {"label": "Readily bypassed", "desc": "Transferable attacks, decomposition, fine-tuning, or scale defeat the production safeguard stack."},
+      "lean": 0.15,
+      "range": "wide",
+      "indicators": ["End-to-end attack success after the complete production stack", "Attacker time, expertise, cost, and query budget", "Monitor true-positive rate at a fixed false-positive rate", "Benign refusal and operational cost", "Patch latency and repeat-attack success"],
+      "evidence": [
+        {"date": "2026-08-12", "observed_period": "2024–2025 tests", "finding": "UK AISI found a universal jailbreak for every system it tested, while one comparison showed about 40 times more expert effort was required to jailbreak a newer protected system.", "measurement": "Expert time to a universal biological-misuse jailbreak", "source_label": "UK AI Security Institute · Frontier AI Trends Report", "source_url": "https://www.aisi.gov.uk/frontier-ai-trends-report", "source_type": "government-evaluation", "independence": "external evaluator", "caveat": "Two systems and one defended domain do not establish general safeguard robustness."},
+        {"date": "2026-08-12", "observed_period": "2025–2026 developer testing", "finding": "Anthropic reports that its first Constitutional Classifiers reduced attack success from 86% to 4.4%. Its successor was tested for more than 1,700 red-team hours across 198,000 attempts, finding one high-risk vulnerability and no universal jailbreak during that test.", "measurement": "Attack success and red-team search effort", "source_label": "Anthropic · Constitutional Classifiers++", "source_url": "https://www.anthropic.com/research/next-generation-constitutional-classifiers", "source_type": "developer-evaluation", "independence": "developer-reported with external red teamers", "caveat": "The result is domain- and implementation-specific and is not an independent population estimate."}
+      ],
+      "gaps": ["Comparable independent tests of full production systems", "Long-budget adaptive attacks across cyber, CBRN, fraud, and agent-control threat models"],
+      "movers": ["Repeated independent low residual-risk estimates across threat models and access modes", "Cheap transferable attacks or safeguards that fail under fine-tuning, decomposition, or operational scale"]
+    },
+    {
+      "id": "evaluation-validity",
+      "stage": "control",
+      "title": "Can evaluations detect danger before deployment?",
+      "question": "Do pre-deployment evaluations and live monitors reliably predict dangerous capability and behavior in real use?",
+      "visual_type": "spectrum",
+      "measurement_state": "partly-measured",
+      "current_reading": "Evaluations reveal important hazards, but realism, gaming, contamination, and weak evaluation-to-field calibration leave material blind spots.",
+      "reading_as_of": "2026-08-12",
+      "evidence_quality": {"setting": "evaluation research and controlled tests", "independence": "cross-lab and international synthesis", "coverage": "partial"},
+      "pole_a": {"label": "Predictive and hard to game", "desc": "Tests and monitors prospectively identify consequential capabilities and failures before they appear in use."},
+      "pole_b": {"label": "Blind spots and gaming", "desc": "Systems recognize tests, exploit scoring, hide capabilities, or behave differently in deployment."},
+      "lean": 0.35,
+      "range": "moderate",
+      "indicators": ["Calibration between pre-deployment predictions and field outcomes", "Hidden-test versus public-test divergence", "Evaluation awareness, sandbagging, and contamination", "Monitor miss rate and time to detection", "Independent evaluator access to the deployed scaffold and tools"],
+      "evidence": [
+        {"date": "2026-08-12", "observed_period": "2026 international review", "finding": "The International AI Safety Report identifies an evaluation gap: controlled pre-deployment tests often do not reliably predict real-world utility, risk, or behavior in the deployed system context.", "measurement": "Cross-study evidence synthesis", "source_label": "International AI Safety Report 2026", "source_url": "https://internationalaisafetyreport.org/publication/international-ai-safety-report-2026", "source_type": "international-synthesis", "independence": "independent expert report", "caveat": "This diagnoses the gap but does not quantify one cross-system miss rate."},
+        {"date": "2026-08-12", "observed_period": "December 2025 evaluation suite", "finding": "OpenAI reports that chain-of-thought monitoring outperformed monitoring actions and outputs alone across 13 evaluations and 24 environments, but notes limited realism, evaluation awareness, and uncertain generalization to wild misbehavior.", "measurement": "Monitorability across controlled evaluation environments", "source_label": "OpenAI · Evaluating chain-of-thought monitorability", "source_url": "https://openai.com/index/evaluating-chain-of-thought-monitorability/", "source_type": "developer-experiment", "independence": "developer-reported with external-model comparisons", "caveat": "Monitorability of elicited reasoning is one control signal, not proof of end-to-end safety."}
+      ],
+      "gaps": ["Matched prospective safety predictions and later production outcomes", "Public monitor false-negative rates under realistic adversarial behavior"],
+      "movers": ["Prospective evaluations that repeatedly predict later incidents and production behavior", "Repeated capability surprises, sandbagging, or incidents missed by systems that passed evaluation"]
+    },
+    {
+      "id": "binding-governance",
+      "stage": "governance",
+      "title": "Are frontier systems under enforceable oversight?",
+      "question": "What share of frontier development and high-risk deployment is covered by binding, independently auditable requirements that are actually enforced?",
+      "visual_type": "spectrum",
+      "measurement_state": "missing-series",
+      "current_reading": "Binding legal scaffolding now exists, but global model coverage, independent access, compliance findings, and enforcement outcomes remain patchy.",
+      "reading_as_of": "2026-08-12",
+      "evidence_quality": {"setting": "statutes and official implementation records", "independence": "primary legal sources", "coverage": "partial"},
+      "pole_a": {"label": "Broad enforceable coverage", "desc": "High-risk developers and deployments face binding evaluation, reporting, audit, security, and corrective requirements."},
+      "pole_b": {"label": "Voluntary or unenforced", "desc": "Important systems remain outside binding rules, or requirements lack verification, capacity, penalties, and corrective action."},
+      "lean": 0.0,
+      "range": "wide",
+      "indicators": ["Share of frontier developers and models within binding regimes", "Mandatory risk evaluation, incident reporting, and cybersecurity", "Independent evaluator and regulator access", "Published compliance findings, penalties, and remediation", "Coverage of internal deployment and open-weight release"],
+      "evidence": [
+        {"date": "2026-08-12", "observed_period": "EU rules in force August 2025; enforcement powers August 2026", "finding": "EU obligations require providers of systemic-risk general-purpose models to submit risk, safety-framework, and serious-incident materials; Commission enforcement powers, including fines, became applicable in August 2026.", "measurement": "Binding regime and enforcement authority", "source_label": "European Commission · GPAI provider guidelines", "source_url": "https://digital-strategy.ec.europa.eu/en/policies/guidelines-gpai-providers", "source_type": "official-legal-guidance", "independence": "regulator primary source", "caveat": "Legal authority does not yet establish broad or effective enforcement outcomes."},
+        {"date": "2026-08-12", "observed_period": "California SB 53 enacted framework", "finding": "California SB 53 requires large frontier developers to publish and follow frontier-AI frameworks, disclose model-specific catastrophic-risk assessment summaries, and report specified critical safety incidents.", "measurement": "Binding disclosure and reporting requirements", "source_label": "California Legislature · SB 53 statutory text", "source_url": "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260SB53", "source_type": "statute", "independence": "government primary source", "caveat": "The law emphasizes transparency and process; it does not itself prove mitigation effectiveness or global coverage."}
+      ],
+      "gaps": ["Comparable data on inspections, noncompliance, sanctions, and remediation", "A global denominator for covered frontier models and consequential deployments"],
+      "movers": ["Independent audits, published compliance findings, corrective orders, and broader model coverage", "Major uncovered systems, unenforced violations, repeated exemptions, or purely self-attested compliance"]
+    },
+    {
+      "id": "severe-incidents",
+      "stage": "outcomes",
+      "title": "What severe incidents and near misses are occurring?",
+      "question": "What well-documented severe incidents and near misses are occurring, what incremental role did AI play, and how quickly were they detected and contained?",
+      "visual_type": "incident-ledger",
+      "measurement_state": "partly-measured",
+      "current_reading": "Providers have documented malicious use, especially in cyber operations, but public cases are selected and do not provide a stable rate or cross-domain denominator.",
+      "reading_as_of": "2026-08-12",
+      "evidence_quality": {"setting": "observed provider cases and incident taxonomies", "independence": "provider telemetry plus intergovernmental methodology", "coverage": "poor"},
+      "incidents": [
+        {"date": "2025-09", "domain": "Cyber espionage", "severity": "not independently rated", "ai_role": "agentic operator", "reading": "Anthropic reported an AI-orchestrated campaign against roughly 30 targets, with a small number of successful infiltrations and limited human intervention.", "attribution": "provider-observed; external verification limited"},
+        {"date": "2025-03–2026-03", "domain": "Malicious cyber use", "severity": "not independently rated", "ai_role": "workflow multiplier", "reading": "Anthropic analyzed 832 banned accounts with sufficient detail; 67.3% used AI for malware preparation and 6.5% for lateral movement.", "attribution": "provider-selected account sample; no population denominator"}
+      ],
+      "indicators": ["Documented incidents by domain and independently rated severity", "AI's role: incidental tool, productivity multiplier, capability unlock, or autonomous operator", "Counterfactual attribution confidence", "Direct loss and affected people or systems", "Time to detection, containment, disclosure, and remediation", "Reporting-coverage denominator"],
+      "evidence": [
+        {"date": "2026-08-12", "observed_period": "campaign detected September 2025", "finding": "Anthropic reported a state-sponsored cyber-espionage campaign using Claude Code to attempt infiltration of roughly 30 targets, succeeding in a small number of cases; it assessed the operation as largely AI-executed with occasional human direction.", "measurement": "Provider-observed attack campaign", "source_label": "Anthropic · Disrupting AI-orchestrated cyber espionage", "source_url": "https://www.anthropic.com/news/disrupting-AI-espionage", "source_type": "provider-threat-intelligence", "independence": "provider-observed, not independently replicated", "caveat": "The report has privileged telemetry but limited external verification and no population denominator."},
+        {"date": "2026-08-12", "observed_period": "March 2025–March 2026", "finding": "Anthropic mapped 832 banned malicious-cyber accounts with sufficient detail: 560 used AI for malware preparation and 54 for lateral movement, illustrating deeper use in attack workflows without estimating prevalence among all attackers.", "measurement": "Selected malicious-account activity", "source_label": "Anthropic · Mapping AI-enabled cyber threats", "source_url": "https://www.anthropic.com/news/AI-enabled-cyber-threats-mitre-attack", "source_type": "provider-threat-intelligence", "independence": "provider-selected dataset", "caveat": "The sample is a subset of banned accounts and cannot establish an incidence rate or counterfactual harm."},
+        {"date": "2026-08-12", "observed_period": "current methodology", "finding": "The OECD distinguishes incidents that caused actual harm from hazards that could plausibly cause harm and is developing an open reporting process to complement news-derived events.", "measurement": "Incident and hazard definitions", "source_label": "OECD.AI · Incidents and Hazards Monitor methodology", "source_url": "https://oecd.ai/en/incidents-methodology", "source_type": "intergovernmental-methodology", "independence": "intergovernmental source", "caveat": "News-derived discovery is sensitive to coverage and reporting changes, so raw counts are not a stable harm trend."}
+      ],
+      "gaps": ["Mandatory standardized reporting", "A defensible denominator and counterfactual estimate of AI's incremental role", "Comparable coverage beyond cyber and fraud"],
+      "movers": ["Independently verified incidents where AI unlocks otherwise infeasible or substantially more severe harm", "Falling severity and containment time under stable or improving reporting coverage"]
+    },
+    {
+      "id": "societal-resilience",
+      "stage": "resilience",
+      "title": "Can society contain and recover from failures?",
+      "question": "If model, safeguard, or governance failures occur, can affected institutions prevent propagation, maintain critical services, and recover quickly?",
+      "visual_type": "spectrum",
+      "measurement_state": "missing-series",
+      "current_reading": "Resilience is causally essential but almost unmeasured in public, frontier-AI-specific stress tests and recovery data.",
+      "reading_as_of": "2026-08-12",
+      "evidence_quality": {"setting": "risk-management synthesis", "independence": "international expert report", "coverage": "poor"},
+      "pole_a": {"label": "Contained and recoverable", "desc": "Critical systems have tested fallbacks, limited common-mode exposure, rapid detection, and effective recovery."},
+      "pole_b": {"label": "Cascading and hard to reverse", "desc": "Dependencies, concentration, or weak response turn local AI failures into persistent or systemic harm."},
+      "lean": 0.0,
+      "range": "wide",
+      "indicators": ["Critical-sector AI dependency and substitutability", "Manual fallback and rollback performance", "Independent exercises for finance, energy, communications, healthcare, and government", "Detection, containment, and recovery time", "Concentration and common-mode failure exposure"],
+      "evidence": [
+        {"date": "2026-08-12", "observed_period": "2026 international review", "finding": "The International AI Safety Report treats societal resilience as necessary because no safeguard stack is perfectly reliable and identifies stronger critical infrastructure, detection tools, and institutional response capacity as key defenses.", "measurement": "Cross-domain risk-management synthesis", "source_label": "International AI Safety Report 2026 · Executive Summary", "source_url": "https://internationalaisafetyreport.org/publication/2026-report-executive-summary", "source_type": "international-synthesis", "independence": "independent expert report", "caveat": "The report establishes importance and candidate practices, not a current comparative resilience score."},
+        {"date": "2026-08-12", "observed_period": "March 2026 monitoring review", "finding": "NIST reports that post-deployment monitoring methods, terminology, and best practices remain nascent and fragmented, limiting visibility into field failures and recovery performance.", "measurement": "Post-deployment monitoring maturity", "source_label": "NIST AI 800-4 · Monitoring Deployed AI Systems", "source_url": "https://www.nist.gov/publications/challenges-monitoring-deployed-ai-systems-center-ai-standards-and-innovation", "source_type": "government-synthesis", "independence": "government literature review and workshops", "caveat": "Monitoring maturity is an input to resilience, not a direct measure of recovery capacity."}
+      ],
+      "gaps": ["Standardized public stress tests and recovery data tied to frontier-AI failure scenarios", "Critical-sector dependency and common-mode exposure inventories"],
+      "movers": ["Successful independent sector exercises, tested fallbacks, and rapid recovery from actual incidents", "Critical dependence without fallback, cascading failures, or provider concentration that amplifies one compromise"]
+    }
+  ]
+}

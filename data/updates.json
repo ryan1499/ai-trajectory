@@ -1,0 +1,40 @@
+{
+  "updates": [
+    {
+      "date": "2026-07-02",
+      "event": "Baseline established",
+      "crux_id": null,
+      "note": "Initial positions seeded from an eight-agent research pass over 2025-2026 primary sources: lab reports, eval results, forecasting platforms, and governance trackers. One low-credibility evidence item (a claim that governments pulled frontier models from access in June 2026, sourced only to a consulting blog) was excluded. All seven cruxes and ten indicators dated to this baseline."
+    },
+    {
+      "date": "2026-07-02",
+      "event": "Adversarial citation verification pass",
+      "crux_id": null,
+      "note": "All 67 evidence citations checked against their sources by seven verifier agents. Five items cut as fabricated: an Apollo 'declined certification' event (misalignment), the 97%/$18k Anthropic agentic-research stats (rsi — replaced with the source's real 25-28%-of-human-uplift figures), the 88% enterprise-pilot-failure stat (capability-to-power), the $2.2B safety-funding figures (tractability, also trimmed from the field-size indicator), and a mismatched SAE citation (interpretability — repaired to the real interpretability-illusions paper). Three URLs repaired, roughly ten claims tightened to what sources actually say. Fabrications cut in both directions, hitting doomer-leaning and optimist-leaning items alike."
+    },
+    {
+      "date": "2026-07-02",
+      "event": "Independent position re-scoring on verified evidence",
+      "crux_id": null,
+      "note": "Three independent agents (empirical-weight lens, expert-distribution lens, recent-trend lens) each scored all seven cruxes from the verified evidence digest only, blind to each other and to the original single-pass positions. Final position/spread set to the median. Two material corrections: rsi-binding flipped sign (0.20 to -0.20, insight-bound to compute-bound) once scorers saw the corrected 25-28%-of-human-uplift figure in place of the fabricated 97% stat — the strongest insight-bound evidence was much weaker than first reported. governance-coordination dropped sharply (0.55 to 0.30) as two of three lenses weighted the enforceable state laws (SB 53, RAISE Act) and CAISI testing agreements more heavily against the rollback evidence than the original pass did. Smaller moves: capability-to-power 0.30->0.15, misalignment-severity 0.45->0.35 (spread widened to high), interpretability-verification 0.40->0.50, takeoff-speed -0.30->-0.35, alignment-tractability unchanged at 0.30."
+    },
+    {
+      "date": "2026-07-02",
+      "event": "Indicator freshness refresh",
+      "crux_id": null,
+      "note": "All 10 indicators re-checked live against their canonical sources by two agents. Three corrections: METR task horizon updated from ~14.5hrs/123-day doubling (Feb 2026) to ~16+hrs/~105-day doubling (May 2026 measurement on Claude Mythos Preview), with METR's own caveat that measurements above 16hrs are near the edge of its task suite's resolution noted explicitly. Benchmark saturation was substantially wrong: ARC-AGI-2 was reported as '~95-98% near-saturated' but current top scores are actually ~77-85% (ARC-AGI-3, launched March 2026, is the benchmark that shows frontier models under 1%); SWE-bench Verified had moved from ~80% to ~95%, not previously captured. Expert P(doom) gained a supporting data point (a Feb 2026 survey of 59 x-risk/AI-safety practitioners, modal 20-29%) alongside the existing broader-pool figure. The other 7 indicators (Metaculus AGI timelines, Metaculus conditional catastrophe forecasts, Epoch training compute, Epoch algorithmic efficiency, AI incident counts, safety field size, datacenter power) were confirmed accurate as-is."
+    },
+    {
+      "date": "2026-07-02",
+      "event": "Position history backfilled",
+      "crux_id": null,
+      "note": "Added data/history.json and a sparkline UI component. Historical positions were reconstructed, not originally computed live: for 7 quarterly snapshots (2024-12 through 2026-06, plus the current live point), each crux was re-scored using only its own evidence items dated on or before that snapshot's cutoff, via a single-lens empirical methodology (lighter than the 3-judge panel used for live positions, since historical points only need to show relative movement). Cruxes with no dated evidence before a given quarter simply have no point there rather than an invented flat line. Snapshots before Dec 2024 were dropped — only one crux had any evidence that early (a single 2024-05 item), making earlier quarters near-duplicate and not worth scoring. Seven spread ratings the scoring agents returned as low/medium from only 1-2 evidence items were manually overridden to 'high' before saving, since a single citation can't support a claim of low expert disagreement."
+    },
+    {
+      "date": "2026-07-06",
+      "event": "Anthropic global-workspace (J-space) paper",
+      "crux_id": "interpretability-verification",
+      "note": "Anthropic published 'Verbalizable Representations Form a Global Workspace in Language Models' (transformer-circuits.pub, July 6): a Jacobian-lens method identifying J-space, the small verbalizable subset of model activity (~100x connection strength, <1/10 of activity, a few dozen concepts at a time). Demonstrated reading covert cognition — silent arithmetic intermediates, private 'fake/fictional' judgments in a blackmail role-play, deception markers active in a deliberately misaligned model — plus a paired intervention (counterfactual reflection training) that reduced dishonest behavior. Nanda's same-day review: persuasive core science, but a hypothesis-generator rather than a validator, single-token-limited, untested against a model actively evading it. Moved interpretability-verification 0.50 to 0.45 and trend to stable (the 2026-07 live history point revised accordingly, within-month); added the training-loop result as an A-item on alignment-tractability without moving its position — one narrow intervention doesn't shift the weight there. Added a pre-registered mover: whether J-lens survives adversarial stress-testing."
+    }
+  ]
+}

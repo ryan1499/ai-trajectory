@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "registry_version": "2026-08-12",
+  "signals": [
+    {
+      "id": "fri-leap-ai-trajectory",
+      "source_id": "fri-leap",
+      "status": "registered-no-snapshot",
+      "question_links": [
+        {"question_id": "real-task-capability", "match": "related"},
+        {"question_id": "ai-rd-feedback", "match": "related"},
+        {"question_id": "capability-to-impact", "match": "related"},
+        {"question_id": "control-and-evaluation", "match": "related"}
+      ],
+      "why_registered": "Recurring expert, superforecaster, and public panel suitable for dated aggregate snapshots once question wording is matched. Wave 4 (AI R&D) was reviewed, but its published AI-written-paper/Test-of-Time question is a relevant proxy rather than a direct measure of whether AI is accelerating AI R&D; its cultural-recognition lag would confound this question.",
+      "snapshot_rule": "Import only a source-linked wave with exact question wording, population or participant count, aggregation method, capture date, and resolution definition where applicable."
+    },
+    {
+      "id": "espai-2023-ai-rd-feedback-loop",
+      "source_id": "espai-2023",
+      "status": "verified-snapshot",
+      "question_links": [
+        {"question_id": "ai-rd-feedback", "match": "exact"}
+      ],
+      "why_registered": "A historical expert-survey anchor for the feedback-loop question. It is a dated cohort view, not a current aggregate or a calibrated probability of takeoff.",
+      "snapshot_rule": "Import only question-level estimates with the original survey wording, denominator, aggregation rule, and survey date.",
+      "snapshot": {
+        "question_text": "Some people have argued the following: If AI systems do nearly all research and development, improvements in AI will accelerate the pace of technological progress, including further progress in AI. Over a short period (less than 5 years), this feedback loop could cause technological progress to become more than an order of magnitude faster. How likely do you find this argument to be broadly correct?",
+        "canonical_match_rationale": "The source question directly asks whether AI doing nearly all R&D could create a feedback loop in which AI improvements accelerate further AI progress. It is therefore a direct aggregate-belief measure for the tracker’s AI R&D feedback question, while preserving the source’s stronger tenfold-under-five-years formulation.",
+        "fielded_from": "2023-10-11",
+        "fielded_to": "2023-10-24",
+        "captured_at": "2024-01-05",
+        "publication_url": "https://arxiv.org/abs/2401.02843",
+        "source_url": "https://wiki.aiimpacts.org/ai_timelines/predictions_of_human-level_ai_timelines/ai_timeline_surveys/2023_expert_survey_on_progress_in_ai",
+        "cohort": "AI researchers sampled from authors who published in 2022 at NeurIPS, ICML, ICLR, AAAI, JMLR, or IJCAI; the question was assigned to a randomized subset.",
+        "sample_or_participants": "299 responses to this question, within 2,778 respondents to the October 2023 ESPAI.",
+        "aggregate_method": "Direct response-category shares among the 299 randomized-subset responses; no mean, median, or pooled forecast was calculated.",
+        "resolution_rule": "Not applicable: this is an elicited judgment about an argument, not a resolvable platform contract.",
+        "display": "9% quite likely · 20% likely · 24% about even · 24% unlikely · 23% quite unlikely",
+        "distribution": {
+          "unit": "percent",
+          "buckets": {
+            "quite_likely_81_100": 9,
+            "likely_61_80": 20,
+            "about_even_41_60": 24,
+            "unlikely_21_40": 24,
+            "quite_unlikely_0_20": 23
+          }
+        }
+      }
+    },
+    {
+      "id": "espai-2023-other-ai-progress-questions",
+      "source_id": "espai-2023",
+      "status": "registered-no-snapshot",
+      "question_links": [
+        {"question_id": "real-task-capability", "match": "related"},
+        {"question_id": "forecast-accountability", "match": "related"}
+      ],
+      "why_registered": "The 2023 ESPAI contains broader task and timeline elicitation, but no additional source question was imported here because its target is not an exact match for one of these canonical questions.",
+      "snapshot_rule": "Import only question-level estimates with the original survey wording, denominator, aggregation rule, fielding window, publication date, and a documented exact canonical-question match."
+    },
+    {
+      "id": "metaculus-ai-questions",
+      "source_id": "metaculus",
+      "status": "registered-no-snapshot",
+      "question_links": [
+        {"question_id": "forecast-accountability", "match": "related"},
+        {"question_id": "governance-and-enforcement", "match": "related"}
+      ],
+      "why_registered": "Question-specific community forecasts can reveal changes in aggregate belief, but only when their resolution rules match the tracker question.",
+      "snapshot_rule": "Import authorized, dated snapshots only; preserve platform question URL, resolution criteria, forecast type, participant count when published, and aggregation method."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# Generated output — Vercel rebuilds this from data/ on every deploy
+dashboard/
+
+# Design tournament scratch (mockups already ported into scripts/template.html)
+design-tournament/
+
+# Local / tooling
+.vercel/
+.DS_Store
+__pycache__/
+*.pyc
+.vercel
+
+# Local credentials and environment overrides
+.env
+.env.*
+!.env.example

@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1.0",
+  "policies": [
+    {"metric_id":"metr-task-horizon","review_every_days":30,"stale_after_days":60,"sources":[{"label":"METR Time Horizons","url":"https://metr.org/time-horizons/"}]},
+    {"metric_id":"frontier-training-compute","review_every_days":45,"stale_after_days":90,"sources":[{"label":"Epoch Training Runs","url":"https://epoch.ai/trends"}]},
+    {"metric_id":"largest-training-run-flop","review_every_days":45,"stale_after_days":90,"sources":[{"label":"Epoch Notable AI Models","url":"https://epoch.ai/data/notable-ai-models"}]},
+    {"metric_id":"algorithmic-efficiency","review_every_days":180,"stale_after_days":365,"sources":[{"label":"Epoch algorithmic progress","url":"https://epoch.ai/blog/algorithmic-progress-in-language-models"}]},
+    {"metric_id":"ai-rd-automation","review_every_days":30,"stale_after_days":60,"sources":[{"label":"METR Time Horizons","url":"https://metr.org/time-horizons/"},{"label":"METR R&D evaluations","url":"https://metr.org/blog/2024-11-22-evaluating-r-d-capabilities-of-llms/"}]},
+    {"metric_id":"hyperscaler-capex","review_every_days":45,"stale_after_days":100,"sources":[{"label":"SEC company filings","url":"https://www.sec.gov/edgar/search/"},{"label":"Epoch capex trend","url":"https://epoch.ai/data-insights/hyperscaler-capex-trend"}]},
+    {"metric_id":"frontier-cluster-power","review_every_days":45,"stale_after_days":90,"sources":[{"label":"Epoch AI Data Centers","url":"https://epoch.ai/data/ai-data-centers"}]},
+    {"metric_id":"ai-compute-stock","review_every_days":30,"stale_after_days":60,"sources":[{"label":"Epoch AI Chip Sales","url":"https://epoch.ai/data/ai-chip-sales"}]},
+    {"metric_id":"frontier-lab-revenue","review_every_days":60,"stale_after_days":120,"sources":[{"label":"Epoch AI Companies","url":"https://epoch.ai/data/ai-companies"}]},
+    {"metric_id":"policy-events","review_every_days":30,"stale_after_days":60,"sources":[{"label":"Federal Register API","url":"https://www.federalregister.gov/developers/documentation/api/v1"},{"label":"EUR-Lex","url":"https://eur-lex.europa.eu/"}]}
+  ],
+  "reviews": [
+    {"metric_id":"metr-task-horizon","checked_on":"2026-07-24","outcome":"baseline","note":"Current structured reading reviewed against the canonical source."},
+    {"metric_id":"frontier-training-compute","checked_on":"2026-07-27","outcome":"source-lag","note":"Epoch's published series still ends in August 2025; review is current, observation is not."},
+    {"metric_id":"largest-training-run-flop","checked_on":"2026-07-24","outcome":"source-lag","note":"Newer frontier models still lack public compute estimates."},
+    {"metric_id":"algorithmic-efficiency","checked_on":"2026-07-24","outcome":"source-lag","note":"No formal measurement has superseded the March 2024 estimate."},
+    {"metric_id":"ai-rd-automation","checked_on":"2026-07-24","outcome":"baseline","note":"Eval and disclosure evidence reviewed; measurement remains low confidence."},
+    {"metric_id":"hyperscaler-capex","checked_on":"2026-07-24","outcome":"baseline","note":"Latest complete reported quarter reviewed."},
+    {"metric_id":"frontier-cluster-power","checked_on":"2026-07-24","outcome":"baseline","note":"Energized capacity kept separate from announced capacity."},
+    {"metric_id":"ai-compute-stock","checked_on":"2026-07-24","outcome":"source-lag","note":"January hard anchor retained; later figure remains an extrapolation."},
+    {"metric_id":"frontier-lab-revenue","checked_on":"2026-07-27","outcome":"baseline","note":"Latest reported run-rate figures reviewed."},
+    {"metric_id":"policy-events","checked_on":"2026-07-27","outcome":"baseline","note":"Binding rules reviewed against current legal sources."}
+  ]
+}

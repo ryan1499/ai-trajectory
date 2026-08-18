@@ -1,0 +1,298 @@
+{
+  "history": [
+    {
+      "crux_id": "takeoff-speed",
+      "date": "2025-09",
+      "position": -0.4,
+      "spread": "high"
+    },
+    {
+      "crux_id": "takeoff-speed",
+      "date": "2025-12",
+      "position": -0.55,
+      "spread": "low"
+    },
+    {
+      "crux_id": "takeoff-speed",
+      "date": "2026-03",
+      "position": -0.35,
+      "spread": "medium"
+    },
+    {
+      "crux_id": "takeoff-speed",
+      "date": "2026-06",
+      "position": -0.25,
+      "spread": "medium"
+    },
+    {
+      "crux_id": "takeoff-speed",
+      "date": "2026-07",
+      "position": -0.35,
+      "spread": "medium"
+    },
+
+    {
+      "crux_id": "rsi-binding",
+      "date": "2025-03",
+      "position": 0.6,
+      "spread": "high"
+    },
+    {
+      "crux_id": "rsi-binding",
+      "date": "2025-06",
+      "position": 0.55,
+      "spread": "high"
+    },
+    {
+      "crux_id": "rsi-binding",
+      "date": "2025-09",
+      "position": 0.15,
+      "spread": "high"
+    },
+    {
+      "crux_id": "rsi-binding",
+      "date": "2025-12",
+      "position": 0.25,
+      "spread": "high"
+    },
+    {
+      "crux_id": "rsi-binding",
+      "date": "2026-03",
+      "position": -0.3,
+      "spread": "high"
+    },
+    {
+      "crux_id": "rsi-binding",
+      "date": "2026-06",
+      "position": -0.35,
+      "spread": "medium"
+    },
+    {
+      "crux_id": "rsi-binding",
+      "date": "2026-07",
+      "position": -0.2,
+      "spread": "high"
+    },
+
+    {
+      "crux_id": "capability-to-power",
+      "date": "2025-03",
+      "position": 0.5,
+      "spread": "high"
+    },
+    {
+      "crux_id": "capability-to-power",
+      "date": "2025-06",
+      "position": 0.5,
+      "spread": "high"
+    },
+    {
+      "crux_id": "capability-to-power",
+      "date": "2025-09",
+      "position": 0.5,
+      "spread": "high"
+    },
+    {
+      "crux_id": "capability-to-power",
+      "date": "2025-12",
+      "position": 0.0,
+      "spread": "high"
+    },
+    {
+      "crux_id": "capability-to-power",
+      "date": "2026-03",
+      "position": 0.15,
+      "spread": "high"
+    },
+    {
+      "crux_id": "capability-to-power",
+      "date": "2026-06",
+      "position": 0.2,
+      "spread": "high"
+    },
+    {
+      "crux_id": "capability-to-power",
+      "date": "2026-07",
+      "position": 0.15,
+      "spread": "high"
+    },
+
+    {
+      "crux_id": "misalignment-severity",
+      "date": "2024-12",
+      "position": 0.4,
+      "spread": "high"
+    },
+    {
+      "crux_id": "misalignment-severity",
+      "date": "2025-03",
+      "position": 0.55,
+      "spread": "high"
+    },
+    {
+      "crux_id": "misalignment-severity",
+      "date": "2025-06",
+      "position": 0.35,
+      "spread": "high"
+    },
+    {
+      "crux_id": "misalignment-severity",
+      "date": "2025-09",
+      "position": 0.5,
+      "spread": "medium"
+    },
+    {
+      "crux_id": "misalignment-severity",
+      "date": "2025-12",
+      "position": 0.55,
+      "spread": "medium"
+    },
+    {
+      "crux_id": "misalignment-severity",
+      "date": "2026-03",
+      "position": 0.35,
+      "spread": "high"
+    },
+    {
+      "crux_id": "misalignment-severity",
+      "date": "2026-06",
+      "position": 0.5,
+      "spread": "medium"
+    },
+    {
+      "crux_id": "misalignment-severity",
+      "date": "2026-07",
+      "position": 0.35,
+      "spread": "high"
+    },
+
+    {
+      "crux_id": "alignment-tractability",
+      "date": "2024-12",
+      "position": 0.45,
+      "spread": "high"
+    },
+    {
+      "crux_id": "alignment-tractability",
+      "date": "2025-03",
+      "position": 0.55,
+      "spread": "high"
+    },
+    {
+      "crux_id": "alignment-tractability",
+      "date": "2025-06",
+      "position": 0.65,
+      "spread": "low"
+    },
+    {
+      "crux_id": "alignment-tractability",
+      "date": "2025-09",
+      "position": 0.7,
+      "spread": "low"
+    },
+    {
+      "crux_id": "alignment-tractability",
+      "date": "2025-12",
+      "position": 0.4,
+      "spread": "medium"
+    },
+    {
+      "crux_id": "alignment-tractability",
+      "date": "2026-03",
+      "position": 0.3,
+      "spread": "high"
+    },
+    {
+      "crux_id": "alignment-tractability",
+      "date": "2026-06",
+      "position": 0.45,
+      "spread": "high"
+    },
+    {
+      "crux_id": "alignment-tractability",
+      "date": "2026-07",
+      "position": 0.3,
+      "spread": "high"
+    },
+
+    {
+      "crux_id": "interpretability-verification",
+      "date": "2025-03",
+      "position": 0.6,
+      "spread": "high"
+    },
+    {
+      "crux_id": "interpretability-verification",
+      "date": "2025-06",
+      "position": 0.65,
+      "spread": "low"
+    },
+    {
+      "crux_id": "interpretability-verification",
+      "date": "2025-09",
+      "position": 0.75,
+      "spread": "low"
+    },
+    {
+      "crux_id": "interpretability-verification",
+      "date": "2025-12",
+      "position": 0.5,
+      "spread": "medium"
+    },
+    {
+      "crux_id": "interpretability-verification",
+      "date": "2026-03",
+      "position": 0.5,
+      "spread": "high"
+    },
+    {
+      "crux_id": "interpretability-verification",
+      "date": "2026-06",
+      "position": 0.6,
+      "spread": "medium"
+    },
+    {
+      "crux_id": "interpretability-verification",
+      "date": "2026-07",
+      "position": 0.45,
+      "spread": "medium"
+    },
+
+    {
+      "crux_id": "governance-coordination",
+      "date": "2025-06",
+      "position": 0.6,
+      "spread": "high"
+    },
+    {
+      "crux_id": "governance-coordination",
+      "date": "2025-09",
+      "position": -0.1,
+      "spread": "high"
+    },
+    {
+      "crux_id": "governance-coordination",
+      "date": "2025-12",
+      "position": -0.1,
+      "spread": "high"
+    },
+    {
+      "crux_id": "governance-coordination",
+      "date": "2026-03",
+      "position": 0.4,
+      "spread": "high"
+    },
+    {
+      "crux_id": "governance-coordination",
+      "date": "2026-06",
+      "position": 0.3,
+      "spread": "high"
+    },
+    {
+      "crux_id": "governance-coordination",
+      "date": "2026-07",
+      "position": 0.3,
+      "spread": "medium"
+    }
+  ]
+}

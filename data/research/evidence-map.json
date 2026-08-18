@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "registry_version": "2026-08-12",
+  "links": [
+    {"question_id": "build-capacity", "record_type": "metric", "record_id": "frontier-training-compute", "relation": "direct-observation"},
+    {"question_id": "build-capacity", "record_type": "metric", "record_id": "largest-training-run-flop", "relation": "supporting-observation"},
+    {"question_id": "build-capacity", "record_type": "metric", "record_id": "ai-compute-stock", "relation": "supporting-observation"},
+    {"question_id": "build-capacity", "record_type": "metric", "record_id": "hyperscaler-capex", "relation": "supporting-observation"},
+    {"question_id": "build-capacity", "record_type": "metric", "record_id": "frontier-cluster-power", "relation": "constraint-observation"},
+    {"question_id": "real-task-capability", "record_type": "metric", "record_id": "metr-task-horizon", "relation": "direct-observation"},
+    {"question_id": "ai-rd-feedback", "record_type": "metric", "record_id": "ai-rd-automation", "relation": "proxy-observation"},
+    {"question_id": "ai-rd-feedback", "record_type": "metric", "record_id": "metr-task-horizon", "relation": "proxy-observation"},
+    {"question_id": "ai-rd-feedback", "record_type": "research-evidence", "record_id": "ai-rd-evidence", "relation": "evidence-package"},
+    {"question_id": "algorithmic-progress", "record_type": "metric", "record_id": "algorithmic-efficiency", "relation": "direct-observation"},
+    {"question_id": "deployment-and-value", "record_type": "metric", "record_id": "frontier-lab-revenue", "relation": "supporting-observation"},
+    {"question_id": "deployment-and-value", "record_type": "metric", "record_id": "hyperscaler-capex", "relation": "context-observation"},
+    {"question_id": "capability-to-impact", "record_type": "crux", "record_id": "capability-to-power", "relation": "open-evidence"},
+    {"question_id": "control-and-evaluation", "record_type": "crux", "record_id": "misalignment-severity", "relation": "open-evidence"},
+    {"question_id": "control-and-evaluation", "record_type": "crux", "record_id": "alignment-tractability", "relation": "open-evidence"},
+    {"question_id": "control-and-evaluation", "record_type": "crux", "record_id": "interpretability-verification", "relation": "open-evidence"},
+    {"question_id": "governance-and-enforcement", "record_type": "metric", "record_id": "policy-events", "relation": "direct-observation"},
+    {"question_id": "governance-and-enforcement", "record_type": "crux", "record_id": "governance-coordination", "relation": "open-evidence"},
+    {"question_id": "forecast-accountability", "record_type": "claim-portfolio", "record_id": "all-scoreboard-claims", "relation": "portfolio-review"},
+    {"question_id": "observed-harms-and-near-misses", "record_type": "coverage-gap", "record_id": "incident-series-not-yet-registered", "relation": "unmeasured"}
+  ]
+}

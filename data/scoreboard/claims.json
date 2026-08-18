@@ -1,0 +1,1587 @@
+{
+  "_comment": "Claim portfolio. Preserve source wording and conditionality; distinguish epistemic type and scorability; append assessments to resolution_history rather than rewriting prior judgments.",
+  "schema_version": "0.1.0",
+  "milestone_ladder": {
+    "_note": "MERGED across papers (Ryan decision #2). Different forecasts overlay the SAME rung via ladder_rung on each milestone claim.",
+    "rungs": [
+      {
+        "id": "r1-month-task",
+        "label": "Agent completes 1-month human-equivalent research task",
+        "measurable_via": "metr-task-horizon"
+      },
+      {
+        "id": "r2-superhuman-coder",
+        "label": "Superhuman Coder (AI 2027 definition)",
+        "measurable_via": "eval + milestone resolution"
+      },
+      {
+        "id": "r3-automated-researcher",
+        "label": "Automated AI researcher / ASARA (Leopold, Forethought)",
+        "measurable_via": "milestone resolution"
+      },
+      {
+        "id": "r4-rd-speedup",
+        "label": "AI R&D speedup multiplier crosses 2x / 10x",
+        "measurable_via": "lab statements + evals, confidence-discounted"
+      },
+      {
+        "id": "r5-agi",
+        "label": "AGI-class (each author's own definition recorded)",
+        "measurable_via": "milestone resolution"
+      }
+    ]
+  },
+  "forecast_sources": [
+    {
+      "id": "aschenbrenner-2024",
+      "author": "Leopold Aschenbrenner",
+      "work": "Situational Awareness",
+      "published": "2024-06",
+      "camp": "bull",
+      "url": "https://situational-awareness.ai/",
+      "epistemic_type": "forecast"
+    },
+    {
+      "id": "ai2027-apr2025",
+      "author": "Kokotajlo/Lifland et al.",
+      "work": "AI 2027",
+      "published": "2025-04",
+      "camp": "bull",
+      "url": "https://ai-2027.com/",
+      "epistemic_type": "scenario"
+    },
+    {
+      "id": "ai2027-dec2025",
+      "author": "AI Futures Project",
+      "work": "Dec 2025 timelines update",
+      "published": "2025-12",
+      "camp": "bull (revised later)",
+      "url": "https://blog.aifutures.org/p/ai-futures-model-dec-2025-update",
+      "epistemic_type": "model"
+    },
+    {
+      "id": "forethought-2025",
+      "author": "MacAskill/Davidson et al.",
+      "work": "Forethought SIE series",
+      "published": "2025",
+      "camp": "model",
+      "url": "https://www.forethought.org/research/preparing-for-the-intelligence-explosion",
+      "epistemic_type": "model"
+    },
+    {
+      "id": "cotra-2022",
+      "author": "Ajeya Cotra",
+      "work": "Bio Anchors (2-yr update)",
+      "published": "2022",
+      "camp": "model",
+      "url": "https://www.alignmentforum.org/posts/AfH2oPHCApdKicM4m/two-year-update-on-my-personal-ai-timelines",
+      "epistemic_type": "model"
+    },
+    {
+      "id": "epoch",
+      "author": "Epoch AI",
+      "work": "various (vintaged)",
+      "published": "varies",
+      "camp": "base-rate",
+      "url": "https://epoch.ai/data",
+      "epistemic_type": "trend-projection"
+    },
+    {
+      "id": "davidson-2023",
+      "author": "Tom Davidson",
+      "work": "Compute-centric takeoff-speeds framework",
+      "published": "2023",
+      "camp": "model",
+      "url": "https://coefficientgiving.org/research/what-a-compute-centric-framework-says-about-takeoff-speeds/",
+      "epistemic_type": "model"
+    },
+    {
+      "id": "erdil-2025",
+      "author": "Ege Erdil",
+      "work": "Case for multi-decade timelines",
+      "published": "2025-04",
+      "camp": "bear",
+      "url": "https://ea.greaterwrong.com/posts/tTzztd2vuDj8Nt7jC/the-case-for-multi-decade-timelines-linkpost",
+      "epistemic_type": "analysis"
+    },
+    {
+      "id": "morgan-stanley",
+      "author": "Morgan Stanley",
+      "work": "AI Infrastructure Spending: Inelastic Demand and Rising Costs",
+      "published": "2026",
+      "camp": "wall-street",
+      "url": "https://www.morganstanley.com/insights/podcasts/thoughts-on-the-market/ai-spending-inelastic-andrew-sheets",
+      "epistemic_type": "forecast"
+    },
+    {
+      "id": "altman-2025",
+      "author": "Sam Altman (OpenAI)",
+      "work": "Internal-goals statement (livestream + X post)",
+      "published": "2025-10",
+      "camp": "bull",
+      "url": "https://forum.openai.com/public/videos/event-replay-sam-altman-on-building-the-future-of-ai-2026-04-06",
+      "epistemic_type": "intention"
+    }
+  ],
+  "claims": [
+    {
+      "id": "forethought-metr-1month-3to6yr",
+      "source": "forethought-2025",
+      "metric_id": "metr-task-horizon",
+      "claim_type": "trajectory",
+      "quote": "within three to six years, AI models will become capable of automating many cognitive tasks which take human experts up to a month",
+      "quote_location": "Preparing for the Intelligence Explosion, AI-human cognitive parity",
+      "conditionality": "conditional-scenario: 'Naively extrapolating this trend' [the METR 7-month doubling]. Preserve as stated.",
+      "predicted": {
+        "value": "1-month-task horizon",
+        "by": "2028-2031",
+        "plot_value": 720
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 55,
+          "as_of": "2026-07",
+          "evidence": "METR horizon ~16h (May 2026), doubling ~105 days; extrapolation tracks toward month-scale ~2028-29.",
+          "counterargument": "Doubling time is itself contested and may be decelerating; >16h measurements are near suite-resolution limits, so recent points are noisy.",
+          "evidence_urls": [
+            "https://metr.org/time-horizons/"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "1-month-task horizon",
+            "deadline": "2028-2031",
+            "observation_metric_id": "metr-task-horizon",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "Doubling time is itself contested and may be decelerating; >16h measurements are near suite-resolution limits, so recent points are noisy."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "sa-metr-drop-in-worker-2027",
+      "source": "aschenbrenner-2024",
+      "metric_id": "metr-task-horizon",
+      "claim_type": "milestone",
+      "ladder_rung": "r3-automated-researcher",
+      "quote": "it is strikingly plausible that by 2027, models will be able to do the work of an AI researcher/engineer.",
+      "quote_location": "Ch I, From GPT-4 to AGI",
+      "conditionality": "conditional-scenario ('strikingly plausible')",
+      "predicted": {
+        "value": "AI researcher/engineer automation",
+        "by": "2027"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "pending",
+          "confidence": 40,
+          "as_of": "2026-07",
+          "evidence": "Strong coding-agent adoption and longer autonomy, but no autonomous AI-researcher demonstrated; RE-Bench-class evals still short of expert autonomy.",
+          "counterargument": "The AI Futures Project itself (Dec 2025) pushed its Superhuman Coder median from Jan 2027 to Dec 2031, evidence against the 2027 rung.",
+          "evidence_urls": [
+            "https://metr.org/time-horizons/"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "AI researcher/engineer automation",
+            "deadline": "2027",
+            "observation_metric_id": "metr-task-horizon",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "The AI Futures Project itself (Dec 2025) pushed its Superhuman Coder median from Jan 2027 to Dec 2031, evidence against the 2027 rung."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "Task-horizon evidence is a proxy for drop-in researcher or engineer automation, not a direct labor-substitution measure."
+      }
+    },
+    {
+      "id": "ai2027-superhuman-coder-revision",
+      "source": "ai2027-dec2025",
+      "metric_id": "ai-rd-automation",
+      "claim_type": "milestone",
+      "ladder_rung": "r2-superhuman-coder",
+      "quote": "the new model with median parameters predicts SC in Dec 2031",
+      "quote_location": "AI Futures Model Dec 2025 update (supersedes AI 2027's Mar 2027 scenario date; do NOT overwrite the original — record both)",
+      "conditionality": "firm model output, but authors retain 'highly uncertain... cannot confidently predict a specific year'",
+      "predicted": {
+        "value": "Superhuman Coder",
+        "by": "2031-12"
+      },
+      "supersedes": "ai2027-apr2025 SC date (2027-03)",
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "pending",
+          "confidence": 50,
+          "as_of": "2026-07",
+          "evidence": "Nothing close to the SC bar (any AGI-company coding task, 30x faster, 30x cheaper) exists: SWE-bench Verified 79.2% (Opus 4.6), Terminal-Bench 2.0 ~65%; the independent AI 2027 tracker grades SC 'Not Yet Testable' (Jun 2026). The authors' aggregate self-grading puts quantitative progress at ~65-75% of scenario pace.",
+          "counterargument": "Even the revised median has wide CI (10th pct 2027.5), and individual forecaster medians (Daniel ~2029, Eli ~2032) still disagree by years — the Dec 2031 model output is not a settled team view.",
+          "evidence_urls": [
+            "https://metr.org/time-horizons/"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "Superhuman Coder",
+            "deadline": "2031-12",
+            "observation_metric_id": "ai-rd-automation",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "Even the revised median has wide CI (10th pct 2027.5), and individual forecaster medians (Daniel ~2029, Eli ~2032) still disagree by years — the Dec 2031 model output is not a settled team view."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "epoch-2e29-flop-2030",
+      "source": "epoch",
+      "metric_id": "largest-training-run-flop",
+      "claim_type": "milestone",
+      "quote": "Training runs of around 2e29 FLOP are likely possible by 2030",
+      "quote_location": "Can AI scaling continue through 2030? (Aug 2024), https://epoch.ai/blog/can-ai-scaling-continue-through-2030",
+      "conditionality": "feasibility claim, not a prediction — 'likely possible' if the ~4x/yr trend continues. Their constraint hierarchy: power binds first, then chip manufacturing, then data. Score against feasibility, not occurrence.",
+      "predicted": {
+        "value": "2e29 FLOP training run possible",
+        "by": "2030",
+        "plot_value": 2e+29
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 60,
+          "as_of": "2026-07",
+          "evidence": "Reaching 2e29 from Grok 4's 5e26 requires ~3.9x/yr through 2030 — right at Epoch's measured 4-5x/yr historical trend. Multi-GW campus construction (Colossus 2, Stargate-class sites) remains consistent with their power-first constraint analysis.",
+          "counterargument": "The realized record has been flat for 12 months and GPT-5 used less pretraining compute than GPT-4.5 — labs are choosing not to scale single runs even where feasible. Epoch's own Sep 2025 lead-times analysis pushes megascale milestones out ~5 years. A feasibility claim can stay technically true while becoming irrelevant to what the frontier actually does.",
+          "evidence_urls": [
+            "https://epoch.ai/data/notable-ai-models"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "2e29 FLOP training run possible",
+            "deadline": "2030",
+            "observation_metric_id": "largest-training-run-flop",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "The realized record has been flat for 12 months and GPT-5 used less pretraining compute than GPT-4.5 — labs are choosing not to scale single runs even where feasible. Epoch's own Sep 2025 lead-times analysis pushes megascale milestones out ~5 years. A feasibility claim can stay technically true while becoming irrelevant to what the frontier actually does."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "sa-compute-half-oom-per-year",
+      "source": "aschenbrenner-2024",
+      "metric_id": "frontier-training-compute",
+      "claim_type": "trajectory",
+      "quote": "training compute used for frontier AI systems has grown at roughly ~0.5 OOMs/year",
+      "quote_location": "Ch I, From GPT-4 to AGI",
+      "conditionality": "firm — stated as the historical baseline he extrapolates through 2027. NOTE: his separate '+2 OOMs of compute (a cluster in the $10s of billions)... by the end of 2027' is a CLUSTER size/cost claim, not a single-run FLOP claim; conflating them would misstate him. Scored here only as the sustained growth-rate extrapolation (implies ~2e27-scale runs by end-2027 from GPT-4's 2e25).",
+      "predicted": {
+        "value": "~0.5 OOM/yr frontier training-compute growth sustained",
+        "by": "2027-12",
+        "plot_value": 2e+27,
+        "plot_note": "Rate forecasts are plotted as the level they imply at their target date, compounded from this metric's own series."
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "ahead",
+          "confidence": 55,
+          "as_of": "2026-07",
+          "evidence": "Measured against the frontier trend rather than the record run, reality runs faster than his baseline: Epoch's top-5 series grows 0.7 OOM/yr (90% CI 0.6-0.8) against his stated ~0.5, rising 3.89e25 to 1.677e26 in the year to Aug 2025 (about 4.3x). Extrapolated to end-2027 that clears the ~2e27 his +2 OOM implies.",
+          "counterargument": "Scored 'ahead' on Epoch's fitted trend, whose published data stops at Aug 2025 — the last 11 months are unmeasured. Epoch itself expects the pace to break within 1-2 years of Sept 2025 on training-duration and lead-time limits, which would pull this back to his rate or below.",
+          "evidence_urls": [
+            "https://epoch.ai/trends"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "~0.5 OOM/yr frontier training-compute growth sustained",
+            "deadline": "2027-12",
+            "observation_metric_id": "frontier-training-compute",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "Scored 'ahead' on Epoch's fitted trend, whose published data stops at Aug 2025 — the last 11 months are unmeasured. Epoch itself expects the pace to break within 1-2 years of Sept 2025 on training-duration and lead-time limits, which would pull this back to his rate or below."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "ai2027-agent0-1e27-late-2025",
+      "source": "ai2027-apr2025",
+      "metric_id": "largest-training-run-flop",
+      "claim_type": "milestone",
+      "quote": "Agent-0 training compute: 10^27 FLOP (Late 2025); Agent-1: 4x10^27 FLOP",
+      "quote_location": "Compute forecast supplement, https://ai-2027.com/research/compute-forecast. CANONICAL READING: the compute-forecast table figures — the supplement's body text and chart give conflicting Agent-0/Agent-1 values (documented source-internal conflict, resolved per schema rule 4).",
+      "conditionality": "scenario narrative — authors' own hedge: '2027 was our modal (most likely) year at the time of publication, our medians were somewhat longer'; the scenario is 'not a prediction'. Superseded (not overwritten) by the Dec 2025 AI Futures Model revision, which moved milestone medians ~4-5 years later.",
+      "predicted": {
+        "value": "1e27 FLOP training run",
+        "by": "2025-12",
+        "plot_value": 1e+27
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "behind",
+          "confidence": 65,
+          "as_of": "2026-07",
+          "evidence": "Largest known run as of mid-2026 is Grok 4 at ~5e26 (Jul 2025) — no confirmed 1e27+ run exists more than six months past the claimed date. Rumors of an xAI 1e27 run exist but Epoch and others place it closer to 1e26-scale.",
+          "counterargument": "The gap is only ~2x, within Epoch's stated uncertainty on the Grok 4 point estimate, and the newest 2026 models have no published estimates — a 1e27 run may already have happened unrecorded. Not scored 'falsified' for exactly this reason.",
+          "evidence_urls": [
+            "https://epoch.ai/data/notable-ai-models"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "1e27 FLOP training run",
+            "deadline": "2025-12",
+            "observation_metric_id": "largest-training-run-flop",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "The gap is only ~2x, within Epoch's stated uncertainty on the Grok 4 point estimate, and the newest 2026 models have no published estimates — a 1e27 run may already have happened unrecorded. Not scored 'falsified' for exactly this reason."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "ai2027-agent2-2e28-early-2027",
+      "source": "ai2027-apr2025",
+      "metric_id": "largest-training-run-flop",
+      "claim_type": "milestone",
+      "quote": "Agent-2 trained with 2e28 FLOP ('1000x GPT-4'), Apr 2026 - Mar 2027",
+      "quote_location": "Compute forecast supplement training table, https://ai-2027.com/research/compute-forecast",
+      "conditionality": "scenario narrative, same hedges and Dec 2025 supersession as Agent-0 claim. Note: the Phase-2 planning doc for this project quoted this as '1e28 by mid-27' — the primary source says 2e28; primary source wins.",
+      "predicted": {
+        "value": "2e28 FLOP training run",
+        "by": "2027-03",
+        "plot_value": 2e+28
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "behind",
+          "confidence": 75,
+          "as_of": "2026-07",
+          "evidence": "Requires a 40x jump from the current 5e26 record within ~8 months, against a record that has been flat for 12 months and a demonstrated pretraining pullback (GPT-5 below GPT-4.5). The authors' own Dec 2025 revision effectively concedes this timeline ('Things seem to be going somewhat slower than the AI 2027 scenario' — Kokotajlo).",
+          "counterargument": "Global compute stock kept growing ~3.3-3.4x/yr (Epoch) even while single-run size stalled — if a lab reallocates stock into one giant run (the mechanics of Epoch's 'Manhattan Project' scenario), a 1e28-scale run in 2027 is not physically implausible, just commercially unmotivated so far.",
+          "evidence_urls": [
+            "https://epoch.ai/data/notable-ai-models"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "2e28 FLOP training run",
+            "deadline": "2027-03",
+            "observation_metric_id": "largest-training-run-flop",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "Global compute stock kept growing ~3.3-3.4x/yr (Epoch) even while single-run size stalled — if a lab reallocates stock into one giant run (the mechanics of Epoch's 'Manhattan Project' scenario), a 1e28-scale run in 2027 is not physically implausible, just commercially unmotivated so far."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "epoch-5x-continuation-2027",
+      "source": "epoch",
+      "metric_id": "frontier-training-compute",
+      "claim_type": "trajectory",
+      "quote": "Frontier AI labs may still scale training compute at 5x per year for another 1-2 years by allocating a larger fraction of compute to training.",
+      "quote_location": "Compute scaling will slow down due to increasing lead times (Sep 2025), https://epoch.ai/gradient-updates/compute-scaling-will-slow-down-due-to-increasing-lead-times",
+      "conditionality": "hedged near-term trajectory ('may still') inside an analysis whose headline is a coming SLOWDOWN — the same piece moves the trillion-dollar-cluster date from ~2030 to ~2035 on lead-time grounds.",
+      "predicted": {
+        "value": "~5x/yr training-compute growth sustained",
+        "by": "2027-09",
+        "plot_value": 4.9e+27,
+        "plot_note": "Rate forecasts are plotted as the level they imply at their target date, compounded from this metric's own series."
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 60,
+          "as_of": "2026-07",
+          "evidence": "Now scored against the series the claim is actually about: Epoch's top-5 trend median went 3.89e25 (Aug 2024) to 1.677e26 (Aug 2025), roughly 4.3x in a year — inside the stated 4-6x band and consistent with the 5x/yr headline.",
+          "counterargument": "The confirming data ends Aug 2025, one month before the claim was published, so almost none of the 1-2 year window it forecasts has been measured. The same piece predicts the slowdown that would falsify it.",
+          "evidence_urls": [
+            "https://epoch.ai/trends"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "~5x/yr training-compute growth sustained",
+            "deadline": "2027-09",
+            "observation_metric_id": "frontier-training-compute",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "The confirming data ends Aug 2025, one month before the claim was published, so almost none of the 1-2 year window it forecasts has been measured. The same piece predicts the slowdown that would falsify it."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "davidson-agi-training-flop-1e36",
+      "source": "davidson-2023",
+      "metric_id": "largest-training-run-flop",
+      "claim_type": "milestone",
+      "quote": "My median AGI training requirements (~1e36 FLOP using 2020 algorithms) are high compared to some.",
+      "quote_location": "What a Compute-Centric Framework Says About Takeoff Speeds, Monte Carlo with aggressive training requirements — verified against the canonical Coefficient Giving page on 2026-08-17",
+      "conditionality": "model parameter, not a dated forecast — an undated threshold in effective (2020-algorithm-equivalent) FLOP, so raw training FLOP alone cannot resolve it; the report presents wide uncertainty and separately tests an aggressive ~1e31 median.",
+      "predicted": {
+        "value": "~1e36 effective FLOP (2020-algorithms) to train AGI",
+        "by": "undated threshold"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "pending",
+          "confidence": 50,
+          "as_of": "2026-07",
+          "evidence": "Frontier raw compute (5e26) sits ~9.5 OOM below the median anchor; even crediting ~2 OOM of post-2020 algorithmic efficiency, reality is ~7+ OOM short — useful mainly as chart context showing how far the model camp's central anchor sits above the measured frontier.",
+          "counterargument": "The +/-3 OOM band and the effective-vs-raw conversion make this the least falsifiable overlay on this metric; it earns its place as context, not as a scoreable bet.",
+          "evidence_urls": [
+            "https://epoch.ai/data/notable-ai-models"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "~1e36 effective FLOP (2020-algorithms) to train AGI",
+            "deadline": "undated threshold",
+            "observation_metric_id": "largest-training-run-flop",
+            "measurement_relation": "translated",
+            "comparison_rule": "Apply the declared conversion before comparing the target with the observation.",
+            "uncertainty_drivers": [
+              "The +/-3 OOM band and the effective-vs-raw conversion make this the least falsifiable overlay on this metric; it earns its place as context, not as a scoreable bet."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "translated",
+        "note": "Raw training FLOP is translated into 2020-algorithm-equivalent FLOP using the separately tracked algorithmic-efficiency improvement.",
+        "formula": "effective_2020_FLOP = raw_training_FLOP x algorithmic_efficiency_multiplier"
+      }
+    },
+    {
+      "id": "sa-algo-2oom-by-2027",
+      "source": "aschenbrenner-2024",
+      "metric_id": "algorithmic-efficiency",
+      "claim_type": "milestone",
+      "quote": "1-3 OOMs of algorithmic efficiency gains (compared to GPT-4) by the end of 2027, maybe with a best guess of ~2 OOMs.",
+      "quote_location": "Ch I, From GPT-4 to AGI",
+      "conditionality": "conditional-scenario ('best guess') — his baseline rate of ~0.5 OOM/yr is stated as firm; the 2027 cumulative figure extrapolates it.",
+      "predicted": {
+        "value": "~2 OOM algorithmic efficiency vs GPT-4 (range 1-3)",
+        "by": "2027-12"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 50,
+          "as_of": "2026-07",
+          "evidence": "Epoch's measured 8-month halving is ~0.45 OOM/yr — essentially his claimed baseline rate — and would compound to ~2.1 OOM over GPT-4-to-end-2027 if it held. Reasoning-model post-training added an estimated further ~10x compute-equivalent gain (Epoch, Aug 2025) in verifiable domains, arguably front-running the schedule.",
+          "counterargument": "The rate has not been formally re-measured since Mar 2024, so 'on-track' rests on extrapolating a stale estimate; the Nov 2025 MIT decomposition argues most historical gains came from two unrepeatable scale-dependent transitions, which would make sustained 0.5 OOM/yr the exception, not the trend.",
+          "evidence_urls": [
+            "https://epoch.ai/blog/algorithmic-progress-in-language-models"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "~2 OOM algorithmic efficiency vs GPT-4 (range 1-3)",
+            "deadline": "2027-12",
+            "observation_metric_id": "algorithmic-efficiency",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "The rate has not been formally re-measured since Mar 2024, so 'on-track' rests on extrapolating a stale estimate; the Nov 2025 MIT decomposition argues most historical gains came from two unrepeatable scale-dependent transitions, which would make sustained 0.5 OOM/yr the exception, not the trend."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "forethought-algo-3x-per-year",
+      "source": "forethought-2025",
+      "metric_id": "algorithmic-efficiency",
+      "claim_type": "trajectory",
+      "quote": "physical computation required to train a model at the same level of performance is falling by roughly 3x per year",
+      "quote_location": "Preparing for the Intelligence Explosion (Mar 2025), Current trends",
+      "conditionality": "stated as a current-trends baseline, not a forecast; their forward-looking software-explosion claims hang off the r_cog parameter (median 1.2, log-uniform 0.4-3.6), which they flag as 'necessarily speculative'.",
+      "predicted": {
+        "value": "~3x/yr training-efficiency gain continues (halving ~7.6 months)",
+        "by": "ongoing",
+        "plot_value": 7.6
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 55,
+          "as_of": "2026-07",
+          "evidence": "3x/yr is the same quantity as Epoch's 8-month halving (3x/yr = halving every ~7 months) and matches Epoch's live dashboard figure (~3.0x/yr, ~7.6-month halving) — internally consistent with the best available measurement.",
+          "counterargument": "All three numbers ultimately derive from the same Epoch methodology and 2012-2023 data window — agreement between them is not independent confirmation, and none reflects a post-2024 re-measurement.",
+          "evidence_urls": [
+            "https://epoch.ai/blog/algorithmic-progress-in-language-models"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "trajectory-checkpoint",
+            "target": "~3x/yr training-efficiency gain continues (halving ~7.6 months)",
+            "deadline": "ongoing",
+            "observation_metric_id": "algorithmic-efficiency",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "All three numbers ultimately derive from the same Epoch methodology and 2012-2023 data window — agreement between them is not independent confirmation, and none reflects a post-2024 re-measurement."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "davidson-algo-input-10-16mo",
+      "source": "davidson-2023",
+      "metric_id": "algorithmic-efficiency",
+      "claim_type": "trajectory",
+      "quote": "Software/algorithmic efficiency input: OpenAI's 'Efficiency' analysis cited at 16-month doubling; Epoch's own analysis at ~10-month doubling; Davidson's assessment: 'Progress is if anything faster for [language models].'",
+      "quote_location": "Recovered secondary-source synthesis from the 2026-07 harvest. The canonical report supports a broader ~1–2 year historical range and a conservative 2.5-year model input, but this exact 10–16 month formulation has not been verified; excluded from headline results.",
+      "conditionality": "model input parameter (2023 vintage), with an explicit hedge that LM progress may be faster than the vision-era 10-16 month figures he anchored on.",
+      "predicted": {
+        "value": "algorithmic efficiency doubling every 10-16 months (model input)",
+        "by": "ongoing",
+        "plot_value": 13
+      },
+      "scorability": "context-only",
+      "resolution_history": [
+        {
+          "status": "ahead",
+          "confidence": 50,
+          "as_of": "2026-07",
+          "evidence": "The best measured LM figure (8-month halving, Mar 2024) is faster than his 10-16-month input range — reality outpaced the parameter he fed his takeoff model, exactly as his own hedge anticipated. Faster algorithmic progress shortens his modeled timelines.",
+          "counterargument": "'Ahead' rests on a single stale measurement whose CI (5-14 months) overlaps his input range; if the MIT one-off-transitions critique is right, the post-2024 rate could fall back inside or below 10-16 months.",
+          "evidence_urls": [
+            "https://epoch.ai/blog/algorithmic-progress-in-language-models"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "trajectory-checkpoint",
+            "target": "algorithmic efficiency doubling every 10-16 months (model input)",
+            "deadline": "ongoing",
+            "observation_metric_id": "algorithmic-efficiency",
+            "measurement_relation": "context",
+            "comparison_rule": "Retain as research context only; do not include in headline totals or chart overlays until the exact source formulation is verified.",
+            "uncertainty_drivers": [
+              "'Ahead' rests on a single stale measurement whose CI (5-14 months) overlaps his input range; if the MIT one-off-transitions critique is right, the post-2024 rate could fall back inside or below 10-16 months."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "context",
+        "note": "The exact 10–16 month formulation is a recovered secondary-source synthesis and is excluded until verified against its canonical input artifact."
+      }
+    },
+    {
+      "id": "ai2027-rd-multiplier-1.5x-early-2026",
+      "source": "ai2027-apr2025",
+      "metric_id": "ai-rd-automation",
+      "claim_type": "milestone",
+      "ladder_rung": "r4-rd-speedup",
+      "quote": "Early 2026: AI R&D progress multiplier reaches 1.5x — algorithmic progress '50% faster' with AI assistants than without",
+      "quote_location": "AI 2027 scenario narrative + compute-forecast multiplier table. CANONICAL READING: the narrative ladder (1.5x early 2026 -> 3x Jan 2027) — the corpus has two conflicting multiplier tables (compute-forecast quarterly vs takeoff-forecast milestone-tied), recorded per schema rule 4.",
+      "conditionality": "scenario narrative with the project-wide hedge ('not a prediction; 2027 was our modal year'). The authors' own end-2026 target was 1.9x, which they now grade 'behind pace'.",
+      "predicted": {
+        "value": "1.5x AI R&D progress multiplier",
+        "by": "2026-06"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 45,
+          "as_of": "2026-07",
+          "evidence": "METR's self-report survey (May 2026) median value-multiplier is 1.4-2x; METR's production-function read of Anthropic's 8x code-volume figure puts researcher uplift 'plausibly >2x'; the third-party AI 2027 tracker marks the 1.5x rung On Track. Evidence is self-report-dominated, hence the discount.",
+          "counterargument": "Anthropic's own system card says acceleration is 'well short of a sustained, AI-attributable doubling of the overall pace'; the only RCT-grade measurement found a 19% SLOWDOWN (since methodologically disowned by METR itself, but never replaced with a positive result); self-reports historically overstate measured savings by ~40 percentage points.",
+          "evidence_kind": "self-report-dominated",
+          "evidence_urls": [
+            "https://metr.org/time-horizons/"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "1.5x AI R&D progress multiplier",
+            "deadline": "2026-06",
+            "observation_metric_id": "ai-rd-automation",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "Anthropic's own system card says acceleration is 'well short of a sustained, AI-attributable doubling of the overall pace'; the only RCT-grade measurement found a 19% SLOWDOWN (since methodologically disowned by METR itself, but never replaced with a positive result); self-reports historically overstate measured savings by ~40 percentage points."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "The R&D multiplier is assessed from a composite of lab self-reports and external evaluations rather than one standardized series."
+      }
+    },
+    {
+      "id": "altman-automated-researcher-2026-2028",
+      "source": "altman-2025",
+      "metric_id": "ai-rd-automation",
+      "claim_type": "milestone",
+      "ladder_rung": "r3-automated-researcher",
+      "quote": "We have set internal goals of having an automated AI research intern by September of 2026 running on hundreds of thousands of GPUs, and a true automated AI researcher by March of 2028.",
+      "quote_location": "Livestream + X post, 2025-10-28 (x.com/sama/status/1983584366547829073)",
+      "conditionality": "explicit self-hedge in the same statement: 'We may totally fail at this goal.' Lab-leader statement = intention data (bottom of the evidence hierarchy), scored with the corresponding discount.",
+      "predicted": {
+        "value": "automated AI research intern, then true automated AI researcher",
+        "by": "2026-09 / 2028-03"
+      },
+      "scorability": "context-only",
+      "resolution_history": [
+        {
+          "status": "pending",
+          "confidence": 35,
+          "as_of": "2026-07",
+          "evidence": "Six weeks from the intern deadline, no public demonstration exists. Strongest adjacent result is DeepMind's AlphaEvolve (novel matrix-multiplication algorithm — real but narrow-domain optimization, not open-ended research). METR's NanoGPT-speedrun analysis (Apr 2026): AI contributions real but 'none reached the deep or breakthrough end of the scale'.",
+          "counterargument": "An 'internal goal' can be declared met internally without public verification — this claim may resolve only on OpenAI's say-so, which the evidence hierarchy discounts to intention data either way.",
+          "evidence_kind": "lab-intention",
+          "evidence_urls": [
+            "https://metr.org/time-horizons/"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "context-only",
+            "target": "automated AI research intern, then true automated AI researcher",
+            "deadline": "2026-09 / 2028-03",
+            "observation_metric_id": "ai-rd-automation",
+            "measurement_relation": "context",
+            "comparison_rule": "Do not include this statement in aggregate status results.",
+            "uncertainty_drivers": [
+              "An 'internal goal' can be declared met internally without public verification — this claim may resolve only on OpenAI's say-so, which the evidence hierarchy discounts to intention data either way."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "context",
+        "note": "Preserved as dated context; excluded from status totals and charts."
+      }
+    },
+    {
+      "id": "davidson-takeoff-under-3yr",
+      "source": "davidson-2023",
+      "metric_id": "ai-rd-automation",
+      "claim_type": "milestone",
+      "quote": "the model’s median prediction is just 3 years. The simulation models the effect of both rising human investments and increasing AI automation",
+      "quote_location": "Primary Coefficient Giving report, Abstract, published 2023-06-27",
+      "conditionality": "model-conditional output; the author says his personal probabilities are 'still massively in flux.' The clock only starts at the 20%-automation trigger, which has not been reached.",
+      "predicted": {
+        "value": "20%-to-100% cognitive automation in 3 years (model median)",
+        "by": "conditional — clock starts at 20% automation"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "pending",
+          "confidence": 50,
+          "as_of": "2026-07",
+          "evidence": "The 20%-automation trigger has not been hit: heavy AI coding ASSISTANCE (~36% of Claude usage) is not task AUTOMATION, and Anthropic's own system card denies even a sustained 2x R&D speedup. Nothing to score yet — the claim defines what to watch.",
+          "counterargument": "If rung (d) resolves at 2x in the next year, Davidson's own feedback-loop math implies the trigger may be closer than the automation-fraction framing suggests — 'pending' could flip to live fast.",
+          "evidence_urls": [
+            "https://metr.org/time-horizons/"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "20%-to-100% cognitive automation in 3 years (model median)",
+            "deadline": "conditional — clock starts at 20% automation",
+            "observation_metric_id": "ai-rd-automation",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the general-economy automation path only as a proxy for AI R&D feedback; do not treat it as a direct AI-R&D speedup measurement.",
+            "uncertainty_drivers": [
+              "If rung (d) resolves at 2x in the next year, Davidson's own feedback-loop math implies the trigger may be closer than the automation-fraction framing suggests — 'pending' could flip to live fast."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "The published 20%-to-100% target concerns general-economy cognitive-task automation; it is relevant to but not a direct measurement of AI R&D feedback."
+      }
+    },
+    {
+      "id": "sa-cluster-1gw-2026",
+      "source": "aschenbrenner-2024",
+      "metric_id": "frontier-cluster-power",
+      "claim_type": "milestone",
+      "quote": "Year-by-year cluster table: ~100k H100e / ~100MW (2024) - ~1M / ~1GW (2026) - ~10M / ~10GW (2028) - ~100M / ~100GW (2030)",
+      "quote_location": "Ch IIIa, Racing to the Trillion-Dollar Cluster (back-of-the-envelope table)",
+      "conditionality": "explicitly illustrative ('back-of-the-envelope') — scored charitably against its 2026 rung as a round-number target.",
+      "predicted": {
+        "value": "~1M H100e / ~1 GW single training cluster",
+        "by": "2026-12",
+        "plot_value": 1
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "resolved-true",
+          "confidence": 60,
+          "as_of": "2026-07",
+          "evidence": "Epoch (Jul 24, 2026, satellite-verified): xAI Colossus 2 at 1,112k H100-equivalents and 946 MW IT power — roughly 1.1-1.4 GW on a facility-power basis — with Amazon-Anthropic New Carlisle at 910 MW right behind. The 2026 rung's both halves (~1M H100e, ~1 GW) are essentially exactly reality, with five months of the year to spare.",
+          "counterargument": "On the strict IT-power measure it is 5% short of the round 1 GW; the table was illustrative, so 'resolved-true' credits a charitable reading; and Epoch's own methodology notes actual consumption runs 60-80% of nameplate.",
+          "evidence_urls": [
+            "https://epoch.ai/data/ai-data-centers"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "~1M H100e / ~1 GW single training cluster",
+            "deadline": "2026-12",
+            "observation_metric_id": "frontier-cluster-power",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "On the strict IT-power measure it is 5% short of the round 1 GW; the table was illustrative, so 'resolved-true' credits a charitable reading; and Epoch's own methodology notes actual consumption runs 60-80% of nameplate."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "sa-cluster-10gw-2028",
+      "source": "aschenbrenner-2024",
+      "metric_id": "frontier-cluster-power",
+      "claim_type": "milestone",
+      "quote": "individual training clusters costing $100s of billions by 2028—clusters requiring power equivalent to a small/medium US state.",
+      "quote_location": "Ch IIIa, Racing to the Trillion-Dollar Cluster (the table's 2028 rung: ~10M H100e / ~10GW)",
+      "conditionality": "conditional-scenario; the 10 GW figure is the same back-of-envelope table's 2028 rung.",
+      "predicted": {
+        "value": "~10 GW single training cluster",
+        "by": "2028-12",
+        "plot_value": 10
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "pending",
+          "confidence": 50,
+          "as_of": "2026-07",
+          "evidence": "Requires ~10x from today's 0.95 GW in ~2.5 years (~2.5x/yr — above the 2.2x/yr historical growth of run power). Announced pipeline is directionally supportive (Stargate >9 GW by 2029, Hyperion 5 GW) but announced-to-energized has been running ~2x optimistic, and no single campus currently targets 10 GW by 2028.",
+          "counterargument": "The 2026 rung of the same table just resolved true on schedule — the table has a live track record, and multi-site distributed training could satisfy the spirit of the rung without one 10 GW campus.",
+          "evidence_urls": [
+            "https://epoch.ai/data/ai-data-centers"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "~10 GW single training cluster",
+            "deadline": "2028-12",
+            "observation_metric_id": "frontier-cluster-power",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "The 2026 rung of the same table just resolved true on schedule — the table has a live track record, and multi-site distributed training could satisfy the spirit of the rung without one 10 GW campus."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "epoch-4-16gw-run-2030",
+      "source": "epoch",
+      "metric_id": "frontier-cluster-power",
+      "claim_type": "milestone",
+      "quote": "the largest individual frontier training runs in 2030 will likely draw 4-16 gigawatts (GW) of power",
+      "quote_location": "How much power will frontier AI training demand in 2030? (Aug 2025), https://epoch.ai/blog/power-demands-of-frontier-ai-training — verified verbatim",
+      "conditionality": "trend projection off 'largest runs now exceeding 100 MW' (2025 baseline) growing 2.2-2.9x/yr; about training RUNS, not cluster nameplate.",
+      "predicted": {
+        "value": "largest single training run drawing 4-16 GW",
+        "by": "2030",
+        "plot_value": 10
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 55,
+          "as_of": "2026-07",
+          "evidence": "Largest verified cluster went ~0.3 GW (Sep 2025) to ~0.95 GW (Jul 2026) — about 3.9x annualized, running FASTER than the 2.2-2.9x/yr their projection assumes. Even at their slower assumed rate, compounding from ~0.95 GW clears the bottom of the 4-16 GW range well before 2030.",
+          "counterargument": "Scored on-track rather than ahead because the quantities differ: this series measures cluster IT power, while their forecast is the draw of a single training RUN, which uses only part of a cluster. The persistent ~2x announced-vs-verified gap and grid-interconnection queues could also stall the buildout before 2030.",
+          "evidence_urls": [
+            "https://epoch.ai/data/ai-data-centers"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "largest single training run drawing 4-16 GW",
+            "deadline": "2030",
+            "observation_metric_id": "frontier-cluster-power",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "Scored on-track rather than ahead because the quantities differ: this series measures cluster IT power, while their forecast is the draw of a single training RUN, which uses only part of a cluster. The persistent ~2x announced-vs-verified gap and grid-interconnection queues could also stall the buildout before 2030."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "ai2027-global-power-38gw-2026",
+      "source": "ai2027-apr2025",
+      "metric_id": "frontier-cluster-power",
+      "claim_type": "milestone",
+      "quote": "Global AI peak power: 38GW (2026); OpenBrain power requirement: 6GW peak",
+      "quote_location": "Compute forecast supplement, Key Metrics 2026 panel, https://ai-2027.com/research/compute-forecast — verified against the primary page on 2026-08-17",
+      "conditionality": "scenario narrative (global figure scored here; the 6GW leading-company figure is scored separately).",
+      "predicted": {
+        "value": "38 GW global AI power",
+        "by": "2026-12"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 50,
+          "as_of": "2026-07",
+          "evidence": "Two independent derivations put mid-2026 global AI IT power at ~40-44 GW (SemiAnalysis ~40 GW AI share, secondary-sourced; Epoch coverage 11.9 GW = 27% of global AI compute implying ~44 GW) — at or slightly above the scenario's 38 GW.",
+          "counterargument": "Both reality figures are derived, not measured: one is paywalled-secondhand, the other a naive extrapolation of Epoch's coverage share; IT-vs-facility-power ambiguity alone could swing the comparison by 30%+.",
+          "evidence_urls": [
+            "https://epoch.ai/data/ai-data-centers"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "38 GW global AI power",
+            "deadline": "2026-12",
+            "observation_metric_id": "frontier-cluster-power",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "Both reality figures are derived, not measured: one is paywalled-secondhand, the other a naive extrapolation of Epoch's coverage share; IT-vs-facility-power ambiguity alone could swing the comparison by 30%+."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "Global AI power is assessed against the largest energized frontier cluster; the tracked metric is narrower than the claim."
+      }
+    },
+    {
+      "id": "ai2027-openbrain-6gw-2026",
+      "source": "ai2027-apr2025",
+      "metric_id": "frontier-cluster-power",
+      "claim_type": "milestone",
+      "quote": "OpenBrain datacenter power: 6GW peak, 2026",
+      "quote_location": "Compute forecast supplement, https://ai-2027.com/research/compute-forecast",
+      "conditionality": "scenario narrative — 'OpenBrain' is the fictional leading company; scored against the actual leading AI company's dedicated power.",
+      "predicted": {
+        "value": "leading AI company at 6 GW peak power",
+        "by": "2026-12"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "behind",
+          "confidence": 45,
+          "as_of": "2026-07",
+          "evidence": "The largest verified single-company training cluster is ~0.95 GW (xAI); OpenAI's energized Stargate capacity is ~0.4-0.6 GW plus shares of Microsoft sites. No single company shows evidence of 6 GW of dedicated AI power in 2026 — the scenario's global figure is tracking but its concentration in one leader is not.",
+          "counterargument": "Company-wide fleets across all sites (especially OpenAI-on-Azure and Google's TPU estate) are poorly public — a leading company's TOTAL ai power could plausibly reach several GW; 'behind' rests on the verified-single-site lens.",
+          "evidence_urls": [
+            "https://epoch.ai/data/ai-data-centers"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "leading AI company at 6 GW peak power",
+            "deadline": "2026-12",
+            "observation_metric_id": "frontier-cluster-power",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "Company-wide fleets across all sites (especially OpenAI-on-Azure and Google's TPU estate) are poorly public — a leading company's TOTAL ai power could plausibly reach several GW; 'behind' rests on the verified-single-site lens."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "sa-ai-investment-1t-2027",
+      "source": "aschenbrenner-2024",
+      "metric_id": "hyperscaler-capex",
+      "claim_type": "milestone",
+      "quote": "total AI investment could be north of $1T annually by 2027.",
+      "quote_location": "Ch IIIa, Racing to the Trillion-Dollar Cluster",
+      "conditionality": "conditional-scenario ('could be') — 'total AI investment' is broader than hyperscaler capex; scored against capex plus credible non-hyperscaler AI investment.",
+      "predicted": {
+        "value": ">$1T/yr total AI investment",
+        "by": "2027"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 60,
+          "as_of": "2026-07",
+          "evidence": "Hyperscaler capex alone is guided to ~$780B for 2026 and forecast ~$1.1T for 2027 (Morgan Stanley); adding non-hyperscaler AI investment (xAI $18B+ Colossus 2 alone, sovereign programs, other labs) puts total 2027 AI investment north of $1T on nearly any accounting.",
+          "counterargument": "The marginal capex dollar is increasingly debt-funded — aggregate hyperscaler FCF hits zero ~Q3 2026 (Epoch) — so a credit-market turn could cut 2027 spending below guidance; and 'total AI investment' has no agreed measurement basis.",
+          "evidence_urls": [
+            "https://epoch.ai/data-insights/hyperscaler-capex-trend"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": ">$1T/yr total AI investment",
+            "deadline": "2027",
+            "observation_metric_id": "hyperscaler-capex",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "The marginal capex dollar is increasingly debt-funded — aggregate hyperscaler FCF hits zero ~Q3 2026 (Epoch) — so a credit-market turn could cut 2027 spending below guidance; and 'total AI investment' has no agreed measurement basis."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "Total AI investment is assessed using hyperscaler capital expenditure, which excludes some investment and includes some non-AI spending."
+      }
+    },
+    {
+      "id": "epoch-capex-770b-2026",
+      "source": "epoch",
+      "metric_id": "hyperscaler-capex",
+      "claim_type": "trajectory",
+      "quote": "If that trend held through 2026, Alphabet, Amazon, Meta, Microsoft, and Oracle would collectively spend $770 billion on capex this year.",
+      "quote_location": "Hyperscaler capex has quadrupled since GPT-4's release (Feb 2026), https://epoch.ai/data-insights/hyperscaler-capex-trend — verified verbatim",
+      "conditionality": "explicit naive trend extrapolation (72%/yr since Q2 2023), not a guidance-based forecast.",
+      "predicted": {
+        "value": "~$770B combined 2026 capex",
+        "by": "2026-12",
+        "plot_value": 192.5,
+        "plot_note": "Annual forecast totals are plotted as quarterly equivalents to match the measured series."
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 70,
+          "as_of": "2026-07",
+          "evidence": "Q1 2026 came in 'on trend' (Epoch's own words); company guidance now sums to ~$780B at midpoints (Alphabet $195-205B, Microsoft ~$190B CY, Amazon $200B, Meta $125-145B, Oracle FY26 $55.7B actual); Alphabet raised guidance again on Jul 22.",
+          "counterargument": "Guidance is not spend — H2 delivery constraints (components, power) have repeatedly shifted capex between quarters; and the cash-vs-finance-lease basis difference (~$90B in 2025) means 'hitting $770B' depends on whose accounting you use.",
+          "evidence_urls": [
+            "https://epoch.ai/data-insights/hyperscaler-capex-trend"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "~$770B combined 2026 capex",
+            "deadline": "2026-12",
+            "observation_metric_id": "hyperscaler-capex",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "Guidance is not spend — H2 delivery constraints (components, power) have repeatedly shifted capex between quarters; and the cash-vs-finance-lease basis difference (~$90B in 2025) means 'hitting $770B' depends on whose accounting you use."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "epoch-fcf-crossover-q3-2026",
+      "source": "epoch",
+      "metric_id": "hyperscaler-capex",
+      "claim_type": "milestone",
+      "quote": "aggregate free cash flow reaches zero around the third quarter of 2026",
+      "quote_location": "Hyperscaler Capex to Exceed Cash Flow by Q3 2026 (live Data Insight, snapshot Jun 16 2026), https://epoch.ai/data-insights/hyperscaler-capex-vs-cash-flow",
+      "conditionality": "model fit (capex ~70%/yr vs operating cash flow ~23%/yr, Q2 2023-Q1 2026); Epoch's own sensitivity note: fit-window choice moves the crossover between roughly Q2 and Q4 2026.",
+      "predicted": {
+        "value": "aggregate hyperscaler FCF = 0",
+        "by": "2026-Q3"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 65,
+          "as_of": "2026-07",
+          "evidence": "Oracle crossed and is deepening ($43B debt + $5B equity raised in FY26, ~$40B more planned); Alphabet — modeled not to cross until Q1 2027 — already posted a negative-FCF quarter (-$5.9B, Q2 2026). If anything the crossover is running early.",
+          "counterargument": "One negative Alphabet quarter could be timing/seasonality, and Amazon/Meta/Microsoft Q2 reports (Jul 29-30) are the real test — 'ahead' would be premature by one week.",
+          "evidence_urls": [
+            "https://epoch.ai/data-insights/hyperscaler-capex-trend"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "aggregate hyperscaler FCF = 0",
+            "deadline": "2026-Q3",
+            "observation_metric_id": "hyperscaler-capex",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "One negative Alphabet quarter could be timing/seasonality, and Amazon/Meta/Microsoft Q2 reports (Jul 29-30) are the real test — 'ahead' would be premature by one week."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "Free-cash-flow crossover is assessed alongside capex because spending drives it; capex is not itself free cash flow."
+      }
+    },
+    {
+      "id": "morgan-stanley-capex-805b-2026",
+      "source": "morgan-stanley",
+      "metric_id": "hyperscaler-capex",
+      "claim_type": "trajectory",
+      "quote": "$800 billion that we think is spent this year is set to be dwarfed by $1.1 trillion of estimated spending in 2027.",
+      "quote_location": "Morgan Stanley, AI Infrastructure Spending: Inelastic Demand and Rising Costs, May 2026 — verified against the primary transcript on 2026-08-17",
+      "conditionality": "sell-side AI-infrastructure spending forecast, repeatedly revised upward; its scope is broader than the four-company capex series used as the tracker's nearest public proxy.",
+      "predicted": {
+        "value": "$800B (2026), ~$1.1T (2027) AI infrastructure spending",
+        "by": "2026 / 2027",
+        "plot_value": 200,
+        "plot_note": "Annual forecast totals are plotted as quarterly equivalents to match the measured series."
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 55,
+          "as_of": "2026-07",
+          "evidence": "Company guidance (~$780B midpoint sum) sits close to Epoch's $770B extrapolation and Morgan Stanley's $800B forecast — within one guidance revision of the forecast, with guidance moving upward during 2026.",
+          "counterargument": "Morgan Stanley's AI-infrastructure spending scope is broader than the four-company capex proxy used here, so proximity between the figures is not a like-for-like confirmation.",
+          "evidence_urls": [
+            "https://epoch.ai/data-insights/hyperscaler-capex-trend"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "$800B (2026), ~$1.1T (2027) AI infrastructure spending",
+            "deadline": "2026 / 2027",
+            "observation_metric_id": "hyperscaler-capex",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "Morgan Stanley's AI-infrastructure spending scope is broader than the four-company capex proxy used here, so proximity between the figures is not a like-for-like confirmation."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "AI-specific capex is assessed using combined hyperscaler capex and guidance, a related but not identical quantity."
+      }
+    },
+    {
+      "id": "ai2027-compute-stock-100m-2027",
+      "source": "ai2027-apr2025",
+      "metric_id": "ai-compute-stock",
+      "claim_type": "trajectory",
+      "quote": "We expect the total stock of AI-relevant compute in the world will grow 2.25x per year over the next three years, from 10M H100e today to 100M H100e by the end of 2027.",
+      "quote_location": "Compute forecast supplement, https://ai-2027.com/research/compute-forecast — verified verbatim ('today' = Mar 2025)",
+      "conditionality": "firm trajectory forecast (their least scenario-dependent number); production table gives checkpoints Dec 2025 = 18M, Dec 2026 = 40M.",
+      "predicted": {
+        "value": "100M H100e global stock (2.25x/yr)",
+        "by": "2027-12",
+        "plot_value": 100
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 55,
+          "as_of": "2026-07",
+          "evidence": "Their implied mid-2026 checkpoint is ~28M H100e; extrapolating Epoch's Jan 2026 hard anchor (>15M) at Epoch's own 3.3-3.4x/yr gives ~27-28M for Jul 2026 — tracking almost exactly. Their Dec 2025 checkpoint (18M) also brackets Epoch's end-2025 figures (~16M deployed / ~20M sold).",
+          "counterargument": "The mid-2026 'reality' figure is an extrapolation from a six-month-old anchor, not a measurement; and supply-side constraints (HBM4 validation issues, CoWoS capacity tight through at least H1 2027) could bend the trajectory's back half below 2.25x/yr.",
+          "evidence_urls": [
+            "https://epoch.ai/data/ai-chip-sales"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "100M H100e global stock (2.25x/yr)",
+            "deadline": "2027-12",
+            "observation_metric_id": "ai-compute-stock",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "The mid-2026 'reality' figure is an extrapolation from a six-month-old anchor, not a measurement; and supply-side constraints (HBM4 validation issues, CoWoS capacity tight through at least H1 2027) could bend the trajectory's back half below 2.25x/yr."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "epoch-training-fleet-100m-2030",
+      "source": "epoch",
+      "metric_id": "ai-compute-stock",
+      "claim_type": "milestone",
+      "quote": "About 100M H100-equivalents could, in principle, be dedicated to training [by 2030] — range 20 million to 400 million H100-equivalents, corresponding to 1e29 to 5e30 FLOP.",
+      "quote_location": "Can AI scaling continue through 2030? (Aug 2024), https://epoch.ai/blog/can-ai-scaling-continue-through-2030",
+      "conditionality": "feasibility claim ('could, in principle') — the fleet existing is one half; DEDICATING it to a single training run is the binding half.",
+      "predicted": {
+        "value": "100M H100e dedicatable to training",
+        "by": "2030"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 60,
+          "as_of": "2026-07",
+          "evidence": "Global stock >15M H100e (Jan 2026) compounding at 3.3-3.4x/yr reaches 100M TOTAL around 2027-28 — the fleet will exist years ahead of their 2030 feasibility date on current trend.",
+          "counterargument": "The allocation half is moving the wrong way for this claim: training's share of compute use is falling (AI 2027's own model has the leading company's training share going 40% to 20%; Epoch's separate finding is that frontier labs don't use most AI compute at all), so a large fleet does not imply a large dedicated training fleet.",
+          "evidence_urls": [
+            "https://epoch.ai/data/ai-chip-sales"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "100M H100e dedicatable to training",
+            "deadline": "2030",
+            "observation_metric_id": "ai-compute-stock",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "The allocation half is moving the wrong way for this claim: training's share of compute use is falling (AI 2027's own model has the leading company's training share going 40% to 20%; Epoch's separate finding is that frontier labs don't use most AI compute at all), so a large fleet does not imply a large dedicated training fleet."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "Training-dedicated fleet capacity is assessed using total installed compute stock; the allocation share remains uncertain."
+      }
+    },
+    {
+      "id": "sa-gpu-fleets-2027",
+      "source": "aschenbrenner-2024",
+      "metric_id": "ai-compute-stock",
+      "claim_type": "milestone",
+      "quote": "Even by 2027... GPU fleets in the 10s of millions... 10 million+ A100-equivalents [training].",
+      "quote_location": "Ch II, From AGI to Superintelligence",
+      "conditionality": "conditional-scenario; note the unit — A100-equivalents, roughly 3x smaller than H100e — and the 'training' qualifier on the 10M+ figure.",
+      "predicted": {
+        "value": "fleets in the 10s of millions of GPUs; 10M+ A100e on training",
+        "by": "2027"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 60,
+          "as_of": "2026-07",
+          "evidence": "Global stock >15M H100e (Jan 2026) is roughly ~45M A100-equivalents — the fleet half of the claim is effectively already true a year early. The 10M+ A100e ON TRAINING half turns on allocation: ~30% of ~45M A100e would clear it, which is within plausible training shares.",
+          "counterargument": "The A100e-vs-H100e conversion (~3x) does heavy lifting, and no one publishes the training-dedicated share — scoring the training half 'resolved' would rest on an allocation assumption, not a measurement.",
+          "evidence_urls": [
+            "https://epoch.ai/data/ai-chip-sales"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "fleets in the 10s of millions of GPUs; 10M+ A100e on training",
+            "deadline": "2027",
+            "observation_metric_id": "ai-compute-stock",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "The A100e-vs-H100e conversion (~3x) does heavy lifting, and no one publishes the training-dedicated share — scoring the training half 'resolved' would rest on an allocation assumption, not a measurement."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "Total compute stock directly informs fleet scale, but the share allocated to training is inferred."
+      }
+    },
+    {
+      "id": "sa-bigtech-100b-revenue-mid-2026",
+      "source": "aschenbrenner-2024",
+      "metric_id": "frontier-lab-revenue",
+      "claim_type": "milestone",
+      "quote": "when will a big tech company (Google, Microsoft, Meta, etc.) hit a $100B revenue run rate from AI (products and API)?... Very naively extrapolating out the doubling every 6 months, supposing we hit a $10B revenue run rate in early 2025, suggests this would happen mid-2026.",
+      "quote_location": "Ch IIIa, Racing to the Trillion-Dollar Cluster",
+      "conditionality": "'Very naively extrapolating' is his own hedge. SCOPE: big-tech AI-specific product/API revenue, NOT frontier-lab total revenue — a different quantity from this metric's axis, so it is not plotted.",
+      "predicted": {
+        "value": "$100B AI run-rate at a big tech company",
+        "by": "2026-06"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "behind",
+          "confidence": 55,
+          "as_of": "2026-07",
+          "evidence": "No big tech company has disclosed a $100B AI-specific run-rate as of Jul 2026, and the doubling-every-6-months pace the extrapolation rests on has not held for this quantity.",
+          "counterargument": "Big tech does not break out AI-specific revenue in filings, so this is not cleanly falsifiable from public data — absence of disclosure is not proof the threshold was missed.",
+          "evidence_urls": [
+            "https://epoch.ai/data-insights/openai-revenue"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "$100B AI run-rate at a big tech company",
+            "deadline": "2026-06",
+            "observation_metric_id": "frontier-lab-revenue",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "Big tech does not break out AI-specific revenue in filings, so this is not cleanly falsifiable from public data — absence of disclosure is not proof the threshold was missed."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "A single big-tech revenue claim is assessed using combined frontier-lab revenue, a directional rather than like-for-like comparison."
+      }
+    },
+    {
+      "id": "ai2027-leading-co-revenue-45b-2026",
+      "source": "ai2027-apr2025",
+      "metric_id": "frontier-lab-revenue",
+      "claim_type": "trajectory",
+      "quote": "Leading-company annual revenue: $1B (2023), $4B (2024), $14B (2025), $45B (2026), $140B (2027)",
+      "quote_location": "Compute forecast supplement, financials table, https://ai-2027.com/research/compute-forecast",
+      "conditionality": "scenario narrative; their stated method is a short-term trend 'we expect to slow down gradually, but see sustained exponential growth through 2027'. NOTE: this forecasts ANNUAL REVENUE while this metric tracks RUN-RATE — different quantities, so it is not plotted on the axis.",
+      "predicted": {
+        "value": "$45B leading-company revenue (2026), $140B (2027)",
+        "by": "2026-12"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 50,
+          "as_of": "2026-07",
+          "evidence": "Tracked closely through 2025: 2024 actual $3.7B vs $4B forecast; 2025 actual $13.07B vs $14B forecast. For 2026 the answer turns on who counts as 'leading' — Anthropic's May run-rate of $47B already clears $45B, while OpenAI sits near $25B and flat.",
+          "counterargument": "Anthropic's $47B is a gross run-rate annualized from one month before hyperscaler retrocession; OpenAI's audited 2025 revenue was less than half its December run-rate, so comparing a run-rate against an annual-revenue forecast systematically flatters the forecast.",
+          "evidence_urls": [
+            "https://epoch.ai/data-insights/openai-revenue"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "$45B leading-company revenue (2026), $140B (2027)",
+            "deadline": "2026-12",
+            "observation_metric_id": "frontier-lab-revenue",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "Anthropic's $47B is a gross run-rate annualized from one month before hyperscaler retrocession; OpenAI's audited 2025 revenue was less than half its December run-rate, so comparing a run-rate against an annual-revenue forecast systematically flatters the forecast."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "Leading-company revenue is assessed using a combined frontier-lab revenue series, which is broader than the claim."
+      }
+    },
+    {
+      "id": "epoch-openai-revenue-3-2x",
+      "source": "epoch",
+      "metric_id": "frontier-lab-revenue",
+      "claim_type": "trajectory",
+      "quote": "OpenAI's annualized revenue has grown by 3.2x/year since 2024.",
+      "quote_location": "Epoch AI trends dashboard (updated Feb 5, 2026), https://epoch.ai/trends",
+      "conditionality": "a measured backward-looking rate stated as the current trend, not an explicit forward forecast; scored here as continuation of that rate.",
+      "predicted": {
+        "value": "~3.2x/yr OpenAI revenue growth continues",
+        "by": "2026-12"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "behind",
+          "confidence": 60,
+          "as_of": "2026-07",
+          "evidence": "OpenAI went $21.4B (Dec 2025) to $25B (Feb 2026) and has reportedly held roughly flat since — about 1.3x/yr. Sustaining 3.2x/yr from the $13B Aug-2025 anchor would put it near $38B by now.",
+          "counterargument": "Run-rate is one month annualized and the $25B figure is press-reported and never company-confirmed; a single large enterprise quarter or S-1-timed disclosure could reset the series sharply upward.",
+          "evidence_urls": [
+            "https://epoch.ai/data-insights/openai-revenue"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "~3.2x/yr OpenAI revenue growth continues",
+            "deadline": "2026-12",
+            "observation_metric_id": "frontier-lab-revenue",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "Run-rate is one month annualized and the $25B figure is press-reported and never company-confirmed; a single large enterprise quarter or S-1-timed disclosure could reset the series sharply upward."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "OpenAI revenue growth is assessed using a combined OpenAI-plus-Anthropic series, which can move for reasons unrelated to OpenAI."
+      }
+    },
+    {
+      "id": "sa-usg-agi-project-27-28",
+      "source": "aschenbrenner-2024",
+      "metric_id": "policy-events",
+      "claim_type": "milestone",
+      "quote": "The USG will wake from its slumber, and by 27/28 we'll get some form of government AGI project.",
+      "quote_location": "Ch IV, The Project",
+      "conditionality": "firm declarative scenario narration ('will'). Not a compute-threshold rule, so it is not plotted on this metric's axis.",
+      "predicted": {
+        "value": "Some form of US government AGI project",
+        "by": "2028-12"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "pending",
+          "confidence": 45,
+          "as_of": "2026-07",
+          "evidence": "The closest existing analog is the Genesis Mission EO (Nov 2025) — a DOE-led national compute and scientific-discovery platform explicitly framed as 'this generation's Manhattan Project'. Equity-stake proposals surfaced Jun-Jul 2026 (OpenAI floating ~5% to the USG; Sanders calling for 50%), none enacted.",
+          "counterargument": "Genesis is scoped to scientific discovery, not sovereign AGI development, and no classified AGI program, mass clearance hiring, or nationalization has been confirmed — this is trending toward the prediction rather than meeting it, and his window runs to end-2028.",
+          "evidence_urls": [
+            "https://www.federalregister.gov/developers/documentation/api/v1"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "Some form of US government AGI project",
+            "deadline": "2028-12",
+            "observation_metric_id": "policy-events",
+            "measurement_relation": "direct",
+            "comparison_rule": "Compare the published target and deadline with the metric observation and recorded milestone evidence.",
+            "uncertainty_drivers": [
+              "Genesis is scoped to scientific discovery, not sovereign AGI development, and no classified AGI program, mass clearance hiring, or nationalization has been confirmed — this is trending toward the prediction rather than meeting it, and his window runs to end-2028."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "direct",
+        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+      }
+    },
+    {
+      "id": "sa-washington-somber-26-27",
+      "source": "aschenbrenner-2024",
+      "metric_id": "policy-events",
+      "claim_type": "milestone",
+      "quote": "Somewhere around 26/27 or so, the mood in Washington will become somber.",
+      "quote_location": "Ch IV, The Project",
+      "conditionality": "firm in tone but a claim about MOOD, not an observable rule or event — inherently resistant to clean resolution. Recorded because it is dated and load-bearing in his narrative.",
+      "predicted": {
+        "value": "Washington turns somber on AI",
+        "by": "2027-12"
+      },
+      "scorability": "context-only",
+      "resolution_history": [
+        {
+          "status": "on-track",
+          "confidence": 40,
+          "as_of": "2026-07",
+          "evidence": "Federal engagement escalated sharply through 2025-26: the Genesis Mission EO, a Dec 2025 executive order litigating against state AI laws, and mid-2026 government equity-stake proposals in the leading labs.",
+          "counterargument": "The observable federal posture is deregulatory and accelerationist, not somber — the 2025 AI Action Plan is framed around winning a race, and the preemption EO exists to remove safety rules, not add them. A mood claim cannot be cleanly falsified either way.",
+          "evidence_urls": [
+            "https://www.federalregister.gov/developers/documentation/api/v1"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "context-only",
+            "target": "Washington turns somber on AI",
+            "deadline": "2027-12",
+            "observation_metric_id": "policy-events",
+            "measurement_relation": "context",
+            "comparison_rule": "Do not include this statement in aggregate status results.",
+            "uncertainty_drivers": [
+              "The observable federal posture is deregulatory and accelerationist, not somber — the 2025 AI Action Plan is framed around winning a race, and the preemption EO exists to remove safety rules, not add them. A mood claim cannot be cleanly falsified either way."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "context",
+        "note": "Preserved as dated context; excluded from status totals and charts."
+      }
+    },
+    {
+      "id": "sa-algo-secrets-leak-12-24mo",
+      "source": "aschenbrenner-2024",
+      "metric_id": "policy-events",
+      "claim_type": "milestone",
+      "quote": "in the next 12-24 months, we will leak key AGI breakthroughs to the CCP.",
+      "quote_location": "Ch IIIb, Lock Down the Labs",
+      "conditionality": "firm ('we will'), dated Jun 2024 so the window closed mid-2026. Not plotted: this is a security event, not a compute-threshold rule.",
+      "predicted": {
+        "value": "Key AGI algorithmic secrets leaked to the PRC",
+        "by": "2026-06"
+      },
+      "scorability": "scored",
+      "resolution_history": [
+        {
+          "status": "pending",
+          "confidence": 30,
+          "as_of": "2026-07",
+          "evidence": "No public reporting confirms a specific AGI-relevant breakthrough leak to China in the Jun 2024 - Jun 2026 window.",
+          "counterargument": "This claim may be permanently unresolvable in public: successful espionage is precisely what does not get reported, so absence of evidence is weak evidence here. It is kept at 'pending' rather than scored as missed for that reason.",
+          "evidence_urls": [
+            "https://www.federalregister.gov/developers/documentation/api/v1"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "Key AGI algorithmic secrets leaked to the PRC",
+            "deadline": "2026-06",
+            "observation_metric_id": "policy-events",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
+            "uncertainty_drivers": [
+              "This claim may be permanently unresolvable in public: successful espionage is precisely what does not get reported, so absence of evidence is weak evidence here. It is kept at 'pending' rather than scored as missed for that reason."
+            ]
+          }
+        }
+      ],
+      "measurement_relation": {
+        "type": "proxy",
+        "note": "A specific espionage milestone is attached to the policy-response area, whose numeric series does not directly measure algorithm leakage."
+      }
+    }
+  ],
+  "forecast_drift": [
+    {
+      "source": "Cotra — transformative AI",
+      "observations": [
+        {
+          "as_of": "2020-09",
+          "median_year": 2050,
+          "note": "Draft report on AI timelines: 'a median of ~2050 for transformative AI'"
+        },
+        {
+          "as_of": "2022-08",
+          "median_year": 2040,
+          "note": "Two-year update: 'A median of ~2040 (a decrease of ~10 years from 2050)'"
+        }
+      ]
+    },
+    {
+      "source": "Kokotajlo — AGI",
+      "observations": [
+        {
+          "as_of": "2025-04",
+          "median_year": 2028,
+          "note": "AI 2027 scenario vintage"
+        },
+        {
+          "as_of": "2026-01",
+          "median_year": 2030.95,
+          "note": "AI Futures update: 'Jan 2026: Dec 2030 (2030.95)' — 'things seem to be going somewhat slower than the AI 2027 scenario'"
+        }
+      ]
+    },
+    {
+      "source": "Lifland — AGI",
+      "observations": [
+        {
+          "as_of": "2025-04",
+          "median_year": 2031,
+          "note": "AI 2027 vintage (Automated Coder)"
+        },
+        {
+          "as_of": "2025-12",
+          "median_year": 2035,
+          "note": "Dec 2025 update: ~Jan 2035, 'about 1.5 years later than the model's output'"
+        }
+      ]
+    }
+  ]
+}

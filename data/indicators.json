@@ -1,0 +1,94 @@
+{
+  "indicators": [
+    {
+      "id": "metr-task-horizon",
+      "name": "METR task-completion time horizon",
+      "value": "~16+ hours (50%-success horizon, Claude Mythos Preview, measured May 2026, 95% CI 8.5-55 hrs); doubling time ~105 days on the latest fit vs ~7 months long-run. METR flags measurements above 16hrs as at the edge of what its current task suite can reliably resolve (only 5 of 228 suite tasks run that long).",
+      "trend": "Accelerating — doubling compressed from ~7 months to ~3.5 months in the most recent window, though the newest data point itself carries a wide confidence interval.",
+      "relevance": "Core empirical proxy for autonomous-agent capability growth; feeds takeoff-speed and capability-to-power.",
+      "source": "METR Time Horizons — https://metr.org/time-horizons/",
+      "cadence": "per frontier release"
+    },
+    {
+      "id": "metaculus-agi-timeline",
+      "name": "Metaculus AGI timelines",
+      "value": "General AI system: community median ~Jan 2033 (25% by 2029); weakly general AI publicly known: median ~June 2028",
+      "trend": "Drifted slightly later through late 2025, with renewed compression among forecasters updating in early 2026.",
+      "relevance": "Aggregated forecaster judgment on how much time exists for safety work.",
+      "source": "Metaculus — https://www.metaculus.com/questions/5121/when-will-the-first-general-ai-system-be-devised-tested-and-publicly-announced/",
+      "cadence": "continuous"
+    },
+    {
+      "id": "metaculus-ai-xrisk",
+      "name": "Metaculus conditional AI-catastrophe forecasts",
+      "value": "Community: 50% probability of AI catastrophe conditional on AGI arriving 2025-2030; 29% for 2030-2040; 12% for 2040-2060",
+      "trend": "Stable pattern: faster arrival is judged riskier across updates.",
+      "relevance": "Quantifies forecaster-estimated tail risk conditional on timelines.",
+      "source": "Metaculus — https://www.metaculus.com/questions/12840/existential-risk-from-agi-vs-agi-timelines/",
+      "cadence": "continuous"
+    },
+    {
+      "id": "expert-pdoom",
+      "name": "Expert P(doom) distribution",
+      "value": "Persistent bimodal split ('controllable tool' vs 'uncontrollable agent' camps); ~40% of broad expert pools put >10% on catastrophic outcomes; estimates span ~0% (LeCun) to 90%+ (Yudkowsky/Yampolskiy). A narrower Feb 2026 survey of 59 x-risk/AI-safety practitioners (a self-selected, higher-concern sample) found a modal estimate of 20-29% with a secondary cluster at 50%+.",
+      "trend": "No convergence in the broad expert pool; the AI-safety-insider subsample skews meaningfully higher, as expected from selection effects.",
+      "relevance": "Tracks whether expert opinion converges or stays polarized — polarization itself is the headline fact.",
+      "source": "'Why do Experts Disagree on Existential Risk and P(doom)?' — https://arxiv.org/abs/2502.14870 ; Summit on Existential Security survey — https://forum.effectivealtruism.org/posts/LxuKuQd69Qx5FKhNZ/survey-of-ai-safety-leaders-on-x-risk-agi-timelines-and",
+      "cadence": "annual"
+    },
+    {
+      "id": "epoch-training-compute",
+      "name": "Frontier training compute growth",
+      "value": "~4-5x per year since 2020; largest known run ~5e26 FLOP (Grok 4); models above 1e26 FLOP projected to grow from ~10 (2026) to ~80 (2028)",
+      "trend": "Still exponential, increasingly gated by power and chip supply rather than capital.",
+      "relevance": "Primary driver in fast-takeoff scenarios and the lever compute governance would pull.",
+      "source": "Epoch AI Trends — https://epoch.ai/trends",
+      "cadence": "per notable release"
+    },
+    {
+      "id": "epoch-algorithmic-efficiency",
+      "name": "Algorithmic efficiency gains",
+      "value": "Compute needed for fixed performance halves roughly every 8 months (90% CI 5-14); overall ~2-6x/year efficiency improvement",
+      "trend": "Steady software gains compounding on top of hardware scaling.",
+      "relevance": "If compute growth slows, this is the term that decides whether capability growth slows with it — feeds rsi-binding.",
+      "source": "Epoch AI — https://epoch.ai/blog/algorithmic-progress-in-language-models",
+      "cadence": "1-2x per year"
+    },
+    {
+      "id": "benchmark-saturation",
+      "name": "Frontier benchmark saturation",
+      "value": "ARC-AGI-2 top scores ~77-85% (not fully saturated as previously reported), which prompted ARC-AGI-3 (launched March 2026) where frontier models score under 1%; HLE top scores ~53-65% depending on tracker; FrontierMath ~52% (flat); SWE-bench Verified surged to ~95% (up from ~80%)",
+      "trend": "Benchmarks are saturating faster than successors can be designed — ARC-AGI-3 launched within months of ARC-AGI-2 and immediately reset frontier scores near zero; SWE-bench Verified moved from headroom to near-saturation within the same window.",
+      "relevance": "Saturation speed signals how fast capabilities outpace evaluation infrastructure.",
+      "source": "ARC Prize 2025 Results — https://arcprize.org/blog/arc-prize-2025-results-analysis ; Artificial Analysis HLE — https://artificialanalysis.ai/evaluations/humanitys-last-exam ; SWE-bench via llm-stats — https://llm-stats.com/benchmarks/swe-bench-verified",
+      "cadence": "per frontier release"
+    },
+    {
+      "id": "ai-incidents",
+      "name": "AI Incident Database yearly count",
+      "value": "362 incidents in 2025, up from 233 in 2024 (~55% YoY); generative AI ~58% of entries, deepfakes fastest-growing category",
+      "trend": "Incident counts growing faster than aggregate deployment.",
+      "relevance": "Realized, documented harms — the empirical counterpoint to purely speculative risk debates.",
+      "source": "AI Incident Database — https://incidentdatabase.ai/",
+      "cadence": "continuous"
+    },
+    {
+      "id": "safety-field-size",
+      "name": "AI safety field size and funding",
+      "value": "~1,100 FTEs total (~600 technical) across ~70 organizations (2025 estimate)",
+      "trend": "Growing steadily, still small relative to capabilities R&D spending.",
+      "relevance": "Whether the defense side scales anywhere near capabilities investment — feeds alignment-tractability.",
+      "source": "AI Safety Field Growth Analysis 2025 — https://forum.effectivealtruism.org/posts/7YDyziQxkWxbGmF3u/ai-safety-field-growth-analysis-2025",
+      "cadence": "annual"
+    },
+    {
+      "id": "datacenter-power",
+      "name": "Datacenter power constraint",
+      "value": "~12 GW new US capacity announced for 2026 but only ~5 GW under construction; transformer backlog ~5 years; global datacenter demand headed toward ~84 GW by 2027",
+      "trend": "Grid infrastructure now the binding constraint on frontier scaling, ahead of chips and capital.",
+      "relevance": "Tests the 'compute scaling continues unabated' assumption — feeds rsi-binding and takeoff-speed.",
+      "source": "Industry tracking — https://www.weforum.org/stories/2026/05/electricity-data-grid-connectivity-strategic-bottleneck-ai-transformation/",
+      "cadence": "quarterly"
+    }
+  ]
+}

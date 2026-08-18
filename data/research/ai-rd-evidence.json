@@ -1,0 +1,163 @@
+{
+  "schema_version": "1.0.0",
+  "registry_version": "2026-08-12",
+  "id": "ai-rd-evidence",
+  "question_id": "ai-rd-feedback",
+  "current_synthesis": {
+    "as_of": "2026-08-12",
+    "status": "partly-measured",
+    "reading": "Public evidence shows task-specific AI assistance inside AI development and credible adjacent evidence about software work, but it does not establish a reproducible, independently audited multiplier for frontier AI R&D or autonomous successor creation.",
+    "strongest_direct_evidence": "No independently verified direct evidence is registered. The closest direct-relevance observations are company disclosures of a reported 1% Gemini-training-time reduction and an internal AI-research demonstration; neither is independently audited.",
+    "strongest_counterevidence": "METR's randomized study of experienced open-source developers found a 19% slowdown with early-2025 tools. Its later experiment contained serious selection and measurement problems, so it neither cleanly reverses nor settles the earlier result.",
+    "measurement_gap": "There is no public longitudinal study that randomly varies frontier-agent access inside frontier AI R&D, measures quality-adjusted research output and model improvement, and separates human direction, compute, and agent contribution."
+  },
+  "observations": [
+    {
+      "id": "metr-rebench-2024",
+      "date": "2024-11-22",
+      "title": "RE-Bench: agent performance on ML research-engineering tasks",
+      "evidence_kind": "benchmark-evaluation",
+      "directness": "benchmark-only",
+      "direction": "capability-signal",
+      "finding": "METR evaluated agents on seven ML research-engineering tasks with 71 human-expert attempts. With an eight-hour budget, it reported Claude 3.5 Sonnet and o1-preview at roughly the 37th and 30th percentiles of the human attempts, respectively.",
+      "source_id": "metr-rebench-2024",
+      "source": {
+        "artifact": "Evaluating frontier AI R&D capabilities of language model agents against human experts",
+        "publisher": "METR",
+        "published_on": "2024-11-22",
+        "url": "https://metr.org/blog/2024-11-22-evaluating-r-d-capabilities-of-llms/"
+      },
+      "question_link": {
+        "question_id": "ai-rd-feedback",
+        "relation": "ai-rd-capability-proxy"
+      },
+      "caveat": "This is an R&D-task benchmark, not a measure of a lab's research velocity, model improvement, or autonomous successor creation. Results depend on a small task set, the tested models, scaffolds, and inference budget."
+    },
+    {
+      "id": "deepmind-alphaevolve-training-2025",
+      "date": "2025-05-14",
+      "title": "AlphaEvolve deployment in Gemini training optimization",
+      "evidence_kind": "company-deployment-report",
+      "directness": "company-report-with-direct-relevance",
+      "direction": "supports-limited",
+      "finding": "Google DeepMind reports that AlphaEvolve found a matrix-multiplication-kernel change that improved that kernel by 23% and reduced Gemini training time by 1%; it also reports reducing kernel-optimization work from weeks of expert effort to days of automated experiments.",
+      "source_id": "deepmind-alphaevolve-2025",
+      "source": {
+        "artifact": "AlphaEvolve: A Gemini-powered coding agent for designing advanced algorithms",
+        "publisher": "Google DeepMind",
+        "published_on": "2025-05-14",
+        "url": "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/"
+      },
+      "question_link": {
+        "question_id": "ai-rd-feedback",
+        "relation": "direct-ai-rd-contribution"
+      },
+      "caveat": "This is a company report about a narrow, evaluator-friendly optimization within one training stack. It is not independently audited, does not report a quality-adjusted R&D multiplier, and does not show autonomous research-direction setting or successor-model development."
+    },
+    {
+      "id": "metr-open-source-rct-2025",
+      "date": "2025-07-10",
+      "title": "Randomized study of early-2025 AI tools for experienced open-source developers",
+      "evidence_kind": "randomized-field-experiment",
+      "directness": "adjacent-causal-evidence",
+      "direction": "counterevidence",
+      "finding": "In a randomized study of 16 experienced developers working on 246 issues in repositories they knew well, METR found that allowing early-2025 AI tools made issue completion 19% slower (reported confidence interval: 2% to 39% slower).",
+      "source_id": "metr-dev-productivity-2025",
+      "source": {
+        "artifact": "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity",
+        "publisher": "METR",
+        "published_on": "2025-07-10",
+        "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
+      },
+      "question_link": {
+        "question_id": "ai-rd-feedback",
+        "relation": "adjacent-software-productivity"
+      },
+      "caveat": "This is the strongest public causal counterevidence, but it is adjacent to frontier AI R&D: it studied experienced contributors' real open-source work with tools available in early 2025. It does not estimate effects for current agents, unfamiliar codebases, or AI laboratories."
+    },
+    {
+      "id": "metr-open-source-rct-update-2026",
+      "date": "2026-02-24",
+      "title": "Later METR developer-productivity experiment becomes hard to interpret",
+      "evidence_kind": "randomized-field-experiment",
+      "directness": "adjacent-causal-evidence",
+      "direction": "mixed",
+      "finding": "METR's later raw estimates suggested an 18% speedup for returning participants and a 4% speedup for newly recruited participants, but METR judged selection into the study and time measurement during concurrent agent use severe enough that the experiment was only very weak evidence about the current effect.",
+      "source_id": "metr-dev-productivity-update-2026",
+      "source": {
+        "artifact": "We are Changing our Developer Productivity Experiment Design",
+        "publisher": "METR",
+        "published_on": "2026-02-24",
+        "url": "https://metr.org/blog/2026-02-24-uplift-update/"
+      },
+      "question_link": {
+        "question_id": "ai-rd-feedback",
+        "relation": "adjacent-software-productivity"
+      },
+      "caveat": "The later study is not clean confirmation of a speedup. Developers and high-uplift tasks increasingly opted out of AI-disallowed assignments, the pay rate changed, and time spent was unreliable when agents ran concurrently. It remains adjacent to AI R&D."
+    },
+    {
+      "id": "metr-technical-worker-survey-2026",
+      "date": "2026-05-11",
+      "title": "Technical workers' self-reported value and speed changes",
+      "evidence_kind": "technical-worker-survey",
+      "directness": "self-report-only",
+      "direction": "self-report-signal",
+      "finding": "METR surveyed 349 technical workers, including 71 researchers. Participants reported median AI-related changes in work value of 1.4x to 2x and a median speed change of 3x around March 2026.",
+      "source_id": "metr-technical-worker-survey-2026",
+      "source": {
+        "artifact": "Measuring the Self-Reported Impact of Early-2026 AI on Technical Worker Productivity",
+        "publisher": "METR",
+        "published_on": "2026-05-11",
+        "url": "https://metr.org/blog/2026-05-11-ai-usage-survey/"
+      },
+      "question_link": {
+        "question_id": "ai-rd-feedback",
+        "relation": "technical-worker-productivity"
+      },
+      "caveat": "These are respondents' counterfactual judgments, not observed productivity or AI R&D output. The source flags convenience sampling, selection bias, and prior evidence that developers can substantially overestimate AI time savings."
+    },
+    {
+      "id": "anthropic-internal-ai-development-2026",
+      "date": "2026-06-04",
+      "title": "Anthropic's internal AI-development operational report",
+      "evidence_kind": "company-operational-report",
+      "directness": "company-report-with-direct-relevance",
+      "direction": "supports-limited",
+      "finding": "Anthropic reports that, as of May 2026, Claude authored more than 80% of code merged into its codebase and that the typical engineer merged eight times as much code per day in Q2 2026 as in 2024. It also reports a March poll of 130 research-team employees with a median estimate of roughly 4x output with Mythos Preview.",
+      "source_id": "anthropic-rsi-2026",
+      "source": {
+        "artifact": "When AI builds itself",
+        "publisher": "Anthropic",
+        "published_on": "2026-06-04",
+        "url": "https://www.anthropic.com/institute/recursive-self-improvement"
+      },
+      "question_link": {
+        "question_id": "ai-rd-feedback",
+        "relation": "direct-ai-rd-contribution"
+      },
+      "caveat": "This is unaudited internal company data. Lines of code are not quality-adjusted productivity, the report gives no randomized counterfactual, and employee estimates are self-reports. It therefore cannot establish an R&D speedup multiplier or an autonomous feedback loop."
+    },
+    {
+      "id": "anthropic-autonomous-ai-safety-demo-2026",
+      "date": "2026-06-04",
+      "title": "Anthropic's constrained autonomous AI-safety research demonstration",
+      "evidence_kind": "company-autonomous-research-demo",
+      "directness": "company-reported-autonomous-demo",
+      "direction": "supports-limited",
+      "finding": "Anthropic reports that Claude-powered agents, given an open AI-safety research problem with a pre-specified floor and ceiling, recovered 97% of the measured gap over 800 cumulative agent-hours; two human researchers recovered about 23% over roughly a week. Anthropic says the agents proposed hypotheses, ran experiments, shared findings, and iterated.",
+      "source_id": "anthropic-rsi-2026",
+      "source": {
+        "artifact": "When AI builds itself",
+        "publisher": "Anthropic",
+        "published_on": "2026-06-04",
+        "url": "https://www.anthropic.com/institute/recursive-self-improvement"
+      },
+      "question_link": {
+        "question_id": "ai-rd-feedback",
+        "relation": "autonomous-ai-rd-demo"
+      },
+      "caveat": "This is a company-reported, bounded demonstration, not independently replicated frontier research. Humans selected the problem and scoring rubric, and Anthropic reports that the result did not transfer cleanly to production-scale models. It is not evidence of autonomous successor creation."
+    }
+  ]
+}
