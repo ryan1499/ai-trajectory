@@ -59,6 +59,14 @@ def esc(value: Any) -> str:
     return html.escape(str(value), quote=True)
 
 
+def disclosure_label(open_label: str, close_label: str, *, tag: str = "span") -> str:
+    """A label whose text follows the native open state of its parent details."""
+    return (
+        f'<{tag} data-disclosure-label data-open-label="{esc(open_label)}" '
+        f'data-close-label="{esc(close_label)}">{esc(open_label)}</{tag}>'
+    )
+
+
 def slug(value: Any) -> str:
     return re.sub(r"[^a-z0-9]+", "-", str(value).lower()).strip("-")
 
@@ -157,9 +165,26 @@ def validate_metrics(data: dict[str, Any], *, production: bool) -> None:
         if production:
             require_keys(
                 metric,
-                ("name", "what_it_measures", "source", "source_cadence", "measurement_notes", "last_checked"),
+                (
+                    "name",
+                    "chart_title",
+                    "chart_subtitle",
+                    "chart_series_label",
+                    "what_it_measures",
+                    "source",
+                    "source_cadence",
+                    "measurement_notes",
+                    "last_checked",
+                ),
                 path,
             )
+            for field, limit in (("chart_title", 90), ("chart_subtitle", 130), ("chart_series_label", 48)):
+                require(
+                    isinstance(metric[field], str) and metric[field].strip(),
+                    f"{path}.{field}",
+                    "must be a non-empty string",
+                )
+                require(len(metric[field]) <= limit, f"{path}.{field}", f"must be {limit} characters or fewer")
         if "source" in metric:
             require(isinstance(metric["source"], dict), f"{path}.source", "must be an object")
             require_keys(metric["source"], ("name", "url"), f"{path}.source")
@@ -720,6 +745,30 @@ def latest_observation(metric: dict[str, Any]) -> str:
     return f'<p class="latest-observation"><span>Latest recorded observation</span><strong>{esc(point.get("date"))} · {esc(note)}</strong>{observation_evidence(point)}</p>'
 
 
+def chart_heading(metric: dict[str, Any], *, milestone: bool = False) -> str:
+    """Give every visual a plain-language identity outside the scrollable SVG.
+
+    The SVG overline explains mark types; it cannot carry the user-facing name
+    because it scrolls out of view on narrow screens and previously reduced every
+    measurement to the same generic "reality + forecasts" label.
+    """
+    source = metric.get("source") or {}
+    source_link = ""
+    if source.get("url") and source.get("name"):
+        source_link = (
+            f'<a href="{esc(source["url"])}" target="_blank" rel="noopener noreferrer">'
+            f'{esc(source["name"])} ↗</a>'
+        )
+    kicker = "Forecast milestone timeline" if milestone else "Measured series and published forecasts"
+    return f"""
+      <header class="chart-heading">
+        <span>{esc(kicker)}</span>
+        <h4>{esc(metric.get('chart_title', metric.get('name', metric['id'])))}</h4>
+        <p>{esc(metric.get('chart_subtitle', metric.get('unit', '')))}{f' · Source: {source_link}' if source_link else ''}</p>
+      </header>
+    """
+
+
 def chart_data_table(
     metric: dict[str, Any],
     claims: list[dict[str, Any]],
@@ -751,7 +800,7 @@ def chart_data_table(
         return ""
     return f"""
       <details class="chart-data">
-        <summary>View chart as data</summary>
+        <summary>{disclosure_label("View chart as data", "Close chart data")}</summary>
         <div><table><thead><tr><th>Series</th><th>Date / deadline</th><th>Observation / target</th><th>State</th><th>Evidence</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
       </details>
     """
@@ -780,7 +829,7 @@ def milestone_timeline(
     def x_pos(value: float) -> float:
         return pad_l + (value - x_min) / (x_max - x_min) * (width - pad_l - pad_r)
 
-    parts = [f'<text x="{pad_l}" y="24" class="chart-overline">DATED MILESTONES &middot; NO NUMERIC SERIES</text>']
+    parts = [f'<text x="{pad_l}" y="24" class="chart-overline">FORECAST DATES &middot; CURRENT STATUS</text>']
     baseline = height - 30
     for position, label in time_ticks(x_min, x_max):
         x = x_pos(position)
@@ -813,17 +862,19 @@ def milestone_timeline(
             reality_drawn=0,
             marks_drawn=drawn,
         )
+    chart_name = str(metric.get("chart_title", metric.get("name", metric["id"])))
     aria = (
-        f"{drawn} dated milestone marker{'s' if drawn != 1 else ''} for "
-        f"{metric.get('name', metric['id'])}; no numeric series exists for this force."
+        f"{chart_name} {drawn} dated milestone marker{'s' if drawn != 1 else ''}; "
+        "no numeric series exists for this measurement."
     )
     return f"""
-      <div class="chart-scroll" tabindex="0" role="group" aria-label="{esc('Milestone timeline for ' + str(metric.get('name', metric['id'])) + ' (scrollable)')}">
+      {chart_heading(metric, milestone=True)}
+      <div class="chart-scroll" tabindex="0" role="group" aria-label="{esc('Milestone timeline: ' + chart_name + ' (scrollable)')}">
         <svg class="forecast-chart" viewBox="0 0 {width} {height}" role="img" aria-label="{esc(aria)}">
           {''.join(parts)}
         </svg>
       </div>
-      <details class="chart-explanation"><summary>How to read this chart</summary><p class="chart-note">{drawn} dated milestone{'s' if drawn != 1 else ''} drawn. This force has no numeric series — vertical position is ordering, not a value.</p></details>
+      <details class="chart-explanation"><summary>{disclosure_label("How to read this chart", "Close chart guide")}</summary><p class="chart-note">{drawn} dated milestone{'s' if drawn != 1 else ''} drawn. This force has no numeric series — vertical position is ordering, not a value.</p></details>
       {chart_data_table(metric, [claim for claim, _dates in dated], sources)}
     """
 
@@ -1141,11 +1192,12 @@ def forecast_chart(
     unit_label = (
         f'<text x="{PAD_L}" y="42" class="axis-label">{esc(axis_unit)}</text>' if axis_unit else ""
     )
-    overline = "REALITY + PUBLISHED FORECASTS" if marks_drawn else "REALITY &middot; NO FORECAST PLOTS ON THIS AXIS"
-    name = str(metric.get("name", metric["id"]))
+    overline = "OBSERVED SERIES + FORECAST TARGETS" if marks_drawn else "OBSERVED SERIES &middot; NO FORECAST TARGETS ON THIS AXIS"
+    metric_name = str(metric.get("name", metric["id"]))
+    name = str(metric.get("chart_title", metric_name))
     aria = (
-        f"Reality history and {marks_drawn} plotted forecast marker{'s' if marks_drawn != 1 else ''} "
-        f"({len(metric_claims)} claim{'s' if len(metric_claims) != 1 else ''} recorded) for {name}"
+        f"{name} Observed history and {marks_drawn} plotted forecast marker{'s' if marks_drawn != 1 else ''} "
+        f"({len(metric_claims)} claim{'s' if len(metric_claims) != 1 else ''} recorded) for {metric_name}"
         + (f", measured in {axis_unit}." if axis_unit else ".")
     )
     if stats is not None:
@@ -1158,6 +1210,7 @@ def forecast_chart(
             undated=undated_n,
         )
     return f"""
+      {chart_heading(metric)}
       <div class="chart-scroll" tabindex="0" role="group" aria-label="{esc(name + ' chart (scrollable)')}">
         <svg class="forecast-chart" viewBox="0 0 {CHART_W} {CHART_H}" role="img" aria-label="{esc(aria)}">
           <text x="{PAD_L}" y="24" class="chart-overline">{overline}</text>
@@ -1168,8 +1221,8 @@ def forecast_chart(
           {''.join(forecast_marks)}
         </svg>
       </div>
-      <div class="chart-legend"><span><i class="legend-line"></i>reality</span>{''.join(camps)}</div>
-      {f'<details class="chart-explanation"><summary>How to read this chart</summary><p class="chart-note">{esc((scale_note + " " + notes).strip())}</p></details>' if scale_note or notes else ''}
+      <div class="chart-legend"><span><i class="legend-line"></i>Observed · {esc(metric.get('chart_series_label', 'measured series'))}</span>{''.join(camps)}</div>
+      {f'<details class="chart-explanation"><summary>{disclosure_label("How to read this chart", "Close chart guide")}</summary><p class="chart-note">{esc((scale_note + " " + notes).strip())}</p></details>' if scale_note or notes else ''}
       {chart_data_table(metric, metric_claims, sources)}
     """
 
@@ -1203,7 +1256,8 @@ def claim_chip(claim: dict[str, Any], sources: dict[str, dict[str, Any]]) -> str
         f'<li><span>{esc(item["as_of"])}</span>{status_badge(item["status"])}<b>confidence {esc(confidence_number(item["confidence"]))}</b></li>'
         for item in claim["resolution_history"]
     )
-    history_html = f'<details class="resolution-history"><summary>{len(claim["resolution_history"])} recorded assessment{"s" if len(claim["resolution_history"]) != 1 else ""}</summary><ol>{history_items}</ol></details>'
+    history_count = f'{len(claim["resolution_history"])} recorded assessment{"s" if len(claim["resolution_history"]) != 1 else ""}'
+    history_html = f'<details class="resolution-history"><summary>{disclosure_label(history_count, "Close assessment history")}</summary><ol>{history_items}</ol></details>'
     evidence_links = "".join(
         f'<a href="{esc(url)}" target="_blank" rel="noopener noreferrer">Canonical measurement source {index + 1} ↗</a>'
         for index, url in enumerate(resolution["evidence_urls"])
@@ -1211,7 +1265,7 @@ def claim_chip(claim: dict[str, Any], sources: dict[str, dict[str, Any]]) -> str
     basis = resolution["assessment_basis"]
     basis_html = f"""
       <details class="assessment-basis">
-        <summary>How this status was assessed</summary>
+        <summary>{disclosure_label("How this status was assessed", "Close assessment basis")}</summary>
         <dl>
           <div><dt>Relationship to measurement</dt><dd>{esc(relation['note'])}</dd></div>
           <div><dt>Test</dt><dd>{esc(basis['comparison_rule'])}</dd></div>
@@ -1314,7 +1368,7 @@ def metric_notes(metric: dict[str, Any], inspection: str) -> str:
     rows.append(f"<div><dt>Canonical source</dt><dd>{source_link(metric.get('source'))}</dd></div>")
     return f"""
       <details class="metric-details">
-        <summary>Metric notes ⓘ</summary>
+        <summary>{disclosure_label("Metric notes ⓘ", "Close metric notes")}</summary>
         <dl class="metric-meta">{''.join(rows)}</dl>
       </details>
     """
@@ -1324,7 +1378,7 @@ def measurement_notes(metric: dict[str, Any]) -> str:
     notes = metric.get("measurement_notes") or "Measurement notes not yet populated."
     return f"""
       <details class="measurement-details">
-        <summary>Measurement notes ⓘ</summary>
+        <summary>{disclosure_label("Measurement notes ⓘ", "Close measurement notes")}</summary>
         <p class="measurement-notes">{esc(notes)}</p>
       </details>
     """
@@ -1436,8 +1490,9 @@ def metric_card(
     inspection = history_inspection(metric, scored_claims, stats)
     supporting_html = ""
     if supporting:
+        supporting_count = f'{len(supporting)} supporting signal{"s" if len(supporting) != 1 else ""}'
         supporting_html = (
-            f'<details class="supporting-details"><summary>{len(supporting)} supporting signal{"s" if len(supporting) != 1 else ""}</summary><div class="supporting-group">'
+            f'<details class="supporting-details"><summary>{disclosure_label(supporting_count, "Close supporting signals")}</summary><div class="supporting-group">'
             + "".join(supporting_card(item, item_claims, sources) for item, item_claims in supporting)
             + "</div></details>"
         )
@@ -1455,7 +1510,7 @@ def metric_card(
         {latest_observation(metric)}
         {freshness}
         <details class="metric-evidence">
-          <summary><span>Explore chart and {len(claims)} forecast{'s' if len(claims) != 1 else ''}</span><i>Open evidence</i></summary>
+          <summary><span>Explore chart and {len(claims)} forecast{'s' if len(claims) != 1 else ''}</span>{disclosure_label("Open evidence", "Close evidence", tag="i")}</summary>
           <div class="metric-evidence-body">
             <div class="history-shell">
               {chart}
@@ -1829,7 +1884,7 @@ def render_evidence_health(metrics_data: dict[str, Any], refresh_data: dict[str,
           <li class="health-row" data-review-health data-due="{due_on.isoformat()}" data-stale="{stale_on.isoformat()}">
             <span class="health-state health-{state}" data-health-label>{state}</span>
             <div><strong>{esc(metric.get('name', metric['id']))}</strong><span>reviewed {esc(review['checked_on'])} · observation {esc(observed)} · {esc(review['outcome'].replace('-', ' '))}</span></div>
-            <details><summary>Sources</summary><div>{sources}<p>{esc(review['note'])}</p></div></details>
+            <details><summary>{disclosure_label("Sources", "Close sources")}</summary><div>{sources}<p>{esc(review['note'])}</p></div></details>
           </li>
         """)
     return f"""
@@ -1842,7 +1897,7 @@ def render_evidence_health(metrics_data: dict[str, Any], refresh_data: dict[str,
           </div>
           <div class="health-totals" aria-label="Evidence review summary"><strong data-health-summary>{states['current']} current · {states['due']} due · {states['stale']} stale</strong><span>{source_lag} source-lagged streams · {point_linked}/{point_total} observation points link to a named series</span></div>
         </div>
-        <details class="health-details"><summary>Review all {len(rows)} evidence streams</summary><ol>{''.join(rows)}</ol></details>
+        <details class="health-details"><summary>{disclosure_label(f"Review all {len(rows)} evidence streams", "Close evidence review")}</summary><ol>{''.join(rows)}</ol></details>
       </section>
     """
 
@@ -2006,7 +2061,7 @@ def render_question_map(
             <p class="question-takeaway">{esc(question['summary'])}</p>
             <span class="coverage-state {status_class}">{esc(status_label)}</span>
             <details class="question-drawer">
-              <summary><span>Explore this question</span><span class="question-drawer-count">{len(lanes)} evidence lane{"s" if len(lanes) != 1 else ""}</span></summary>
+              <summary>{disclosure_label("Explore this question", "Close this question")}<span class="question-drawer-count">{len(lanes)} evidence lane{"s" if len(lanes) != 1 else ""}</span></summary>
               <div class="question-lanes">{''.join(lanes)}</div>
               <p class="disclosure-hint"><strong>What would change the picture:</strong> {esc(question['what_would_change'])}</p>
               {actions}
@@ -2022,7 +2077,7 @@ def render_question_map(
           <p>Start with the question, not the database. Each one keeps measured reality, named forecasts, and group expectations in separate lanes so unlike evidence never becomes a fake consensus.</p>
         </div>
         <details class="section-drawer question-index">
-          <summary><span>Browse the ten-question research map</span><i>Choose a question</i></summary>
+          <summary><span>Browse the ten-question research map</span>{disclosure_label("Open question map", "Close question map", tag="i")}</summary>
           <div class="question-map" data-progressive-questions data-guided-limit="4">
             <div class="question-map-header">
               <div><h3>Explore what matters to you.</h3><p>The four load-bearing questions appear first. Reveal the rest only when you want the full research map.</p></div>
@@ -2085,7 +2140,7 @@ def render_ai_rd_focus(research: dict[str, Any], claims_data: dict[str, Any]) ->
             <h3>Could near-total AI R&amp;D produce a 10× feedback loop within five years?</h3>
             <ul class="belief-bars">{bars}</ul>
             <p>{esc(snapshot['sample_or_participants'])} This is a dated judgment about a stronger scenario—not a current consensus or a measured probability of takeoff.</p>
-            <details><summary>Exact wording and method</summary><div><p>{esc(snapshot['question_text'])}</p><p>{esc(snapshot['aggregate_method'])}</p><a href="{esc(snapshot['source_url'])}" target="_blank" rel="noopener noreferrer">Original survey results ↗</a></div></details>
+            <details><summary>{disclosure_label("Exact wording and method", "Close wording and method")}</summary><div><p>{esc(snapshot['question_text'])}</p><p>{esc(snapshot['aggregate_method'])}</p><a href="{esc(snapshot['source_url'])}" target="_blank" rel="noopener noreferrer">Original survey results ↗</a></div></details>
           </article>
         """)
     return f"""
@@ -2102,12 +2157,12 @@ def render_ai_rd_focus(research: dict[str, Any], claims_data: dict[str, Any]) ->
         <div class="rd-path" aria-label="AI R&D evidence path"><span><b>1</b> AI performs research tasks</span><i>→</i><span><b>2</b> Researchers produce more</span><i>→</i><span><b>3</b> Better models arrive faster</span><i>→</i><span><b>4</b> The loop compounds</span></div>
         <p class="rd-path-note">Public evidence reaches parts of steps 1–2. It does not yet establish steps 3–4.</p>
         <details class="rd-explorer">
-          <summary><span>Explore observations, forecasts, and expert beliefs</span><i>Three separate evidence lanes</i></summary>
+          <summary><span>Explore observations, forecasts, and expert beliefs</span>{disclosure_label("Open evidence lanes", "Close evidence lanes", tag="i")}</summary>
           <div class="rd-columns">
             <div><div class="rd-column-heading"><span>Observed evidence</span><strong>Seven typed observations</strong></div><div class="rd-evidence-list">{''.join(evidence_cards)}</div></div>
             <div>
               <div class="rd-column-heading"><span>Named published views</span><strong>Forecasts stay attributed</strong></div><ol class="rd-claim-list">{claim_items}</ol>
-              <details class="section-drawer rd-forecast-drawer"><summary><span>Open the shared milestone ladder</span><i>Compare dates</i></summary><p>The detailed metric section keeps each author’s original definition, relation, status, evidence, and counterargument.</p><a href="#metric-ai-rd-automation">Explore the AI R&amp;D milestone evidence →</a></details>
+              <details class="section-drawer rd-forecast-drawer"><summary><span>Shared milestone ladder</span>{disclosure_label("Open date comparison", "Close date comparison", tag="i")}</summary><p>The detailed metric section keeps each author’s original definition, relation, status, evidence, and counterargument.</p><a href="#metric-ai-rd-automation">Explore the AI R&amp;D milestone evidence →</a></details>
               <div class="rd-column-heading rd-belief-heading"><span>Aggregate expectation</span><strong>A cohort, not a consensus</strong></div>{''.join(aggregate_cards) if aggregate_cards else '<p class="rd-empty">No exact aggregate snapshot has passed the inclusion rule.</p>'}
             </div>
           </div>
@@ -2207,7 +2262,7 @@ def render_open_questions(safety_data: dict[str, Any]) -> str:
                 <div><h4>What is still missing</h4><ul>{gaps}</ul></div>
                 <div><h4>What would change the reading</h4><ul>{movers}</ul></div>
               </div>
-              <details class="crux-evidence safety-evidence"><summary>Audit {len(question['evidence'])} source-backed evidence items</summary><ol>{evidence}</ol></details>
+              <details class="crux-evidence safety-evidence"><summary>{disclosure_label(f"Audit {len(question['evidence'])} source-backed evidence items", "Close evidence audit")}</summary><ol>{evidence}</ol></details>
               <p class="crux-review">No cross-question safety score is calculated. Each reading keeps its measurement setting, independence, coverage, and gaps visible.</p>
             </div>
           </details>
@@ -2222,7 +2277,7 @@ def render_open_questions(safety_data: dict[str, Any]) -> str:
         <div class="safety-chain" aria-label="Safety question framework"><span>Hazard</span><i>→</i><span>Exposure</span><i>→</i><span>Control</span><i>→</i><span>Governance</span><i>→</i><span>Outcomes</span><i>→</i><span>Resilience</span></div>
         <p class="safety-scope">Scope: {esc(safety_data['scope'])}</p>
         <details class="section-drawer">
-          <summary><span>Explore the eight safety questions</span><i>Open</i></summary>
+          <summary><span>Explore the eight safety questions</span>{disclosure_label("Open questions", "Close questions", tag="i")}</summary>
           <div class="crux-list">{''.join(cards)}</div>
         </details>
       </section>
@@ -2289,7 +2344,7 @@ def render_forecast_comparison(
               <div class="comparison-bar" aria-hidden="true">{bars}</div>
               <div class="comparison-counts">{count_labels}</div>
               <details class="comparison-claims">
-                <summary>Jump to individual claims</summary>
+                <summary>{disclosure_label("Jump to individual claims", "Close individual claims")}</summary>
                 <ul>{claim_links}</ul>
               </details>
             </td>
@@ -2448,7 +2503,7 @@ def render_drift(claims_data: dict[str, Any]) -> str:
         )
         chart = (
             f'<div class="chart-scroll" tabindex="0" role="group" aria-label="Forecast drift chart (scrollable)"><svg class="forecast-chart drift-chart" viewBox="0 0 {CHART_W} {CHART_H}" role="img" aria-label="Median AGI forecast over publication time">{"".join(marks)}</svg></div>'
-            f'<details class="chart-data"><summary>View chart as data</summary><div><table><thead><tr><th>Forecaster</th><th>Published</th><th>Median year</th><th>Milestone</th></tr></thead><tbody>{data_rows}</tbody></table></div></details>'
+            f'<details class="chart-data"><summary>{disclosure_label("View chart as data", "Close chart data")}</summary><div><table><thead><tr><th>Forecaster</th><th>Published</th><th>Median year</th><th>Milestone</th></tr></thead><tbody>{data_rows}</tbody></table></div></details>'
         )
     return f"""
       <section class="scoreboard-section drift-section research-layer" id="forecast-drift" aria-labelledby="drift-title">
@@ -2555,7 +2610,7 @@ def render_unmatched_supporting(
     return f"""
       <section class="scoreboard-section supporting-signals research-layer" aria-labelledby="supporting-title">
         <details class="supporting-drawer">
-          <summary><span>Supporting signals</span><strong id="supporting-title">Value and policy response</strong><i>Open</i></summary>
+          <summary><span>Supporting signals</span><strong id="supporting-title">Value and policy response</strong>{disclosure_label("Open signals", "Close signals", tag="i")}</summary>
           <div class="supporting-strip">{cards}</div>
         </details>
       </section>
@@ -2615,7 +2670,7 @@ def render_scoreboard(metrics_data: dict[str, Any], claims_data: dict[str, Any],
             <p>Every section begins with the plain-language takeaway and current observation. The charts put published predictions on the same axis as what actually happened.</p>
           </div>
           <details class="section-drawer evidence-drawer">
-            <summary><span>Browse the six core measurements</span><i>Open evidence</i></summary>
+            <summary><span>Browse the six core measurements</span>{disclosure_label("Open measurements", "Close measurements", tag="i")}</summary>
             <div class="metric-stack">{cards}</div>
           </details>
         </section>

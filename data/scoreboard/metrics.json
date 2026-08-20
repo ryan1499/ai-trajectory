@@ -47,6 +47,9 @@
     {
       "id": "metr-task-horizon",
       "name": "Autonomous task-completion time horizon",
+      "chart_title": "How long a task can a frontier model complete on its own?",
+      "chart_subtitle": "METR Time Horizons test · Human-expert task duration at 50% success",
+      "chart_series_label": "METR test results",
       "stage": "capability",
       "tier": 1,
       "verdict": "~16 hrs, doubling ~105 days; eval-gaming is the new caveat",
@@ -108,6 +111,9 @@
     {
       "id": "frontier-training-compute",
       "name": "Frontier training compute",
+      "chart_title": "How much compute is used to train frontier language models?",
+      "chart_subtitle": "Epoch top-five frontier trend estimate · Training FLOP",
+      "chart_series_label": "Epoch top-five trend",
       "stage": "compute",
       "tier": 1,
       "verdict": "Growing 5x/yr since 2020 — Epoch's series stops at Aug 2025",
@@ -201,6 +207,9 @@
     {
       "id": "largest-training-run-flop",
       "name": "Largest known single training run",
+      "chart_title": "How large is the biggest known AI training run?",
+      "chart_subtitle": "Epoch notable-model estimates · Total training FLOP",
+      "chart_series_label": "Epoch record-run estimates",
       "stage": "compute",
       "tier": 2,
       "verdict": "Record frozen since Jul 2025 — but newer models lack estimates",
@@ -270,6 +279,9 @@
     {
       "id": "algorithmic-efficiency",
       "name": "Algorithmic efficiency (pretraining)",
+      "chart_title": "How quickly is pretraining becoming more compute-efficient?",
+      "chart_subtitle": "Epoch fixed-capability estimate · Months for required compute to halve",
+      "chart_series_label": "Epoch efficiency estimate",
       "stage": "algorithms",
       "tier": 1,
       "verdict": "No formal re-measurement in 28 months",
@@ -323,6 +335,9 @@
     {
       "id": "ai-rd-automation",
       "name": "AI R&D automation",
+      "chart_title": "How close is AI to automating AI research?",
+      "chart_subtitle": "Five-rung milestone ladder · Dated forecasts, not a numeric time series",
+      "chart_series_label": "AI R&D milestones",
       "stage": "automation",
       "tier": 1,
       "verdict": "Contributions are visible; the R&D multiplier is unknown",
@@ -349,6 +364,9 @@
     {
       "id": "hyperscaler-capex",
       "name": "Hyperscaler capex",
+      "chart_title": "How much are five major AI infrastructure buyers spending?",
+      "chart_subtitle": "Alphabet, Amazon, Meta, Microsoft, and Oracle · Quarterly cash capex",
+      "chart_series_label": "Five-company capex",
       "stage": "capital",
       "tier": 1,
       "verdict": "All four forecasts on-track — the bulls’ best stage",
@@ -482,6 +500,9 @@
     {
       "id": "frontier-cluster-power",
       "name": "Frontier cluster power (announced vs energized)",
+      "chart_title": "How powerful is the largest AI computing cluster?",
+      "chart_subtitle": "IT power in gigawatts · Energized capacity versus public announcements",
+      "chart_series_label": "Energized cluster power",
       "stage": "physical",
       "tier": 1,
       "verdict": "Claims run 2-5x ahead of metal; the first cap-back just landed",
@@ -632,6 +653,9 @@
     {
       "id": "ai-compute-stock",
       "name": "Global AI compute stock",
+      "chart_title": "How much AI computing capacity is installed worldwide?",
+      "chart_subtitle": "Epoch estimate · Millions of H100-equivalent accelerators",
+      "chart_series_label": "Epoch compute-stock estimate",
       "stage": "compute",
       "tier": 2,
       "verdict": "Compounding on the bulls’ schedule while the record run sleeps",
@@ -684,6 +708,9 @@
     {
       "id": "frontier-lab-revenue",
       "name": "Frontier lab revenue run-rate",
+      "chart_title": "How much annualized revenue are OpenAI and Anthropic generating?",
+      "chart_subtitle": "Combined reported run-rate · USD billions",
+      "chart_series_label": "Reported lab revenue",
       "stage": "value",
       "tier": 2,
       "verdict": "OpenAI flat since February; Anthropic tripled to $47B",
@@ -754,6 +781,9 @@
     {
       "id": "policy-events",
       "name": "Binding compute-threshold rules in force",
+      "chart_title": "How many binding frontier-compute regimes are in force?",
+      "chart_subtitle": "United States, European Union, and state rules · Count of active regimes",
+      "chart_series_label": "Active binding regimes",
       "stage": "response",
       "tier": 2,
       "verdict": "Two regimes bind labs today; the US federal threshold died in 2025",

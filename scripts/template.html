@@ -165,6 +165,11 @@ h1 em{font-weight:500;color:var(--signal)}
 .freshness-line{margin:0;padding:10px 28px;border-bottom:1px solid var(--line-soft);font-size:.66rem;color:var(--ink-soft);background:var(--paper-raised)}
 
 .history-shell{position:relative;padding:24px 28px 18px;background:var(--paper-raised)}
+.chart-heading{display:grid;gap:5px;margin:0 0 17px;padding:0 2px 15px;border-bottom:1px solid var(--line-soft)}
+.chart-heading>span{font-family:var(--font-mono);font-size:.56rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--moss)}
+.chart-heading h4{max-width:34ch;margin:0;font-family:var(--font-display);font-size:clamp(1.4rem,2.6vw,2rem);font-weight:400;line-height:1.12;color:var(--ink)}
+.chart-heading p{margin:2px 0 0;font-size:.7rem;line-height:1.5;color:var(--ink-faint)}
+.chart-heading a{font-weight:600;color:var(--moss)}
 .chart-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;border:1px solid var(--line-soft);border-radius:9px;background:var(--paper);scrollbar-color:var(--moss) var(--paper-warm)}
 .forecast-chart{display:block;width:100%;min-width:650px;height:auto}
 .chart-overline,.axis-label,.forecast-label-text,.drift-label{font-family:'JetBrains Mono',monospace}
@@ -247,7 +252,7 @@ blockquote cite{display:block;margin-top:7px;font-family:'JetBrains Mono',monosp
 
 .supporting-group{padding:20px 28px 0;border-top:1px solid var(--line-soft);background:var(--paper-warm)}
 .supporting-card{margin:0 0 20px;border:1px solid var(--line);border-radius:8px;background:var(--paper-raised);overflow:hidden}
-.supporting-card>header{padding:18px 20px 10px}.supporting-card h4{font-size:1.08rem}.supporting-card .metric-verdict{font-size:.65rem}
+.supporting-card>header{padding:18px 20px 10px}.supporting-card>header h4{font-size:1.08rem}.supporting-card .metric-verdict{font-size:.65rem}
 .supporting-card .why-matters{font-size:.85rem;line-height:1.55;margin:9px 0 0}
 .supporting-current{display:flex;align-items:center;gap:8px;padding:8px 20px 14px}.supporting-current>strong{font-family:'JetBrains Mono',monospace;color:var(--moss-deep);font-size:1.05rem}
 .supporting-card .freshness-line{padding-inline:20px}.supporting-card .claim-chip-row{padding:12px 20px 18px}
@@ -287,7 +292,7 @@ footer{max-width:var(--max);margin:0 auto;padding:28px;border-top:2px solid var(
   .scoreboard-nav{justify-content:flex-start;overflow-x:auto;gap:20px;padding-inline:18px}.scoreboard-section{padding:54px 18px}.section-heading{margin-bottom:28px}
   .metric-stack{gap:24px}.metric-header{grid-template-columns:40px 1fr;padding:22px 18px 18px;gap:10px}.stage-number{font-size:1.35rem}
   .metric-summary{grid-template-columns:1fr}.metric-current{padding:17px 18px;min-height:0}.freshness-line{padding-inline:18px}
-  .history-shell{padding:18px 12px 14px}.forecast-chart{min-width:620px}.chart-scroll{border-radius:7px}
+  .history-shell{padding:18px 12px 14px}.chart-heading h4{font-size:1.5rem}.chart-heading p{font-size:.68rem}.forecast-chart{min-width:620px}.chart-scroll{border-radius:7px}
   .metric-details>summary,.measurement-details>summary{padding:12px 18px}.metric-meta{grid-template-columns:1fr;margin-inline:18px}.measurement-notes{margin-inline:18px}.claim-chip-row{padding-inline:18px}.claim-card{padding:17px 15px}.claim-prediction{grid-template-columns:1fr}.claim-prediction>div+div{border-left:0;border-top:1px solid var(--line-soft)}
   .resolution-pair{flex-direction:column}.resolution-pair>div{flex:none}.resolution-copy{grid-template-columns:1fr}
   .supporting-strip{grid-template-columns:1fr}.rung-details>summary{grid-template-columns:12px 50px 1fr;gap:7px}
@@ -779,6 +784,108 @@ html[data-view="research"] .question-map .question-card[data-research-only="true
   .rd-focus{padding-inline:18px}.rd-focus-heading,.rd-columns{grid-template-columns:1fr;gap:28px}.rd-summary-grid{grid-template-columns:1fr}.rd-path{grid-template-columns:1fr}.rd-path>i{transform:rotate(90deg);justify-self:start;margin-left:7px}.rd-explorer>summary{align-items:flex-start;padding:16px}.rd-explorer>summary span{font-size:1.2rem}.rd-explorer>summary i{max-width:110px;text-align:right}.rd-explorer .rd-columns{padding:16px}.rd-evidence-card>summary{grid-template-columns:1fr}.rd-evidence-card>summary>span,.rd-evidence-card>summary>strong,.rd-evidence-card>summary>i{grid-column:1}.rd-evidence-card>summary>i{justify-self:start}.rd-evidence-body{padding-left:2px}.rd-claim-list a{grid-template-columns:1fr auto}.rd-claim-list a>span{grid-column:1/-1}
   .claim-chip>summary,.health-row details>summary,.safety-evidence>summary,.comparison-claims>summary,.chart-explanation>summary,.chart-data>summary,.resolution-history>summary,.assessment-basis>summary{min-height:44px}
 }
+
+/* Readable type scale. The dashboard previously treated 9–11px text as normal
+   metadata, which made the full-width desktop view look like a zoomed-out
+   wireframe. Keep hierarchy through weight, case, and spacing—not tiny type. */
+:root{
+  --max:1280px;
+  --text-meta:.72rem;
+  --text-small:.82rem;
+  --text-body:.95rem;
+}
+html{font-size:clamp(17px,calc(16.6px + .08vw),18px)}
+body{font-size:1rem;line-height:1.6}
+small{font-size:.72rem}
+
+.hero-mast,.scoreboard-nav,.view-switch button,.eyebrow,.model-heading span,.model-step,
+.model-question span,.hero-pulse,.section-heading>span,.overview-number,.overview-signal span,
+.checkpoint-card>div>span,.checkpoint-card>a,.reading-guide,.health-details>summary,.health-state,
+.health-row details>summary,.crux-summary-lean>i,.crux-poles span,.crux-synthesis>span,
+.crux-related>span,.crux-lean-heading>span,.crux-lean-heading>i,.crux-beam-labels b,
+.crux-columns h4,.crux-evidence>summary,.crux-evidence li>span,.crux-review,.safety-chain,
+.safety-summary-title>i,.safety-summary-viz>i,.safety-reading>span,.safety-domain>span,
+.safety-quality dt,.safety-method-grid h4,.status-key>span,.comparison-table thead th,
+.comparison-counts,.comparison-claims>summary,.comparison-claims a>span:first-child,.stage-label,
+.data-label,.confidence-tag,.vintage-tag,.freshness-line,.claim-chip>summary,.epistemic-chip,
+.relation-marker,.resolution-history>summary,.resolution-history li,.evidence-links a,
+.latest-observation>span,.latest-observation>a,.provenance-gap,.assessment-basis>summary,
+.metric-evidence>summary,.chart-explanation>summary,.chart-data>summary,.supporting-details>summary,
+.chart-data th,.supporting-drawer>summary span,.supporting-drawer>summary i,.rung-details>summary,
+.chart-heading>span,.chart-legend,.metric-details>summary,.measurement-details>summary,
+.metric-meta dt,.measurement-notes strong,.resolution-copy strong,.status-badge,.camp-chip,
+.claim-prediction dt,.build-provenance,footer,.checkpoint-more,.question-map-key,
+.question-card .question-number,.coverage-state,.question-drawer>summary,.lane h4,.lane .lane-label,
+.question-actions a,.question-actions button,.question-map-more,.section-drawer>summary i,
+.rd-reading>span,.rd-summary-grid span,.rd-column-heading span,.rd-aggregate-card>span,
+.rd-evidence-card>summary span,.rd-evidence-card>summary i,.rd-tags span,.rd-claim-list span,
+.rd-claim-list i,.rd-aggregate-card summary,.rd-explorer>summary i{
+  font-size:var(--text-meta)
+}
+
+.wordmark{font-size:.84rem}
+.scoreboard-nav{justify-content:flex-start;max-width:100vw;overflow-x:auto;scrollbar-width:none}
+.scoreboard-nav::-webkit-scrollbar{display:none}
+.hero-lede{font-size:clamp(1.12rem,1.5vw,1.28rem)}
+.hero-actions a{font-size:.96rem}.hero-scope{font-size:.86rem}
+.model-flow strong{font-size:1.02rem}.model-flow p,.model-question{font-size:.9rem}
+.section-heading p,.methodology-prose p,.methodology-prose li{font-size:1rem;line-height:1.65}
+.overview-card h3{font-size:2rem}.overview-card>p{font-size:.95rem;line-height:1.62}
+.overview-signal{grid-template-columns:104px 1fr 18px}
+.overview-signal strong{font-size:.84rem;line-height:1.5}
+.checkpoint-card h3{font-size:1.35rem}.checkpoint-card p{font-size:.84rem;line-height:1.55}
+.health-row>div>strong{font-size:.9rem}.health-row>div>span{font-size:.76rem}
+.health-row details>div{font-size:.78rem}.health-totals span{font-size:.82rem}
+
+.crux-full-question{font-size:1.32rem}.crux-poles p{font-size:.88rem}
+.crux-beam-labels{font-size:.78rem}.crux-lean-panel>p{font-size:.8rem}
+.crux-synthesis p{font-size:.95rem}.crux-columns li{font-size:.86rem}
+.crux-evidence li{font-size:.84rem}.crux-related a{font-size:.82rem}
+.safety-scope{font-size:.8rem}.safety-reading>strong{font-size:1.38rem}
+.domain-state{font-size:.72rem}.safety-domain>p{font-size:.84rem;line-height:1.5}
+.safety-exposure-ladder p{font-size:.78rem}.safety-mini-ledger span{font-size:.65rem}
+.safety-incident-ledger span,.safety-incident-ledger small{font-size:.66rem}
+.safety-incident-ledger strong,.safety-incident-ledger p{font-size:.84rem}
+.safety-viz-note{font-size:.78rem}.safety-quality dd{font-size:.82rem}
+.safety-method-grid li{font-size:.82rem}.safety-evidence li>a{font-size:.72rem}
+
+.comparison-table tbody th>span{font-size:.8rem}.comparison-coverage>strong{font-size:.9rem}
+.comparison-coverage>span{font-size:.8rem}.comparison-claims a>strong{font-size:.8rem}
+.comparison-note,.comparison-unpopulated .comparison-reading p{font-size:.82rem}
+.metric-verdict{font-size:.82rem}.why-matters{font-size:1rem}
+.metric-current>strong.long{font-size:1.05rem}.latest-observation{font-size:.8rem}
+.claim-topline,.claim-topline a,blockquote cite,.resolution-pair,.resolution-pair strong,
+.discount-marker,.rd-path b,.safety-exposure-ladder li>span,.safety-mini-ledger span,
+.safety-incident-ledger span,.safety-incident-ledger small{font-size:.72rem}
+.assessment-basis dl>div{font-size:.8rem}.chart-heading p{font-size:.84rem}
+.chart-note{font-size:.78rem;line-height:1.55}.chart-data table{font-size:.8rem}
+.metric-meta dd{font-size:.92rem}.measurement-notes{font-size:.96rem;line-height:1.6}
+.rung-details>summary strong{font-size:1rem}.supporting-card .metric-verdict{font-size:.78rem}
+.supporting-card .why-matters{font-size:.94rem}
+
+.disclosure-hint{font-size:.82rem}.question-map-header p{font-size:.95rem}
+.question-card>.question-takeaway{font-size:.95rem}.question-drawer>summary .question-drawer-count{font-size:.72rem}
+.lane p,.lane a,.lane li{font-size:.84rem}.section-drawer>summary span{font-size:1.55rem}
+.rd-reading p,.rd-summary-grid p,.rd-path span,.rd-column-heading strong,
+.rd-evidence-card>summary strong,.rd-evidence-body>p,.rd-claim-list strong,
+.rd-forecast-drawer>p,.rd-forecast-drawer>a,.rd-aggregate-card>p,
+.rd-aggregate-card details p{font-size:.84rem}
+.rd-path-note,.rd-evidence-body aside p,.rd-evidence-body>a,.rd-aggregate-card details a{font-size:.76rem}
+.rd-evidence-body aside strong,.belief-bars span,.belief-bars strong{font-size:.72rem}
+
+.chart-overline,.forecast-label-text,.level-label,.timeline-status{font-size:12px}
+.axis-label,.timeline-source,.drift-label{font-size:13px}
+
+@media (max-width:900px){:root{--max:1160px}}
+@media (max-width:640px){
+  html{font-size:17px}
+  .scoreboard-nav{font-size:.72rem}
+  .overview-card h3{font-size:1.85rem}
+  .overview-signal{grid-template-columns:96px 1fr 14px}
+  .chart-heading p{font-size:.82rem}
+  .safety-scope{font-size:.78rem}
+  .question-drawer>summary,.question-drawer>summary .question-drawer-count{font-size:.72rem}
+}
 </style>
 </head>
 <body>
@@ -885,11 +992,29 @@ html[data-view="research"] .question-map .question-card[data-research-only="true
     control.textContent = expanded ? 'Show fewer questions' : 'Show ' + totalExtra + ' more questions';
   }
 
+  function syncDisclosureLabel(details) {
+    var summary = details.firstElementChild;
+    if (!summary || summary.tagName !== 'SUMMARY') return;
+    var label = summary.querySelector('[data-disclosure-label]');
+    if (!label) return;
+    label.textContent = details.open ? label.dataset.closeLabel : label.dataset.openLabel;
+  }
+
+  function setDisclosureLabels() {
+    document.querySelectorAll('details').forEach(function (details) {
+      syncDisclosureLabel(details);
+      if (details.dataset.disclosureReady === 'true') return;
+      details.dataset.disclosureReady = 'true';
+      details.addEventListener('toggle', function () { syncDisclosureLabel(details); });
+    });
+  }
+
   function syncDisclosureState() {
     setCheckpointControl();
     syncCheckpointControl();
     setQuestionMaps();
     document.querySelectorAll('[data-progressive-questions]').forEach(syncQuestionMap);
+    setDisclosureLabels();
   }
 
   function revealLinkedDisclosure() {
