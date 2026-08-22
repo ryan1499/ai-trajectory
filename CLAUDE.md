@@ -25,6 +25,22 @@ safety questions separate from measurement. Not a doom-o-meter and not a single 
 
 The build validates before it renders: invalid data fails rather than producing a wrong page.
 
+## Privacy is a hard release requirement
+
+- **Never use, print, save, or commit a personal email address.** This includes Git configuration,
+  commit metadata, documentation, issue templates, test fixtures, command output, and CI logs.
+- Every commit made from this checkout must use a GitHub noreply identity ending in
+  `@users.noreply.github.com`. Before creating a commit, run
+  `scripts/setup_privacy.sh <github-username>` once per clone; it configures only local Git settings
+  and the committed pre-commit hook. Do not copy a private address into that command or into any
+  repository file.
+- The pre-commit hook checks the configured identity, staged additions, and every tracked text file.
+  CI repeats the tracked-content scan and checks every author and committer identity in the public
+  checked-out ref's complete ancestry. Both tools intentionally report only pass/fail and counts;
+  do not modify them to echo addresses for debugging.
+- If a check fails, stop. Fix the identity or remove the sensitive staged content without exposing it
+  in logs, commit messages, or issue discussion. There is no bypass for public-repository work.
+
 ## Data semantics
 
 - `metric.current` is the headline reading and `metric.history` is the measured series, oldest

@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# This hook intentionally emits only redacted counts/statuses.
+exec python3 scripts/privacy_check.py --config --staged --tracked

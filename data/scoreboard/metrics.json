@@ -296,7 +296,7 @@
       "measurement_notes": "The 8-month figure is pretraining-only and backward-looking (2012-2023 fit). Epoch's own decomposition: 60-95% of capability gains came from compute and data, algorithms only 5-40%. A Nov 2025 MIT preprint attributes ~91% of measured efficiency gains to two one-off scale-dependent transitions (LSTM-to-Transformer, Kaplan-to-Chinchilla), cautioning against treating the rate as a steady state. The post-training era complicates measurement further: Epoch (Aug 2025) estimates reasoning-model RL delivered a ~10x compute-equivalent gain (range 1x-100x) in verifiable domains — not captured by the pretraining halving rate. Epoch's live trends dashboard shows ~7.6-month halving, but its provenance/update cadence is undocumented; the Mar 2024 paper remains the citable number.",
       "current": {
         "value": 8,
-        "display": "compute for fixed capability halves every ~8 months (95% CI 5-14) — estimate is 28 months old",
+        "display": "Fixed-capability compute halves ~every 8 months (5-14 mo CI)",
         "as_of": "2024-03",
         "source_note": "Epoch: 'the level of compute needed to achieve a given level of performance has halved roughly every 8 months, with a 95% confidence interval of 5 to 14 months.' Vintage displayed deliberately — no formal re-measurement exists.",
         "confidence": "medium",
@@ -340,7 +340,7 @@
       "chart_series_label": "AI R&D milestones",
       "stage": "automation",
       "tier": 1,
-      "verdict": "Contributions are visible; the R&D multiplier is unknown",
+      "verdict": "Editorial synthesis: contributions visible; multiplier unknown",
       "why_it_matters": "The hinge of the feedback loop. If AI meaningfully speeds up the research that builds better AI, progress compounds on itself. Every fast-takeoff argument runs through this stage, which is why we track it despite it being the hardest thing here to measure.",
       "unit": "milestone ladder resolution state (not a numeric series)",
       "what_it_measures": "Whether AI is beginning to automate the research that improves AI — the hinge variable in every published takeoff model. Scored as resolution states on the 5-rung merged milestone ladder, with METR research-task horizons and RE-Bench-class evals as quantitative proxies.",
@@ -352,7 +352,7 @@
       "measurement_notes": "This is the hardest Tier 1 variable to measure, but every takeoff model turns on it. Evidence hierarchy applies hard here: lab-leader statements are intention data and self-reported speedups receive a confidence discount. METR's early-2025 randomized study found a 19% slowdown in adjacent open-source work; its later experiment was inconclusive because of selection and measurement limits. The field still has no clean causal estimate of frontier AI-R&D acceleration.",
       "current": {
         "value": "0 of 5 rungs resolved",
-        "display": "No independently audited frontier AI-R&D multiplier; task-specific contributions and company reports are visible",
+        "display": "No audited frontier R&D multiplier; only limited evidence",
         "as_of": "2026-07",
         "source_note": "Rung (a) proxy: METR 50%-horizon ~16h vs ~160h+ needed for a 1-month task. Rung (d): AI 2027's own authors grade their R&D-uplift prediction 'behind pace' (aggregate quantitative pace ~65-75% of scenario).",
         "confidence": "low",
@@ -381,7 +381,7 @@
       "measurement_notes": "Total capex is NOT AI-specific — no company breaks it out; third-party estimates of the AI share range 40-75% (JPMorgan ~70% for 2025; Dell'Oro: accelerator silicon alone is ~1/3) depending on definition. Series here is cash 'purchases of property and equipment' EXCLUDING finance leases — earnings-call figures often include them (this basis gap largely explains ~$411B vs Epoch's ~$500B for 2025). Oracle adds ~$248B of off-balance-sheet lease commitments and reports on a May-end fiscal year; Microsoft on June-end — quarterly alignment is by calendar quarter of period end. History values are aggregator-compiled (stockanalysis.com), spot-checked against press figures, not line-by-line 10-Q reconciled.",
       "current": {
         "value": 148.4,
-        "display": "$148.4B in Q1 2026 (~$594B annualized); 2026 guidance sums to ~$780B; Q2 partials point up (Alphabet $44.9B, +26% QoQ)",
+        "display": "$148.4B in Q1 2026; ~$780B combined 2026 guidance",
         "as_of": "2026-Q1",
         "source_note": "All five reported for Q1 2026. Q2 so far: Alphabet $44.9B (Jul 22, guidance raised to $195-205B), Oracle FQ4 $15.9B; Amazon/Meta/Microsoft report Jul 29-30. Alphabet posted a negative-FCF quarter (-$5.9B) — capex now outrunning operating cash flow there too.",
         "confidence": "high",
@@ -517,7 +517,7 @@
       "measurement_notes": "Three power measures get conflated constantly: IT power (compute equipment draw — used here), facility power (20-50% higher, cooling/overhead), and grid-connection capacity. Operator claims run ~2x above third-party verification (Musk claimed Colossus 2 at '2 GW' in Jan 2026; satellite analysis then showed ~350 MW cooling; Epoch measures 946 MW in Jul 2026). Announced figures: sum of top-5 campus targets ~20-25 GW (Stargate >9 GW by 2029, Meta Hyperion 5 GW, Rainier ~2.2-4.6 GW (sources conflict), Colossus 2 target 2 GW, Prometheus >=1 GW). GPT-4-era baseline point is an unverified secondary estimate. Training-vs-inference cluster labels are operator-reported snapshots. ANNOUNCED SERIES: operator claims plotted at the date each was made, with a bar running to the delivery date promised for it; an X marks an announcement that was cancelled. Operators almost never say whether a figure is IT or facility power, so every announced figure here is UNSPECIFIED on that axis and is not strictly like-for-like with the measured IT-power line. Sources are Musk's X posts, Zuckerberg's Threads posts, and company newsroom releases; xAI has never published a datacenter power figure on its own site. Deliberately EXCLUDED: Stargate's ~10 GW is a multi-site PROGRAM total, not a campus. Project Rainier's widely-cited 2.2 GW traces to Indiana state officials and site plans — neither AWS nor Anthropic has ever attached a GW figure to that campus. Microsoft has never published a power figure for either Fairwater site; the circulating 3.3 GW is Epoch's own independent estimate, which Epoch itself calls 'somewhat more speculative than our other estimates'. That absence is itself informative: two of the four largest builders disclose no campus power at all. Note the asymmetry in the announced series: every revision is upward (Hyperion 2 GW to 5 GW) except one — Stargate Abilene, capped back at 1.2 GW in Mar 2026 when a ~600 MW expansion was scrapped after grid-interconnection delays. That is the physical constraint this stage exists to watch, showing up in an operator's own plans rather than in an analyst's forecast.",
       "current": {
         "value": 0.946,
-        "display": "energized: ~0.95 GW IT (xAI Colossus 2; Amazon-Anthropic New Carlisle ~0.91 GW close behind) — announced: ~20-25 GW across top-5 campuses",
+        "display": "~0.95 GW energized; ~20-25 GW top-five campus targets",
         "as_of": "2026-07",
         "source_note": "Epoch AI, data as of Jul 24-25 2026: Colossus 2 at 946 MW IT power / 1,112k H100e is 'the largest known AI data center by IT power'. Facility-power basis: roughly 1.1-1.4 GW.",
         "confidence": "medium",
@@ -669,7 +669,7 @@
       "measurement_notes": "Stock (installed) vs flow (annual shipments) vs revenue (dollars) get conflated constantly — this series is cumulative installed capacity, H100e = TPP-normalized across Nvidia/TPU/AMD/Huawei. Epoch states the growth trend as 3.4x/yr (trends dashboard) and 3.3x/yr (chip-production insight) — same trend, two restatements. Concentration: five hyperscalers held 71% of capacity in Q4 2025; Google alone ~25% (mostly TPUs). The mid-2026 value is EXTRAPOLATED from the Jan 2026 hard anchor, not measured — Epoch's live explorer renders client-side and needs a browser pull to confirm. Sanity proxy: NVIDIA DC revenue $75.2B in Q1 FY2027 (+92% YoY), consistent with continued compounding but ASP-inflated.",
       "current": {
         "value": 15,
-        "display": ">15M H100e (Jan 2026 hard anchor); ~27-28M extrapolated to Jul 2026 at 3.3-3.4x/yr",
+        "display": ">15M H100e confirmed Jan 2026; ~27-28M extrapolated Jul 2026",
         "as_of": "2026-01",
         "source_note": "Epoch: 'Global AI computing capacity is doubling every 7 months' (Jan 9, 2026). End-2025 companion figures: ~16M deployed, ~20M cumulative sold (different methodology — noted, not charted). The divergence story: stock compounding ~3.4x/yr while the record training run has been frozen at 5e26 since Jul 2025.",
         "confidence": "medium",

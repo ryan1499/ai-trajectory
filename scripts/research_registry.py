@@ -64,6 +64,7 @@ SAFETY_VISUAL_TYPES = {"spectrum", "domain-matrix", "exposure-ladder", "incident
 SAFETY_MEASUREMENT_STATES = {"measured", "partly-measured", "missing-series"}
 SAFETY_STAGES = {"hazard", "exposure", "control", "governance", "outcomes", "resilience"}
 SAFETY_RANGES = {"narrow", "moderate", "wide"}
+SAFETY_LEAN_STATES = {"leans-a", "near-midpoint", "leans-b", "no-stable-lean"}
 SAFETY_SOURCE_TYPES = {
     "government-evaluation", "developer-evaluation", "developer-experiment", "government-taxonomy",
     "government-research", "international-synthesis", "official-legal-guidance", "statute",
@@ -410,9 +411,10 @@ def _validate_safety_questions(data: dict[str, Any]) -> set[str]:
                 if not isinstance(question.get(pole), dict):
                     raise RegistryError(f"{label}.{pole} must be an object")
                 _require_strings(question[pole], ("label", "desc"), f"{label}.{pole}")
-            lean = question.get("lean")
-            if not isinstance(lean, (int, float)) or isinstance(lean, bool) or not -1 <= lean <= 1:
-                raise RegistryError(f"{label}.lean must be from -1 to 1")
+            if question.get("lean_state") not in SAFETY_LEAN_STATES:
+                raise RegistryError(f"{label}.lean_state must be an ordinal evidence state")
+            if "lean" in question:
+                raise RegistryError(f"{label}.lean is no longer allowed; use lean_state to avoid false numeric precision")
             if question.get("range") not in SAFETY_RANGES:
                 raise RegistryError(f"{label}.range is invalid")
         elif visual_type == "domain-matrix":

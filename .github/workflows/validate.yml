@@ -13,9 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Privacy validation must inspect the public checked-out ref's full
+          # ancestry, not only the shallow checkout supplied by default.
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Check commit identity and tracked-content privacy
+        run: python3 scripts/privacy_check.py --history --tracked
       - name: Validate and render
         run: python3 scripts/build.py
       - name: Check evidence review schedule

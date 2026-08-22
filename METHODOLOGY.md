@@ -8,7 +8,7 @@ The scoreboard compares **dated, falsifiable claims** with the public measuremen
 - Forecast wording and conditionality stay attached to the original claim. `epistemic_type` keeps scenarios, model projections, and lab intentions from being presented as ordinary forecasts.
 - `measurement_relation` distinguishes direct, translated, proxy, and context claims. Only direct and formula-backed translated claims enter headline status totals or chart overlays.
 - Metric history, evidence reviews, and `resolution_history` are append-only. A later reversal adds an entry; it does not rewrite the earlier record.
-- Every assessment links to at least one canonical measurement source; the original claim links to its published source. Observation tables distinguish named-series links from compiled points that still lack a direct point citation.
+- Every assessment links to at least one canonical measurement source; the original claim links to its published source. Plotted observations are explicitly classified as **source-linked** when the record carries a source link for that observation, or **compiled estimate** when it does not. A source-linked series observation is not presented as an individually verified measurement. Compiled estimates are shown as unconnected markers and never inherit a metric-wide link as a point citation.
 - Each metric has a machine-readable review policy and append-only review log. Review freshness and observation vintage are displayed separately: checking a source does not make an old observation new.
 
 ## Reading a resolution
@@ -21,10 +21,17 @@ The six statuses on the board:
 - **on-track** — the measured series is running consistent with what the claim requires.
 - **ahead** — reality is running faster or further than the claim required by now.
 - **behind** — reality is running short of the pace the claim required by now.
+- **indeterminate** — the deadline passed, but public evidence cannot establish whether the target occurred; it is excluded from success-or-failure interpretations.
 - **resolved true** — the target was met; the claim is settled in the forecaster's favour.
 - **falsified** — the window closed without the target being met, or the evidence moved decisively against it.
 
-**Confidence** is an integer from 0 to 100 recording how strongly the evidence supports _that status call_. It is not a probability that the forecast comes true, and it is not a percentile.
+**Assessment confidence** is shown publicly as **low**, **medium**, or **high**. It describes how strongly the record supports _that status call_; it is not a probability that the forecast comes true and not a percentile.
+
+- **Low** — evidence is missing, indirect, stale, single-source, or materially mismatched to the claim.
+- **Medium** — evidence directionally supports the call but has a material caveat, incomplete coverage, or a plausible competing interpretation.
+- **High** — current, comparable evidence substantially supports the call and the recorded counterargument does not overturn it.
+
+Older append-only records retain their original internal 0–100 field for history. The public renderer normalizes those legacy values to low (<45), medium (45–64), or high (65+) until a later human assessment records an explicit level. New resolutions should set `confidence_level` directly and must use this rubric.
 
 Every status is the tracker's judgment, not the source author's. Disagreeing with one is the intended use of this site — open an issue or a PR against the data. Each assessment records its test, target, deadline, measurement relationship, and uncertainty driver. Headline inventories include only direct or explicitly translated claims.
 
@@ -54,7 +61,7 @@ No composite or aggregate is published unless its formula is shown inline. This 
 
 The safety layer is scoped to severe and catastrophic risks from frontier general-purpose AI; it is not a complete taxonomy of every AI harm. Its eight questions follow a causal chain: hazard, exposure, control, governance, incidents, and resilience.
 
-The visual form follows the evidence. A spectrum is used only when two opposing operational states are defensible; its dot is an editorial, source-reviewed synthesis and its band is interpretive disagreement, not a probability or statistical confidence interval. Dangerous uplift uses a domain matrix because cyber, CBRN, manipulation, and autonomy can differ. Deployment uses an exposure ladder but shows no current rung without representative telemetry. Incidents use a ledger rather than a trend because reporting coverage and denominators are unstable.
+The visual form follows the evidence. A spectrum is used only when two opposing operational states are defensible. Its marker uses one of four ordinal editorial states—**leans Pole A**, **near midpoint**, **leans Pole B**, or **no stable lean**—rather than a hidden numerical score. Its band is interpretive disagreement, not a probability or statistical confidence interval. Dangerous uplift uses a domain matrix because cyber, CBRN, manipulation, and autonomy can differ. Deployment uses an exposure ladder but shows no current rung without representative telemetry. Incidents use a ledger rather than a trend because reporting coverage and denominators are unstable.
 
 Every reading separately records evidence setting, independence, coverage, observation period, limitations, and what would change it. No position is combined into an overall risk or safety number.
 

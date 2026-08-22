@@ -5,8 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{TITLE}}</title>
 <meta name="description" content="{{DESCRIPTION}}">
+<meta name="author" content="Ryan Combes">
 <meta name="theme-color" content="#f4f4ef">
+<link rel="canonical" href="{{PAGE_URL}}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
+<meta property="og:url" content="{{PAGE_URL}}">
 <meta property="og:title" content="{{TITLE}}">
 <meta property="og:description" content="{{DESCRIPTION}}">
 <meta property="og:image" content="https://ai-trajectory.vercel.app/og.png">
@@ -128,13 +134,13 @@ h1 em{font-weight:500;color:var(--signal)}
   .status-verdict{font-size:.9rem}
 }
 .tally-segment{white-space:nowrap}.status-text-resolved-true,.status-text-ahead,.status-text-on-track{color:var(--moss)}
-.status-text-behind{color:var(--gold-ink)}.status-text-pending{color:var(--ink-faint)}.status-text-falsified{color:var(--signal)}
+.status-text-behind{color:var(--gold-ink)}.status-text-pending{color:var(--ink-faint)}.status-text-indeterminate{color:var(--model)}.status-text-falsified{color:var(--signal)}
 
 .scoreboard-nav{position:sticky;top:0;z-index:40;display:flex;justify-content:center;gap:26px;padding:11px 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(247,248,243,.96);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(10px)}
 .scoreboard-nav a{text-decoration:none;white-space:nowrap;color:var(--ink-soft)}
 .scoreboard-nav a:hover{color:var(--signal)}
 
-.scoreboard-section{max-width:var(--max);margin:0 auto;padding:76px 28px}
+.scoreboard-section{max-width:var(--max);margin:0 auto;padding:76px 28px;content-visibility:auto;contain-intrinsic-size:auto 780px}
 .scoreboard-section+.scoreboard-section{border-top:1px solid var(--line)}
 .section-heading{max-width:var(--prose);margin-bottom:38px}
 .section-heading>span{display:block;margin-bottom:8px;color:var(--signal);font-size:.7rem;letter-spacing:.11em;text-transform:uppercase}
@@ -199,7 +205,7 @@ h1 em{font-weight:500;color:var(--signal)}
 .timeline-source{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;fill:var(--ink)}
 .timeline-status{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
 text.status-text-resolved-true{fill:#24392d}text.status-text-ahead{fill:#3c5c48}text.status-text-on-track{fill:#3c5c48}
-text.status-text-behind{fill:var(--gold-ink)}text.status-text-pending{fill:var(--ink-faint)}text.status-text-falsified{fill:#b5432a}
+text.status-text-behind{fill:var(--gold-ink)}text.status-text-pending{fill:var(--ink-faint)}text.status-text-indeterminate{fill:var(--model)}text.status-text-falsified{fill:#b5432a}
 .hero-forcerow a:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
 .chart-note{margin:9px 0 0;font-size:.64rem;color:var(--ink-faint)}
 .chart-empty{min-height:180px;display:grid;place-content:center;text-align:center;border:1px dashed var(--line);border-radius:9px;color:var(--ink-faint);background:var(--paper)}
@@ -280,7 +286,7 @@ blockquote cite{display:block;margin-top:7px;font-family:'JetBrains Mono',monosp
 .drift-label{font-size:11px;fill:var(--ink)}
 
 .methodology-section{display:grid;grid-template-columns:minmax(260px,.55fr) minmax(0,1.45fr);gap:24px 64px}.methodology-section .section-heading{margin:0}
-.methodology-prose{max-width:700px}.methodology-prose h2,.methodology-prose h3{font-size:1.2rem;margin:28px 0 8px}.methodology-prose h2:first-child{display:none}.methodology-prose p,.methodology-prose li{color:var(--ink-soft);font-size:.94rem}.methodology-prose ul,.methodology-prose ol{padding-left:1.2rem}.methodology-prose li+li{margin-top:7px}
+.methodology-prose{max-width:700px}.methodology-prose h2,.methodology-prose h3{font-size:1.2rem;margin:28px 0 8px}.methodology-prose p,.methodology-prose li{color:var(--ink-soft);font-size:.94rem}.methodology-prose ul,.methodology-prose ol{padding-left:1.2rem}.methodology-prose li+li{margin-top:7px}
 .methodology-prose code{font-size:.78rem;background:var(--paper-warm);padding:2px 4px;border-radius:3px}.build-provenance{grid-column:2;margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:.63rem;color:var(--ink-faint)}
 footer{max-width:var(--max);margin:0 auto;padding:28px;border-top:2px solid var(--ink);font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--ink-faint)}
 
@@ -379,6 +385,7 @@ h1{font-size:clamp(3.5rem,6.2vw,5.8rem);line-height:.96;max-width:690px}
 .model-flow a:hover{color:var(--moss)}
 .model-question{margin:20px 0 0;padding:17px 18px;background:#e8ecfb;border-left:3px solid var(--moss);font-size:.83rem;color:var(--ink);line-height:1.5}
 .model-question span{display:block;margin-bottom:5px;font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--moss);font-weight:600}
+.model-hypothesis{margin:12px 0 0;font-size:.72rem;line-height:1.5;color:var(--ink-faint)}.model-hypothesis strong{color:var(--ink-soft)}
 .hero-pulse{display:flex;justify-content:space-between;align-items:center;gap:22px;max-width:var(--max);width:calc(100% - 56px);margin:0 auto;padding:18px 0;border-top:1px solid var(--line);font-size:.63rem;color:var(--ink-faint)}
 .hero-pulse>strong{color:var(--ink);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
 .hero-pulse>div{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
@@ -396,7 +403,7 @@ html[data-view="guided"] .research-layer,html[data-view="guided"] .research-nav{
 .scoreboard-section{padding:88px 28px}
 .section-heading{margin-bottom:42px}
 .section-heading>span{font-size:.65rem;color:var(--moss);font-weight:600}
-.section-heading h2{font-size:clamp(2.35rem,5vw,4rem);line-height:1.02}
+.section-heading h1,.section-heading h2{font-size:clamp(2.35rem,5vw,4rem);line-height:1.02}
 .section-heading p{font-family:var(--font-body);font-size:.94rem;line-height:1.6}
 
 .status-section{padding-bottom:72px}
@@ -543,6 +550,7 @@ html[data-view="guided"] .research-layer,html[data-view="guided"] .research-nav{
 .status-key .key-on-track{background:#aabbe9}
 .status-key .key-behind{background:var(--gold)}
 .status-key .key-pending{background:#aeb2b5}
+.status-key .key-indeterminate{background:var(--model)}
 .status-key .key-falsified{background:var(--signal)}
 .comparison-table-shell{overflow-x:auto;border:1px solid var(--line);background:var(--paper);overscroll-behavior-inline:contain}
 .comparison-table{width:100%;min-width:820px;border-collapse:collapse;text-align:left}
@@ -564,6 +572,7 @@ html[data-view="guided"] .research-layer,html[data-view="guided"] .research-nav{
 .comparison-on-track{background:#aabbe9}
 .comparison-behind{background:var(--gold)}
 .comparison-pending{background:#aeb2b5}
+.comparison-indeterminate{background:var(--model)}
 .comparison-falsified{background:var(--signal)}
 .comparison-counts{display:flex;flex-wrap:wrap;gap:5px 12px;margin-top:9px;font-family:var(--font-mono);font-size:.57rem}
 .comparison-count b{color:currentColor}
@@ -662,6 +671,7 @@ html[data-view="guided"] .research-layer,html[data-view="guided"] .research-nav{
 .drift-section{gap:52px}
 .methodology-link h2{font-size:1.75rem}
 footer{font-family:var(--font-mono);border-top:1px solid var(--line);font-size:.61rem}
+.site-footer{display:flex;justify-content:space-between;align-items:flex-start;gap:22px;padding-block:32px}.site-footer p{margin:0;max-width:64ch;line-height:1.65}.site-footer-nav{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px 14px;white-space:nowrap}.site-footer a{color:var(--ink-soft)}.site-footer a:hover{color:var(--moss)}
 
 @media (max-width:900px){
   .scoreboard-hero{min-height:0}
@@ -768,7 +778,7 @@ html[data-view="research"] .question-map .question-card[data-research-only="true
 .rd-focus{background:var(--ink);color:#edf0f7;max-width:none;padding-inline:max(28px,calc((100vw - var(--max))/2))}
 .rd-focus .section-heading{margin:0}.rd-focus .section-heading>span{color:#aabcf8}.rd-focus .section-heading h2{color:white;max-width:800px}.rd-focus .section-heading p{color:#c4cad6;max-width:70ch}
 .rd-focus-heading{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.5fr);gap:60px;align-items:end}
-.rd-reading{padding:20px;border:1px solid #455066;background:#202a3f}.rd-reading>span,.rd-summary-grid span,.rd-column-heading span,.rd-aggregate-card>span{display:block;font-family:var(--font-mono);font-size:.56rem;text-transform:uppercase;letter-spacing:.07em;color:#aabcf8}.rd-reading>strong{display:block;margin-top:10px;font-family:var(--font-display);font-size:1.55rem;font-weight:400;color:white;line-height:1.1}.rd-reading p{margin:9px 0 0;font-size:.72rem;color:#b8c0d0}
+.rd-reading{padding:20px;border:1px solid #455066;background:#202a3f}.rd-reading>span,.rd-summary-grid span,.rd-column-heading span,.rd-aggregate-card>span{display:block;font-family:var(--font-mono);font-size:.56rem;text-transform:uppercase;letter-spacing:.07em;color:#aabcf8}.rd-reading>strong{display:block;margin-top:10px;font-family:var(--font-display);font-size:1.55rem;font-weight:400;color:white;line-height:1.1}.rd-reading p{margin:9px 0 0;font-size:.72rem;color:#b8c0d0}.rd-synthesis-label{display:inline-block;margin-right:6px;color:#d7e0ff;font-family:var(--font-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.04em}
 .rd-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:34px;background:#465066;border:1px solid #465066}.rd-summary-grid article{padding:19px;background:#202a3f}.rd-summary-grid p{margin:8px 0 0;font-size:.74rem;line-height:1.55;color:#c6ccd8}
 .rd-path{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:12px;align-items:center;margin-top:34px;padding:17px 18px;border:1px solid #465066}.rd-path span{font-size:.73rem;line-height:1.35}.rd-path b{display:inline-grid;place-items:center;width:22px;height:22px;margin-right:7px;border:1px solid #7181a5;border-radius:50%;font-family:var(--font-mono);font-size:.55rem;color:#b8c8fa}.rd-path i{font-style:normal;color:#8290ad}.rd-path-note{margin:9px 0 0;font-size:.66rem;color:#9fa9bb}
 .rd-columns{display:grid;grid-template-columns:1fr 1fr;gap:42px;margin-top:42px}.rd-column-heading{display:flex;justify-content:space-between;gap:18px;align-items:baseline;margin-bottom:12px}.rd-column-heading strong{font-size:.72rem;color:white}.rd-evidence-list{border-top:1px solid #465066}.rd-evidence-card{border-bottom:1px solid #465066}.rd-evidence-card>summary{display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center;padding:15px 2px;cursor:pointer;list-style:none}.rd-evidence-card>summary::-webkit-details-marker{display:none}.rd-evidence-card>summary span,.rd-evidence-card>summary i{font-family:var(--font-mono);font-size:.53rem;color:#9fa9bb;font-style:normal}.rd-evidence-card>summary strong{font-size:.75rem;color:#eef1f7}.rd-evidence-card>summary i{padding:3px 5px;border:1px solid #59657c;color:#c0c9da}.rd-evidence-card>summary i::after{content:' +'}.rd-evidence-card[open]>summary i::after{content:' −'}.rd-evidence-body{padding:3px 2px 19px 102px}.rd-tags{display:flex;gap:6px;flex-wrap:wrap}.rd-tags span{padding:3px 5px;border:1px solid #58647b;font-family:var(--font-mono);font-size:.5rem;text-transform:uppercase;color:#bac5d8}.rd-evidence-body>p{margin:12px 0;font-size:.74rem;line-height:1.55;color:#c6ccd8}.rd-evidence-body aside{padding:11px 12px;border-left:2px solid #d39b4c;background:#283247}.rd-evidence-body aside strong{font-size:.62rem;color:white}.rd-evidence-body aside p{margin:4px 0 0;font-size:.68rem;color:#bdc5d3}.rd-evidence-body>a{display:inline-block;margin-top:12px;font-size:.63rem;color:#c3cff9}
@@ -824,8 +834,16 @@ small{font-size:.72rem}
 }
 
 .wordmark{font-size:.84rem}
-.scoreboard-nav{justify-content:flex-start;max-width:100vw;overflow-x:auto;scrollbar-width:none}
-.scoreboard-nav::-webkit-scrollbar{display:none}
+.scoreboard-nav{justify-content:flex-start;max-width:100vw;overflow:visible}.nav-links-scroll{display:contents}
+/* On a phone, the detail switch stays fixed while destinations get their own
+   scroll tray. The persistent track and fade make additional destinations clear
+   without allowing the control to cover an in-between link. */
+@media (max-width:640px){
+  .scoreboard-nav{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0;padding:8px 0 4px 12px;align-items:start}
+  .nav-links-scroll{display:flex;gap:16px;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;scrollbar-color:var(--moss) var(--paper-warm);scroll-padding-inline:6px;background-image:linear-gradient(90deg,rgba(251,251,248,0) calc(100% - 24px),rgba(251,251,248,.97));background-size:100% 100%;background-repeat:no-repeat}
+  .nav-links-scroll::-webkit-scrollbar{height:5px}.nav-links-scroll::-webkit-scrollbar-track{background:var(--paper-warm)}.nav-links-scroll::-webkit-scrollbar-thumb{background:var(--moss);border-radius:99px}
+  .view-switch{position:static;margin:0 8px 0 4px;align-self:start}.view-switch button{min-height:44px;padding-inline:8px}
+}
 .hero-lede{font-size:clamp(1.12rem,1.5vw,1.28rem)}
 .hero-actions a{font-size:.96rem}.hero-scope{font-size:.86rem}
 .model-flow strong{font-size:1.02rem}.model-flow p,.model-question{font-size:.9rem}
@@ -880,6 +898,7 @@ small{font-size:.72rem}
 @media (max-width:640px){
   html{font-size:17px}
   .scoreboard-nav{font-size:.72rem}
+  .site-footer{display:block}.site-footer-nav{justify-content:flex-start;margin-top:14px}
   .overview-card h3{font-size:1.85rem}
   .overview-signal{grid-template-columns:96px 1fr 14px}
   .chart-heading p{font-size:.82rem}
@@ -890,7 +909,14 @@ small{font-size:.72rem}
 </head>
 <body>
 {{PAGE}}
-<footer>AI Trajectory · Observations remain attributable; interpretations remain contestable. · <a href="index.html">Evidence map</a> · <a href="methodology.html">Methodology</a></footer>
+<footer class="site-footer">
+  <p>Research, data architecture, design, and implementation by <a href="https://ryancombes.com">Ryan Combes</a>, with AI-assisted research.</p>
+  <nav class="site-footer-nav" aria-label="Footer navigation">
+    <a href="index.html">Evidence map</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="https://github.com/ryan1499/ai-trajectory" rel="noopener noreferrer">Source</a>
+  </nav>
+</footer>
 <script>
 /* Small, framework-free behavior shared by the current overview and future
    question explorer. It intentionally only enhances explicit data hooks: no
@@ -1009,6 +1035,21 @@ small{font-size:.72rem}
     });
   }
 
+  function setResponsiveNavigation() {
+    var nav = document.querySelector('.scoreboard-nav');
+    if (!nav || nav.dataset.responsiveReady === 'true') return;
+    var switcher = nav.querySelector('.view-switch');
+    if (!switcher) return;
+    var tray = document.createElement('div');
+    tray.className = 'nav-links-scroll';
+    tray.setAttribute('aria-label', 'Section navigation');
+    Array.prototype.slice.call(nav.children).forEach(function (child) {
+      if (child !== switcher) tray.appendChild(child);
+    });
+    nav.insertBefore(tray, switcher);
+    nav.dataset.responsiveReady = 'true';
+  }
+
   function syncDisclosureState() {
     setCheckpointControl();
     syncCheckpointControl();
@@ -1043,6 +1084,7 @@ small{font-size:.72rem}
   window.addEventListener('hashchange', revealLinkedDisclosure);
   if (compactQuery.addEventListener) compactQuery.addEventListener('change', syncDisclosureState);
   else compactQuery.addListener(syncDisclosureState);
+  setResponsiveNavigation();
   syncDisclosureState();
   revealLinkedDisclosure();
 }());

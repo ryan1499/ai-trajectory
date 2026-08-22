@@ -41,7 +41,7 @@
       "evidence_quality": {"setting": "adversarial simulations", "independence": "developer and government evaluations", "coverage": "narrow"},
       "pole_a": {"label": "Reliably corrigible", "desc": "Agents obey constraints, accept correction, and remain controllable across realistic high-authority settings."},
       "pole_b": {"label": "Strategic violations", "desc": "Agents deceive, sabotage, evade correction, or preserve their objectives when authority and incentives conflict."},
-      "lean": 0.2,
+      "lean_state": "leans-b",
       "range": "wide",
       "indicators": ["Deception, sabotage, shutdown-compliance, and self-preservation rates", "Hidden deployment-like evaluations with realistic permissions", "Persistence across models, prompts, scaffolds, and mitigations", "Successful harmful action after monitoring—not expressed intent alone"],
       "evidence": [
@@ -89,7 +89,7 @@
       "evidence_quality": {"setting": "adaptive red teaming", "independence": "government plus developer testing", "coverage": "partial"},
       "pole_a": {"label": "Robust under attack", "desc": "Defense-in-depth keeps end-to-end attack success low under adaptive, persistent, well-resourced testing."},
       "pole_b": {"label": "Readily bypassed", "desc": "Transferable attacks, decomposition, fine-tuning, or scale defeat the production safeguard stack."},
-      "lean": 0.15,
+      "lean_state": "leans-b",
       "range": "wide",
       "indicators": ["End-to-end attack success after the complete production stack", "Attacker time, expertise, cost, and query budget", "Monitor true-positive rate at a fixed false-positive rate", "Benign refusal and operational cost", "Patch latency and repeat-attack success"],
       "evidence": [
@@ -111,7 +111,7 @@
       "evidence_quality": {"setting": "evaluation research and controlled tests", "independence": "cross-lab and international synthesis", "coverage": "partial"},
       "pole_a": {"label": "Predictive and hard to game", "desc": "Tests and monitors prospectively identify consequential capabilities and failures before they appear in use."},
       "pole_b": {"label": "Blind spots and gaming", "desc": "Systems recognize tests, exploit scoring, hide capabilities, or behave differently in deployment."},
-      "lean": 0.35,
+      "lean_state": "leans-b",
       "range": "moderate",
       "indicators": ["Calibration between pre-deployment predictions and field outcomes", "Hidden-test versus public-test divergence", "Evaluation awareness, sandbagging, and contamination", "Monitor miss rate and time to detection", "Independent evaluator access to the deployed scaffold and tools"],
       "evidence": [
@@ -133,7 +133,7 @@
       "evidence_quality": {"setting": "statutes and official implementation records", "independence": "primary legal sources", "coverage": "partial"},
       "pole_a": {"label": "Broad enforceable coverage", "desc": "High-risk developers and deployments face binding evaluation, reporting, audit, security, and corrective requirements."},
       "pole_b": {"label": "Voluntary or unenforced", "desc": "Important systems remain outside binding rules, or requirements lack verification, capacity, penalties, and corrective action."},
-      "lean": 0.0,
+      "lean_state": "no-stable-lean",
       "range": "wide",
       "indicators": ["Share of frontier developers and models within binding regimes", "Mandatory risk evaluation, incident reporting, and cybersecurity", "Independent evaluator and regulator access", "Published compliance findings, penalties, and remediation", "Coverage of internal deployment and open-weight release"],
       "evidence": [
@@ -178,7 +178,7 @@
       "evidence_quality": {"setting": "risk-management synthesis", "independence": "international expert report", "coverage": "poor"},
       "pole_a": {"label": "Contained and recoverable", "desc": "Critical systems have tested fallbacks, limited common-mode exposure, rapid detection, and effective recovery."},
       "pole_b": {"label": "Cascading and hard to reverse", "desc": "Dependencies, concentration, or weak response turn local AI failures into persistent or systemic harm."},
-      "lean": 0.0,
+      "lean_state": "no-stable-lean",
       "range": "wide",
       "indicators": ["Critical-sector AI dependency and substitutability", "Manual fallback and rollback performance", "Independent exercises for finance, energy, communications, healthcare, and government", "Detection, containment, and recovery time", "Concentration and common-mode failure exposure"],
       "evidence": [

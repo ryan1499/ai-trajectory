@@ -14,13 +14,15 @@ from typing import Any, Iterable
 
 
 CORE_STAGES = ("compute", "algorithms", "capability", "automation", "capital", "physical")
-STATUS_VALUES = {"pending", "on-track", "ahead", "behind", "falsified", "resolved-true"}
-STATUS_ORDER = ("resolved-true", "ahead", "on-track", "behind", "pending", "falsified")
+STATUS_VALUES = {"pending", "on-track", "ahead", "behind", "indeterminate", "falsified", "resolved-true"}
+STATUS_ORDER = ("resolved-true", "ahead", "on-track", "behind", "pending", "indeterminate", "falsified")
 CAMP_VALUES = {"bull", "bear", "base-rate", "model", "wall-street"}
 EPISTEMIC_TYPES = {"forecast", "scenario", "model", "trend-projection", "intention", "analysis"}
 SCORABILITY_VALUES = {"scored", "context-only"}
 MEASUREMENT_RELATIONS = {"direct", "translated", "proxy", "context"}
 PROVENANCE_VALUES = {"named-series", "compiled-no-point-link"}
+OBSERVATION_CLASSES = {"source-linked", "compiled-estimate"}
+PUBLIC_CONFIDENCE_LEVELS = {"low", "medium", "high"}
 NON_DATABLE_PREFIXES = ("undated", "ongoing", "conditional")
 SOURCE_SHORT_NAMES = {
     "aschenbrenner-2024": "Leopold",
@@ -82,13 +84,17 @@ def require_keys(obj: dict[str, Any], keys: Iterable[str], path: str) -> None:
 
 
 def validate_observation_provenance(point: dict[str, Any], path: str, *, production: bool) -> None:
-    """Each production observation is either directly cited or explicitly classified as debt.
+    """Each production observation has a recorded source link or explicit provenance debt.
 
-    A metric-wide canonical link is not a substitute for evidence for a plotted point.
+    A metric-wide canonical link is never silently substituted for a plotted point's
+    provenance; the public renderer calls such sourced points source-linked, not
+    individually verified measurements.
     """
     if not production:
         return
     require(point.get("provenance") in PROVENANCE_VALUES, f"{path}.provenance", f"must be one of {sorted(PROVENANCE_VALUES)}")
+    if "observation_class" in point:
+        require(point["observation_class"] in OBSERVATION_CLASSES, f"{path}.observation_class", f"must be one of {sorted(OBSERVATION_CLASSES)}")
     has_label = bool(point.get("source_label"))
     has_url = bool(point.get("source_url"))
     require(has_label == has_url, path, "source_label and source_url must appear together")
@@ -98,14 +104,46 @@ def validate_observation_provenance(point: dict[str, Any], path: str, *, product
             f"{path}.source_url",
             "must be an http(s) URL",
         )
-        require(point.get("provenance") == "named-series", f"{path}.provenance", "must be named-series when a direct point link is supplied")
+        require(point.get("provenance") == "named-series", f"{path}.provenance", "must be named-series when a recorded source link is supplied")
+        if "observation_class" in point:
+            require(point["observation_class"] == "source-linked", f"{path}.observation_class", "must be source-linked when a recorded source link is supplied")
         return
-    require(point.get("provenance") == "compiled-no-point-link", f"{path}.provenance", "must be compiled-no-point-link without a direct point link")
+    require(point.get("provenance") == "compiled-no-point-link", f"{path}.provenance", "must be compiled-no-point-link without a recorded source link")
+    if "observation_class" in point:
+        require(point["observation_class"] == "compiled-estimate", f"{path}.observation_class", "must be compiled-estimate without a recorded source link")
     require(
         isinstance(point.get("provenance_gap_reason"), str) and point["provenance_gap_reason"].strip(),
         f"{path}.provenance_gap_reason",
         "is required when no direct point link is available",
     )
+
+
+def observation_class(point: dict[str, Any]) -> str:
+    """Return the conservative public class for a plotted observation.
+
+    A metric-wide canonical source describes the series, not necessarily a source for
+    every plotted value. Only a source-labelled point is styled as source-linked.
+    Everything else is a compiled estimate and must not join the reality line.
+    """
+    return "source-linked" if point.get("provenance") == "named-series" and point.get("source_url") else "compiled-estimate"
+
+
+def public_confidence(resolution: dict[str, Any]) -> str:
+    """Use ordinal confidence in public UI while retaining legacy numeric records.
+
+    The numeric field predates the public rubric. New records may state an explicit
+    level; older records are normalized only for display, never overwritten.
+    """
+    level = resolution.get("confidence_level")
+    if level in PUBLIC_CONFIDENCE_LEVELS:
+        return str(level)
+    raw = resolution.get("confidence", 0)
+    if isinstance(raw, (int, float)) and not isinstance(raw, bool):
+        if raw >= 65:
+            return "high"
+        if raw >= 45:
+            return "medium"
+    return "low"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -355,6 +393,18 @@ def validate_claims(data: dict[str, Any], metric_ids: set[str], *, production: b
             confidence = resolution["confidence"]
             require(isinstance(confidence, (int, float)) and not isinstance(confidence, bool), f"{r_path}.confidence", "must be numeric")
             require(0 <= confidence <= 100, f"{r_path}.confidence", "must be between 0 and 100")
+            if "confidence_level" in resolution:
+                require(
+                    resolution["confidence_level"] in PUBLIC_CONFIDENCE_LEVELS,
+                    f"{r_path}.confidence_level",
+                    f"must be one of {sorted(PUBLIC_CONFIDENCE_LEVELS)}",
+                )
+            if production and resolution_date >= decimal_date("2026-08"):
+                require(
+                    resolution.get("confidence_level") in PUBLIC_CONFIDENCE_LEVELS,
+                    f"{r_path}.confidence_level",
+                    "is required for new public assessments; use the low/medium/high rubric",
+                )
             require(isinstance(resolution["counterargument"], str) and resolution["counterargument"].strip(), f"{r_path}.counterargument", "must be non-empty")
             evidence_urls = resolution["evidence_urls"]
             require(isinstance(evidence_urls, list) and evidence_urls, f"{r_path}.evidence_urls", "must be a non-empty array")
@@ -364,7 +414,17 @@ def validate_claims(data: dict[str, Any], metric_ids: set[str], *, production: b
             require(isinstance(basis, dict), f"{r_path}.assessment_basis", "must be an object")
             require_keys(basis, ("test_type", "target", "deadline", "observation_metric_id", "measurement_relation", "comparison_rule", "uncertainty_drivers"), f"{r_path}.assessment_basis")
             require(basis["observation_metric_id"] == claim["metric_id"], f"{r_path}.assessment_basis.observation_metric_id", "must match the claim metric")
-            require(basis["measurement_relation"] == relation["type"], f"{r_path}.assessment_basis.measurement_relation", "must match the claim relation")
+            basis_relation = basis["measurement_relation"]
+            if basis_relation != relation["type"]:
+                # Reclassifying a claim must add a later correction rather than
+                # rewrite the historical assessment that used the old taxonomy.
+                require(
+                    resolution.get("legacy_relation") == basis_relation
+                    and basis_relation in MEASUREMENT_RELATIONS
+                    and r_index < len(history) - 1,
+                    f"{r_path}.assessment_basis.measurement_relation",
+                    "must match the claim relation unless this is an older, explicitly marked reclassification record",
+                )
             require(isinstance(basis["uncertainty_drivers"], list) and basis["uncertainty_drivers"], f"{r_path}.assessment_basis.uncertainty_drivers", "must be a non-empty array")
             if production:
                 require(isinstance(resolution["evidence"], str) and resolution["evidence"].strip(), f"{r_path}.evidence", "must be non-empty")
@@ -514,12 +574,6 @@ def source_icon(source: Any) -> str:
         f'<a class="source-icon" href="{esc(source["url"])}" target="_blank" '
         f'rel="noopener noreferrer" aria-label="Open canonical source for {esc(source.get("name", "this metric"))}">↗</a>'
     )
-
-
-def confidence_number(value: Any) -> str:
-    if isinstance(value, float) and value.is_integer():
-        return str(int(value))
-    return str(value)
 
 
 def status_badge(status: Any) -> str:
@@ -778,8 +832,9 @@ def chart_data_table(
     rows = []
     for point in metric.get("history", []):
         note = f' · {esc(point["note"])}' if point.get("note") else ""
+        point_state = "Source-linked observation" if observation_class(point) == "source-linked" else "Compiled estimate (no recorded source link)"
         rows.append(
-            f'<tr><td>Reality</td><td>{esc(point.get("date"))}</td><td>{esc(point.get("value"))}{note}</td><td>Measured</td><td>{observation_evidence(point)}</td></tr>'
+            f'<tr><td>Reality</td><td>{esc(point.get("date"))}</td><td>{esc(point.get("value"))}{note}</td><td>{point_state}</td><td>{observation_evidence(point)}</td></tr>'
         )
     for series in metric.get("series", []):
         for point in series.get("points", []):
@@ -794,7 +849,7 @@ def chart_data_table(
         resolution = current_resolution(claim)
         rows.append(
             f'<tr><td>{esc(source_short(source))}</td><td>{esc(claim["predicted"].get("by"))}</td>'
-            f'<td>{esc(claim["predicted"].get("value"))}</td><td>{esc(resolution["status"])} · confidence {esc(confidence_number(resolution["confidence"]))}</td><td><a href="{esc(source["url"])}" target="_blank" rel="noopener noreferrer">Published claim ↗</a></td></tr>'
+            f'<td>{esc(claim["predicted"].get("value"))}</td><td>{esc(resolution["status"])} · {esc(public_confidence(resolution))} assessment confidence</td><td><a href="{esc(source["url"])}" target="_blank" rel="noopener noreferrer">Published claim ↗</a></td></tr>'
         )
     if not rows:
         return ""
@@ -1017,11 +1072,17 @@ def forecast_chart(
 
     reality = ""
     reality_drawn = 0
+    compiled_drawn = 0
     if historical:
-        # A zero cannot sit on a log axis. Break the line at the gap rather than
-        # bridging it, and count what was actually drawn so the caption can say so.
+        # Only source-linked observations form the reality line. A compiled value
+        # can be useful context, but joining it to sourced points would visually
+        # imply a measured time series it is not.
         segments: list[list[tuple[float, float, dict[str, Any]]]] = []
         for date, value, point in historical:
+            if observation_class(point) != "source-linked":
+                if segments:
+                    segments.append(None)  # type: ignore[arg-type]
+                continue
             if value > 0 or not logarithmic:
                 if not segments or segments[-1] is None:
                     segments.append([])
@@ -1043,7 +1104,21 @@ def forecast_chart(
                 f'aria-label="Reality, {esc(point.get("date"))}: {esc(value)}">'
                 f'<title>{esc(point.get("date"))}: {esc(value)}{(" — " + esc(point.get("note"))) if point.get("note") else ""}</title></circle>'
             )
-        reality = f'{lines}{"".join(dots)}'
+        compiled_dots = []
+        for date, value, point in historical:
+            if observation_class(point) != "compiled-estimate" or (logarithmic and value <= 0):
+                continue
+            compiled_drawn += 1
+            label = (
+                f'Compiled estimate without a recorded source link, {point.get("date")}: {value}. '
+                f'{point.get("provenance_gap_reason", "")}'
+            )
+            compiled_dots.append(
+                f'<circle cx="{x_pos(date):.1f}" cy="{y_pos(value):.1f}" r="5" class="reality-dot compiled-observation" '
+                f'style="fill:#f5e9dc;stroke:#9a5a35;stroke-width:2;stroke-dasharray:2 2" role="img" '
+                f'aria-label="{esc(label)}"><title>{esc(label)}</title></circle>'
+            )
+        reality = f'{lines}{"".join(dots)}{"".join(compiled_dots)}'
 
     claimed = []
     for s_index, extra in enumerate(extra_series):
@@ -1083,7 +1158,7 @@ def forecast_chart(
             "delivery date promised for it. The vertical distance is an announced-to-energized scale gap, but "
             "capacity bases are not always like-for-like; the horizontal gap is the delivery lag."
         )
-    dropped_history = len(historical) - reality_drawn
+    dropped_history = len(historical) - reality_drawn - compiled_drawn
     if dropped_history:
         conversion_notes.add(
             f"{dropped_history} zero observation{'s' if dropped_history != 1 else ''} cannot be shown on a log axis — "
@@ -1221,7 +1296,7 @@ def forecast_chart(
           {''.join(forecast_marks)}
         </svg>
       </div>
-      <div class="chart-legend"><span><i class="legend-line"></i>Observed · {esc(metric.get('chart_series_label', 'measured series'))}</span>{''.join(camps)}</div>
+      <div class="chart-legend"><span><i class="legend-line"></i>Source-linked observation · {esc(metric.get('chart_series_label', 'measured series'))}</span>{'<span><i style="display:inline-block;width:9px;height:9px;border:2px dashed #9a5a35;border-radius:50%;background:#f5e9dc"></i>Compiled estimate · no recorded source link</span>' if compiled_drawn else ''}{''.join(camps)}</div>
       {f'<details class="chart-explanation"><summary>{disclosure_label("How to read this chart", "Close chart guide")}</summary><p class="chart-note">{esc((scale_note + " " + notes).strip())}</p></details>' if scale_note or notes else ''}
       {chart_data_table(metric, metric_claims, sources)}
     """
@@ -1251,21 +1326,32 @@ def claim_chip(claim: dict[str, Any], sources: dict[str, dict[str, Any]]) -> str
     relation = claim["measurement_relation"]
     relation_label = relation["type"].replace("-", " ")
     excluded = relation["type"] in {"proxy", "context"}
+    context_only = claim.get("scorability") == "context-only" or relation["type"] == "context"
     relation_marker = f'<span class="relation-marker relation-{esc(relation["type"])}">{esc(relation_label)}{" · excluded from totals" if excluded else ""}</span>'
-    history_items = "".join(
-        f'<li><span>{esc(item["as_of"])}</span>{status_badge(item["status"])}<b>confidence {esc(confidence_number(item["confidence"]))}</b></li>'
-        for item in claim["resolution_history"]
-    )
-    history_count = f'{len(claim["resolution_history"])} recorded assessment{"s" if len(claim["resolution_history"]) != 1 else ""}'
-    history_html = f'<details class="resolution-history"><summary>{disclosure_label(history_count, "Close assessment history")}</summary><ol>{history_items}</ol></details>'
+    if context_only:
+        history_items = "".join(
+            f'<li><span>{esc(item["as_of"])}</span><strong>Context note</strong></li>'
+            for item in claim["resolution_history"]
+        )
+        history_count = f'{len(claim["resolution_history"])} recorded context note{"s" if len(claim["resolution_history"]) != 1 else ""}'
+        history_html = f'<details class="resolution-history"><summary>{disclosure_label(history_count, "Close context history")}</summary><ol>{history_items}</ol></details>'
+    else:
+        history_items = "".join(
+            f'<li><span>{esc(item["as_of"])}</span>{status_badge(item["status"])}<b>{esc(public_confidence(item))} confidence</b></li>'
+            for item in claim["resolution_history"]
+        )
+        history_count = f'{len(claim["resolution_history"])} recorded assessment{"s" if len(claim["resolution_history"]) != 1 else ""}'
+        history_html = f'<details class="resolution-history"><summary>{disclosure_label(history_count, "Close assessment history")}</summary><ol>{history_items}</ol></details>'
     evidence_links = "".join(
         f'<a href="{esc(url)}" target="_blank" rel="noopener noreferrer">Canonical measurement source {index + 1} ↗</a>'
         for index, url in enumerate(resolution["evidence_urls"])
     )
     basis = resolution["assessment_basis"]
+    basis_open = "Why this is context only" if context_only else "How this status was assessed"
+    basis_close = "Close context rationale" if context_only else "Close assessment basis"
     basis_html = f"""
       <details class="assessment-basis">
-        <summary>{disclosure_label("How this status was assessed", "Close assessment basis")}</summary>
+        <summary>{disclosure_label(basis_open, basis_close)}</summary>
         <dl>
           <div><dt>Relationship to measurement</dt><dd>{esc(relation['note'])}</dd></div>
           <div><dt>Test</dt><dd>{esc(basis['comparison_rule'])}</dd></div>
@@ -1274,9 +1360,25 @@ def claim_chip(claim: dict[str, Any], sources: dict[str, dict[str, Any]]) -> str
         </dl>
       </details>
     """
+    if context_only:
+        summary_assessment = '<strong>Context only · not status-assessed</strong>'
+        resolution_pair = """
+          <div class="resolution-pair" aria-label="Assessment treatment">
+            <div><span>Treatment</span><strong>Context only · not status-assessed</strong></div>
+          </div>
+        """
+    else:
+        summary_assessment = f'{status_badge(status)}<span aria-hidden="true">·</span><b>{esc(public_confidence(resolution))} confidence</b>'
+        resolution_pair = f"""
+          <div class="resolution-pair" aria-label="Resolution status and confidence">
+            <div><span>Status</span>{status_badge(status)}</div>
+            <div><span>Assessment confidence</span><strong>{esc(public_confidence(resolution))}</strong></div>
+            {self_reported_marker(claim)}
+          </div>
+        """
     return f"""
       <details class="claim-chip camp-border-{camp}" id="claim-{esc(claim['id'])}" data-claim-id="{esc(claim['id'])}">
-        <summary><span>{esc(source_short(source))}</span><span aria-hidden="true">·</span>{status_badge(status)}<span aria-hidden="true">·</span><b>{esc(confidence_number(resolution['confidence']))}</b></summary>
+        <summary><span>{esc(source_short(source))}</span><span aria-hidden="true">·</span>{summary_assessment}</summary>
         <div class="claim-card">
           <div class="claim-topline">
             <span class="camp-chip camp-{camp}">{esc(camp.replace('-', ' '))}</span>
@@ -1291,11 +1393,7 @@ def claim_chip(claim: dict[str, Any], sources: dict[str, dict[str, Any]]) -> str
           </dl>
           <p class="conditionality"><strong>Conditionality:</strong> {esc(claim['conditionality'])}</p>
           {supersedes}
-          <div class="resolution-pair" aria-label="Resolution status and confidence">
-            <div><span>Status</span>{status_badge(status)}</div>
-            <div><span>Confidence</span><strong>{esc(confidence_number(resolution['confidence']))}</strong></div>
-            {self_reported_marker(claim)}
-          </div>
+          {resolution_pair}
           <div class="resolution-copy">
             <p><strong>Evidence · {esc(resolution['as_of'])}</strong>{esc(resolution['evidence'])}<span class="evidence-links">{evidence_links}</span></p>
             <p class="counterargument"><strong>Counterargument</strong>{esc(resolution['counterargument'])}</p>
@@ -1364,7 +1462,7 @@ def metric_notes(metric: dict[str, Any], inspection: str) -> str:
             rows.append(f"<div><dt>{esc(label)}</dt><dd>{esc(value)}</dd></div>")
     if current:
         rows.append(f"<div><dt>Current observation provenance</dt><dd>{observation_evidence(current)}</dd></div>")
-    rows.append(f"<div><dt>Point-level provenance</dt><dd>{linked_points} of {len(observation_points)} current and historical observations have direct point links; every remaining gap is classified explicitly.</dd></div>")
+    rows.append(f"<div><dt>Point-level provenance</dt><dd>{linked_points} of {len(observation_points)} current and historical observations carry recorded source links; every remaining gap is classified explicitly.</dd></div>")
     rows.append(f"<div><dt>Canonical source</dt><dd>{source_link(metric.get('source'))}</dd></div>")
     return f"""
       <details class="metric-details">
@@ -1680,6 +1778,7 @@ def render_hero_strata(stage_anchors: dict[str, str]) -> str:
           </li>
         </ol>
         <p class="model-question"><span>The central uncertainty</span> Does the software feedback loop accelerate faster than chips, power, and institutions can keep up?</p>
+        <p class="model-hypothesis"><strong>This loop is a hypothesis.</strong> Deployment economics, data limits, organizational bottlenecks, and substitution can weaken or break it.</p>
       </aside>
     """
 
@@ -1690,7 +1789,7 @@ def render_hero(
     claims: list[dict[str, Any]],
     data_files: dict[str, str],
 ) -> str:
-    data_label = "Seed data preview" if any(name.endswith(".seed.json") for name in data_files.values()) else "Production data build"
+    data_label = "Seed data preview" if any(name.endswith(".seed.json") for name in data_files.values()) else "Public research prototype"
     strata_visual = render_hero_strata(stage_anchors)
     counts = {status: 0 for status in STATUS_ORDER}
     scored_claims = [claim for claim in claims if is_headline_claim(claim)]
@@ -1821,7 +1920,7 @@ def render_next_checkpoints(claims_data: dict[str, Any], metrics_data: dict[str,
     for claim in claims_data["claims"]:
         resolution = current_resolution(claim)
         window = date_range(claim["predicted"].get("by"))
-        if not is_headline_claim(claim) or window is None or resolution["status"] in {"resolved-true", "falsified"}:
+        if not is_headline_claim(claim) or window is None or resolution["status"] in {"resolved-true", "indeterminate", "falsified"}:
             continue
         if window[1] + 0.001 < today_value:
             continue
@@ -2147,7 +2246,7 @@ def render_ai_rd_focus(research: dict[str, Any], claims_data: dict[str, Any]) ->
       <section class="scoreboard-section rd-focus" id="ai-rd-question" aria-labelledby="rd-focus-title">
         <div class="rd-focus-heading">
           <div class="section-heading"><span>Flagship question · AI R&amp;D feedback</span><h2 id="rd-focus-title">Is AI accelerating the creation of better AI?</h2><p>{esc(synthesis['reading'])}</p></div>
-          <div class="rd-reading"><span>Current reading · {esc(synthesis['as_of'])}</span><strong>Contribution visible. Multiplier unknown.</strong><p>No single score is shown because the evidence measures different things.</p></div>
+          <div class="rd-reading"><span>Current reading · {esc(synthesis['as_of'])}</span><strong>Contribution visible. Multiplier unknown.</strong><p><b class="rd-synthesis-label">Editorial synthesis · no canonical measurement</b> No single score is shown because the evidence measures different things.</p></div>
         </div>
         <div class="rd-summary-grid">
           <article><span>Closest direct-relevance evidence</span><p>{esc(synthesis['strongest_direct_evidence'])}</p></article>
@@ -2180,24 +2279,31 @@ def render_open_questions(safety_data: dict[str, Any]) -> str:
     }
 
     def spectrum_visual(question: dict[str, Any], compact: bool = False) -> tuple[str, str]:
-        lean = float(question["lean"])
-        lean_pct = (lean + 1) * 50
+        # The spectrum has deliberately ordinal stops. It is a concise editorial
+        # reading of the cited evidence, not a hidden continuous score.
+        lean_state = question["lean_state"]
+        lean_pct = {
+            "leans-a": 30.0,
+            "near-midpoint": 50.0,
+            "leans-b": 70.0,
+            "no-stable-lean": 50.0,
+        }[lean_state]
         range_width = {"narrow": 16.0, "moderate": 30.0, "wide": 50.0}[question["range"]]
         range_start = max(0.0, lean_pct - range_width / 2)
         range_end = min(100.0, lean_pct + range_width / 2)
-        beam_style = f"--lean:{lean_pct:.1f}%;--range-start:{range_start:.1f}%;--range-width:{range_end - range_start:.1f}%"
-        if question["measurement_state"] == "missing-series" and abs(lean) <= 0.05:
+        beam_style = f"--lean:{lean_pct:.0f}%;--range-start:{range_start:.0f}%;--range-width:{range_end - range_start:.0f}%"
+        if lean_state == "no-stable-lean":
             lean_class, lean_short, lean_long, leaning_pole = "leans-center", "No stable lean", "No stable evidence lean", "neither pole"
-        elif lean < -0.05:
+        elif lean_state == "leans-a":
             lean_class, lean_short, lean_long, leaning_pole = "leans-a", "Leans Pole A", "Leans toward Pole A", question["pole_a"]["label"]
-        elif lean > 0.05:
+        elif lean_state == "leans-b":
             lean_class, lean_short, lean_long, leaning_pole = "leans-b", "Leans Pole B", "Leans toward Pole B", question["pole_b"]["label"]
         else:
             lean_class, lean_short, lean_long, leaning_pole = "leans-center", "Near midpoint", "Evidence is near the midpoint", "neither pole"
         if compact:
             visual = f'<div class="crux-summary-lean {lean_class}"><div class="crux-mini-beam" style="{beam_style}" aria-hidden="true"><span class="crux-range"></span><span class="crux-midpoint"></span><span class="crux-marker"></span></div></div>'
         else:
-            aria = f'{lean_long}: {leaning_pole}, with a {question["range"]} interpretive range. This is not a statistical confidence interval.'
+            aria = f'{lean_long}: {leaning_pole}, with a {question["range"]} interpretive range. This is an editorial ordinal synthesis, not a statistical confidence interval.'
             visual = f"""
               <div class="crux-poles">
                 <div><span>Pole A</span><strong>{esc(question['pole_a']['label'])}</strong><p>{esc(question['pole_a']['desc'])}</p></div>
@@ -2207,7 +2313,7 @@ def render_open_questions(safety_data: dict[str, Any]) -> str:
                 <div class="crux-lean-heading"><span>Current evidence lean</span><strong>{esc(lean_long)}</strong><i>{esc(question['range'])} interpretive range</i></div>
                 <div class="crux-beam" style="{beam_style}" role="img" aria-label="{esc(aria)}"><span class="crux-range"></span><span class="crux-midpoint"></span><span class="crux-marker"></span></div>
                 <div class="crux-beam-labels"><span><b>Pole A</b>{esc(question['pole_a']['label'])}</span><span><b>Pole B</b>{esc(question['pole_b']['label'])}</span></div>
-                <p>The dot is the current qualitative synthesis. The band is interpretive disagreement—not a probability or statistical confidence interval.</p>
+                <p>The dot uses an ordinal editorial state: leans Pole A, near midpoint, leans Pole B, or no stable lean. The band shows interpretive disagreement—not a probability or statistical confidence interval.</p>
               </div>
             """
         return visual, f'{lean_short} · {question["range"]} range'
@@ -2288,7 +2394,7 @@ def render_forecast_comparison(
     claims_data: dict[str, Any],
     metrics_data: dict[str, Any],
 ) -> str:
-    """Compare bodies of work without turning unlike claims into a leaderboard."""
+    """Show this tracker's selected claims without grading entire bodies of work."""
     metric_map = {metric["id"]: metric for metric in metrics_data["metrics"]}
     rows = []
     for source in claims_data["forecast_sources"]:
@@ -2326,7 +2432,8 @@ def render_forecast_comparison(
         )
         claim_links = "".join(
             f'<li><a href="#claim-{esc(claim["id"])}"><span>{esc(STAGE_COPY.get(metric_map.get(claim["metric_id"], {}).get("stage", ""), (claim["metric_id"], ""))[0])}</span>'
-            f'<strong>{esc(claim["predicted"]["value"])}</strong>{status_badge(current_resolution(claim)["status"])}</a></li>'
+            f'<strong>{esc(claim["predicted"]["value"])}</strong>'
+            f'{"<span class=\"relation-marker relation-context\">context only</span>" if claim.get("scorability") == "context-only" or claim["measurement_relation"]["type"] == "context" else status_badge(current_resolution(claim)["status"])}</a></li>'
             for claim in source_claims
         )
         year = str(source.get("published", "undated"))
@@ -2353,9 +2460,9 @@ def render_forecast_comparison(
     return f"""
       <section class="scoreboard-section comparison-section research-layer" id="forecast-comparison" aria-labelledby="comparison-title">
         <div class="section-heading">
-          <span>Compare the claims</span>
-          <h2 id="comparison-title">Which bodies of work are holding up?</h2>
-          <p>This is a status map, not a ranking. Forecasts, scenarios, models, and intentions answer different questions, so claim counts should never be read as grades.</p>
+          <span>Selected claims · not a scorecard</span>
+          <h2 id="comparison-title">How are the tracker’s selected claims comparing with later evidence?</h2>
+          <p>This is a coverage-limited status map, not an evaluation of whole bodies of work. Selection is not preregistered or representative; forecasts, scenarios, models, and intentions answer different questions, so counts are never grades.</p>
         </div>
         <div class="status-key" aria-label="Status definitions">
           <span><i class="key-confirmed"></i><b>Confirmed</b> target met</span>
@@ -2363,6 +2470,7 @@ def render_forecast_comparison(
           <span><i class="key-on-track"></i><b>On-track</b> consistent so far</span>
           <span><i class="key-behind"></i><b>Behind</b> reality lagging</span>
           <span><i class="key-pending"></i><b>Pending</b> not yet testable</span>
+          <span><i class="key-indeterminate"></i><b>Indeterminate</b> deadline passed; public evidence cannot resolve it</span>
           <span><i class="key-falsified"></i><b>Falsified</b> target missed</span>
         </div>
         <div class="comparison-table-shell">
@@ -2371,7 +2479,7 @@ def render_forecast_comparison(
             <tbody>{''.join(rows)}</tbody>
           </table>
         </div>
-        <p class="comparison-note">Portfolio bars include only direct and formula-backed translated claims. Proxy and context claims remain linked but excluded. Status and confidence remain separate.</p>
+        <p class="comparison-note">Coverage varies by source and subject. Portfolio bars include only selected direct and formula-backed translated claims; proxy and context claims remain linked but excluded. Status and assessment confidence remain separate.</p>
       </section>
     """
 
@@ -2553,7 +2661,7 @@ def markdown_subset(text: str) -> str:
         if heading:
             flush_paragraph()
             close_list()
-            level = len(heading.group(1)) + 1
+            level = len(heading.group(1))
             output.append(f"<h{level}>{inline_markdown(heading.group(2))}</h{level}>")
             continue
         item = re.match(r"^[-*]\s+(.+)$", line)
@@ -2575,13 +2683,16 @@ def markdown_subset(text: str) -> str:
 
 
 def render_methodology(methodology_text: str, data_files: dict[str, str]) -> str:
+    # The standalone page supplies the document H1. Remove the Markdown title so
+    # the rendered outline has one clear page title rather than two peer headings.
+    methodology_body = re.sub(r"\A#\s+Methodology\s*\n+", "", methodology_text, count=1)
     return f"""
       <section class="scoreboard-section methodology-section" id="methodology" aria-labelledby="methodology-title">
         <div class="section-heading">
           <span>05 · Methodology</span>
-          <h2 id="methodology-title">How to read—and challenge—the scoreboard</h2>
+          <h1 id="methodology-title">How to read—and challenge—the scoreboard</h1>
         </div>
-        <div class="methodology-prose">{markdown_subset(methodology_text)}</div>
+        <div class="methodology-prose">{markdown_subset(methodology_body)}</div>
         <p class="build-provenance">This build rendered <code>{esc(data_files['metrics'])}</code> and <code>{esc(data_files['claims'])}</code>. The generated page contains no hand-entered observations.</p>
       </section>
     """

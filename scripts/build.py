@@ -20,6 +20,11 @@ TEMPLATE = Path(__file__).resolve().parent / "template.html"
 METHODOLOGY = ROOT / "METHODOLOGY.md"
 OG_SOURCE = ROOT / "assets" / "og-ai-trajectory.png"
 OG_OUT = OUT_DIR / "og.png"
+STATIC_ASSETS = (
+    (ROOT / "assets" / "favicon.svg", OUT_DIR / "favicon.svg"),
+    (ROOT / "assets" / "favicon.ico", OUT_DIR / "favicon.ico"),
+    (ROOT / "assets" / "apple-touch-icon.png", OUT_DIR / "apple-touch-icon.png"),
+)
 
 
 class VisibleWordCounter(HTMLParser):
@@ -44,10 +49,11 @@ class VisibleWordCounter(HTMLParser):
         self.words += len(re.findall(r"\b[\w’'-]+\b", html.unescape(data)))
 
 
-def render_page(template: str, body: str, *, title: str, description: str) -> str:
+def render_page(template: str, body: str, *, title: str, description: str, page_url: str) -> str:
     replacements = {
         "{{TITLE}}": html.escape(title, quote=True),
         "{{DESCRIPTION}}": html.escape(description, quote=True),
+        "{{PAGE_URL}}": html.escape(page_url, quote=True),
         "{{PAGE}}": body,
     }
     for placeholder, value in replacements.items():
@@ -99,6 +105,7 @@ def main() -> None:
             "A live evidence map of AI progress, constraints, forecasts, and safety questions—"
             "measured against reality."
         ),
+        page_url="https://ai-trajectory.vercel.app/",
     )
     methodology_body = f"""
       <header class="scoreboard-hero methodology-header">
@@ -117,6 +124,7 @@ def main() -> None:
         methodology_body,
         title="Methodology — AI Trajectory",
         description="How AI Trajectory records observations, compares published claims, and maps unresolved safety questions.",
+        page_url="https://ai-trajectory.vercel.app/methodology.html",
     )
     assert_single_escaped(index_page, "dashboard/index.html")
     assert_single_escaped(methodology_page, "dashboard/methodology.html")
@@ -125,6 +133,10 @@ def main() -> None:
     METHODOLOGY_OUT.write_text(methodology_page, encoding="utf-8")
     if OG_SOURCE.exists():
         shutil.copyfile(OG_SOURCE, OG_OUT)
+    for source, destination in STATIC_ASSETS:
+        if not source.exists():
+            raise FileNotFoundError(f"Missing required public asset: {source}")
+        shutil.copyfile(source, destination)
     word_count = visible_word_count(index_page)
     print(f"Validated {data_files['metrics']} + {data_files['claims']}")
     print(f"Validated {len(research['questions']['questions'])} research questions across three evidence lanes")

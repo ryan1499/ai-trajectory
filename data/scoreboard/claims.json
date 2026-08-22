@@ -377,6 +377,29 @@
               "The gap is only ~2x, within Epoch's stated uncertainty on the Grok 4 point estimate, and the newest 2026 models have no published estimates — a 1e27 run may already have happened unrecorded. Not scored 'falsified' for exactly this reason."
             ]
           }
+        },
+        {
+          "status": "indeterminate",
+          "confidence": 35,
+          "confidence_level": "low",
+          "as_of": "2026-08",
+          "evidence": "Correction: the Dec 2025 deadline has passed, but public training-compute estimates are right-censored for newer frontier models and the reported gap is within the measurement uncertainty. The public record therefore cannot establish whether a 1e27 FLOP run occurred in the stated window.",
+          "counterargument": "No confirmed 1e27 FLOP run has appeared more than six months after the deadline, so the public evidence leans against the milestone even though it cannot resolve it.",
+          "evidence_urls": [
+            "https://epoch.ai/data/notable-ai-models"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "1e27 FLOP training run",
+            "deadline": "2025-12",
+            "observation_metric_id": "largest-training-run-flop",
+            "measurement_relation": "direct",
+            "comparison_rule": "Use indeterminate after the deadline when newer runs are not publicly observable and the available estimate cannot distinguish a miss from an undisclosed success.",
+            "uncertainty_drivers": [
+              "New frontier training runs are not comprehensively disclosed, and the remaining factor-of-two gap is within the uncertainty of available estimates."
+            ]
+          }
         }
       ],
       "measurement_relation": {
@@ -464,6 +487,29 @@
               "The confirming data ends Aug 2025, one month before the claim was published, so almost none of the 1-2 year window it forecasts has been measured. The same piece predicts the slowdown that would falsify it."
             ]
           }
+        },
+        {
+          "status": "pending",
+          "confidence": 35,
+          "confidence_level": "low",
+          "as_of": "2026-08",
+          "evidence": "Correction: Epoch's published top-5 series ends in Aug 2025, before this Sep 2025 continuation claim. It provides context for the starting level, but no post-publication observation yet tests whether the claimed 5x/year continuation occurred.",
+          "counterargument": "The pre-publication trend is relevant background and is close to the claimed rate; it may become supporting evidence once the source publishes a post-publication observation, but it cannot make a prospective claim on-track by itself.",
+          "evidence_urls": [
+            "https://epoch.ai/trends"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "~5x/yr training-compute growth sustained",
+            "deadline": "2027-09",
+            "observation_metric_id": "frontier-training-compute",
+            "measurement_relation": "direct",
+            "comparison_rule": "Do not assign an on-track, ahead, or behind status until the recorded series contains an observation after the Sep 2025 publication date.",
+            "uncertainty_drivers": [
+              "The source has not published a post-publication point; the continuation window is still open."
+            ]
+          }
         }
       ],
       "measurement_relation": {
@@ -483,12 +529,13 @@
         "value": "~1e36 effective FLOP (2020-algorithms) to train AGI",
         "by": "undated threshold"
       },
-      "scorability": "scored",
+      "scorability": "context-only",
       "resolution_history": [
         {
           "status": "pending",
           "confidence": 50,
           "as_of": "2026-07",
+          "legacy_relation": "translated",
           "evidence": "Frontier raw compute (5e26) sits ~9.5 OOM below the median anchor; even crediting ~2 OOM of post-2020 algorithmic efficiency, reality is ~7+ OOM short — useful mainly as chart context showing how far the model camp's central anchor sits above the measured frontier.",
           "counterargument": "The +/-3 OOM band and the effective-vs-raw conversion make this the least falsifiable overlay on this metric; it earns its place as context, not as a scoreable bet.",
           "evidence_urls": [
@@ -506,12 +553,34 @@
               "The +/-3 OOM band and the effective-vs-raw conversion make this the least falsifiable overlay on this metric; it earns its place as context, not as a scoreable bet."
             ]
           }
+        },
+        {
+          "status": "pending",
+          "confidence": 30,
+          "confidence_level": "low",
+          "as_of": "2026-08",
+          "evidence": "Correction: this is an undated model parameter, not a falsifiable forecast. The raw-to-effective FLOP conversion and broad uncertainty band make the distance from the frontier useful context, but not a status-bearing comparison.",
+          "counterargument": "The parameter remains relevant to a compute-centric model of takeoff, and future work could turn a clearly dated, operationalized version into a scoreable claim.",
+          "evidence_urls": [
+            "https://epoch.ai/data/notable-ai-models"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "context-only",
+            "target": "~1e36 effective FLOP (2020-algorithms) to train AGI",
+            "deadline": "undated threshold",
+            "observation_metric_id": "largest-training-run-flop",
+            "measurement_relation": "context",
+            "comparison_rule": "Retain as a labelled contextual model parameter. Exclude it from comparable-claim totals and forecast-status judgments.",
+            "uncertainty_drivers": [
+              "No date, no operational AGI threshold, and no settled raw-to-effective conversion are recorded."
+            ]
+          }
         }
       ],
       "measurement_relation": {
-        "type": "translated",
-        "note": "Raw training FLOP is translated into 2020-algorithm-equivalent FLOP using the separately tracked algorithmic-efficiency improvement.",
-        "formula": "effective_2020_FLOP = raw_training_FLOP x algorithmic_efficiency_multiplier"
+        "type": "context",
+        "note": "This undated model parameter is retained as contextual distance from the measured frontier, not as a scoreable forecast."
       }
     },
     {
@@ -961,6 +1030,7 @@
           "status": "behind",
           "confidence": 45,
           "as_of": "2026-07",
+          "legacy_relation": "direct",
           "evidence": "The largest verified single-company training cluster is ~0.95 GW (xAI); OpenAI's energized Stargate capacity is ~0.4-0.6 GW plus shares of Microsoft sites. No single company shows evidence of 6 GW of dedicated AI power in 2026 — the scenario's global figure is tracking but its concentration in one leader is not.",
           "counterargument": "Company-wide fleets across all sites (especially OpenAI-on-Azure and Google's TPU estate) are poorly public — a leading company's TOTAL ai power could plausibly reach several GW; 'behind' rests on the verified-single-site lens.",
           "evidence_urls": [
@@ -978,11 +1048,34 @@
               "Company-wide fleets across all sites (especially OpenAI-on-Azure and Google's TPU estate) are poorly public — a leading company's TOTAL ai power could plausibly reach several GW; 'behind' rests on the verified-single-site lens."
             ]
           }
+        },
+        {
+          "status": "pending",
+          "confidence": 35,
+          "confidence_level": "low",
+          "as_of": "2026-08",
+          "evidence": "Correction: the public record identifies the largest known single cluster, not the total AI power of a leading company across its fleet. That narrower observation is useful directional context but cannot directly determine whether the scenario's company-wide 6 GW target is on pace.",
+          "counterargument": "A verified, company-level fleet inventory on a consistent IT-power basis could make this a direct test; such an inventory is not currently public.",
+          "evidence_urls": [
+            "https://epoch.ai/data/ai-data-centers"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "leading AI company at 6 GW peak power",
+            "deadline": "2026-12",
+            "observation_metric_id": "frontier-cluster-power",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Treat the largest public cluster only as a directional proxy. Keep the status pending until a comparable company-wide total is evidenced or the deadline closes with sufficient coverage.",
+            "uncertainty_drivers": [
+              "Company fleet boundaries, contracted cloud capacity, and IT-versus-facility power are not publicly measured on a comparable basis."
+            ]
+          }
         }
       ],
       "measurement_relation": {
-        "type": "direct",
-        "note": "The published target and assessment evidence refer to the same measured quantity or milestone."
+        "type": "proxy",
+        "note": "The tracked metric is the largest single public cluster, while the scenario names a leading company's total peak AI power across its fleet."
       }
     },
     {
@@ -1527,6 +1620,29 @@
             "comparison_rule": "Use the named metric only as directional evidence; do not treat it as a like-for-like test.",
             "uncertainty_drivers": [
               "This claim may be permanently unresolvable in public: successful espionage is precisely what does not get reported, so absence of evidence is weak evidence here. It is kept at 'pending' rather than scored as missed for that reason."
+            ]
+          }
+        },
+        {
+          "status": "indeterminate",
+          "confidence": 25,
+          "confidence_level": "low",
+          "as_of": "2026-08",
+          "evidence": "Correction: the Jun 2026 deadline has passed without public confirmation, but successful espionage may remain classified or undisclosed. Absence of public reporting cannot establish that the event did not occur.",
+          "counterargument": "No named investigation, indictment, disclosure, or independently documented incident supports the specific claim, so there is also no positive public evidence that it occurred.",
+          "evidence_urls": [
+            "https://www.federalregister.gov/developers/documentation/api/v1"
+          ],
+          "provenance_scope": "metric-series",
+          "assessment_basis": {
+            "test_type": "target-and-deadline",
+            "target": "Key AGI algorithmic secrets leaked to the PRC",
+            "deadline": "2026-06",
+            "observation_metric_id": "policy-events",
+            "measurement_relation": "proxy",
+            "comparison_rule": "Use indeterminate after the deadline because the tracked policy series cannot observe a potentially classified espionage event and public silence is not a valid negative measurement.",
+            "uncertainty_drivers": [
+              "The event is intrinsically difficult to observe publicly, and the attached metric is only a directional proxy."
             ]
           }
         }
