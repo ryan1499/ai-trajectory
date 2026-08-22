@@ -2430,12 +2430,26 @@ def render_forecast_comparison(
             for status in STATUS_ORDER
             if counts[status]
         )
-        claim_links = "".join(
-            f'<li><a href="#claim-{esc(claim["id"])}"><span>{esc(STAGE_COPY.get(metric_map.get(claim["metric_id"], {}).get("stage", ""), (claim["metric_id"], ""))[0])}</span>'
-            f'<strong>{esc(claim["predicted"]["value"])}</strong>'
-            f'{"<span class=\"relation-marker relation-context\">context only</span>" if claim.get("scorability") == "context-only" or claim["measurement_relation"]["type"] == "context" else status_badge(current_resolution(claim)["status"])}</a></li>'
-            for claim in source_claims
-        )
+        claim_link_items = []
+        for claim in source_claims:
+            context_only = (
+                claim.get("scorability") == "context-only"
+                or claim["measurement_relation"]["type"] == "context"
+            )
+            assessment_marker = (
+                '<span class="relation-marker relation-context">context only</span>'
+                if context_only
+                else status_badge(current_resolution(claim)["status"])
+            )
+            stage_label = STAGE_COPY.get(
+                metric_map.get(claim["metric_id"], {}).get("stage", ""),
+                (claim["metric_id"], ""),
+            )[0]
+            claim_link_items.append(
+                f'<li><a href="#claim-{esc(claim["id"])}"><span>{esc(stage_label)}</span>'
+                f'<strong>{esc(claim["predicted"]["value"])}</strong>{assessment_marker}</a></li>'
+            )
+        claim_links = "".join(claim_link_items)
         year = str(source.get("published", "undated"))
         rows.append(f"""
           <tr>
