@@ -2,8 +2,9 @@
 """Redacted Git identity and staged-content privacy checks for AI Trajectory.
 
 This utility deliberately never prints an email address. It is safe to use in
-local hooks and CI output. It accepts only GitHub noreply domains for commit
-metadata and rejects any non-noreply email address introduced in staged lines.
+local hooks and CI output. It requires GitHub user-noreply author identities,
+allows only GitHub's platform-generated merge identity as a committer exception,
+and rejects any non-noreply email address introduced in staged lines.
 """
 
 from __future__ import annotations
@@ -19,6 +20,7 @@ from pathlib import Path
 NOREPLY_DOMAIN = "users.noreply.github.com"
 EMAIL_RE = re.compile(r"(?<![\w.+-])[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\.[A-Za-z]{2,})(?![\w.-])")
 NOREPLY_EMAIL_RE = re.compile(r"^[^@\s]+@users\.noreply\.github\.com$", re.IGNORECASE)
+GITHUB_PLATFORM_COMMITTER = "@".join(("noreply", "github.com"))
 
 
 def git(*args: str) -> subprocess.CompletedProcess[str]:
@@ -34,6 +36,10 @@ def git(*args: str) -> subprocess.CompletedProcess[str]:
 
 def is_noreply(email: str) -> bool:
     return bool(NOREPLY_EMAIL_RE.fullmatch(email))
+
+
+def is_allowed_committer(email: str) -> bool:
+    return is_noreply(email) or email.casefold() == GITHUB_PLATFORM_COMMITTER
 
 
 def report(name: str, passed: bool, **counts: int) -> bool:
@@ -61,7 +67,7 @@ def check_config() -> bool:
     )
 
 
-def history_emails() -> Iterable[str]:
+def history_identities() -> Iterable[tuple[str, str]]:
     # Only the public history reachable from the checked-out ref belongs in
     # this check. Local archive/remotes may intentionally retain old history.
     # CI fetches this public ref's complete ancestry before running the check.
@@ -74,15 +80,25 @@ def history_emails() -> Iterable[str]:
     identities = git("log", "HEAD", "--format=%ae%x00%ce%x00")
     if identities.returncode != 0:
         return ()
-    return (email for email in identities.stdout.split("\x00") if email.strip())
+    emails = [email.strip() for email in identities.stdout.split("\x00") if email.strip()]
+    return zip(emails[0::2], emails[1::2], strict=True)
 
 
 def check_history() -> bool:
     revisions = git("rev-list", "HEAD")
     commit_count = len([line for line in revisions.stdout.splitlines() if line]) if revisions.returncode == 0 else 0
-    emails = list(history_emails())
-    invalid = sum(not is_noreply(email.strip()) for email in emails)
-    return report("history", invalid == 0, commits=commit_count, invalid_identities=invalid)
+    identities = list(history_identities())
+    invalid_authors = sum(not is_noreply(author) for author, _ in identities)
+    invalid_committers = sum(not is_allowed_committer(committer) for _, committer in identities)
+    invalid = invalid_authors + invalid_committers
+    return report(
+        "history",
+        invalid == 0,
+        commits=commit_count,
+        invalid_identities=invalid,
+        invalid_authors=invalid_authors,
+        invalid_committers=invalid_committers,
+    )
 
 
 def check_staged() -> bool:
