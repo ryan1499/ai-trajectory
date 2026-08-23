@@ -140,7 +140,7 @@ h1 em{font-weight:500;color:var(--signal)}
 .scoreboard-nav a{text-decoration:none;white-space:nowrap;color:var(--ink-soft)}
 .scoreboard-nav a:hover{color:var(--signal)}
 
-.scoreboard-section{max-width:var(--max);margin:0 auto;padding:76px 28px;content-visibility:auto;contain-intrinsic-size:auto 780px}
+.scoreboard-section{max-width:var(--max);margin:0 auto;padding:76px 28px}
 .scoreboard-section+.scoreboard-section{border-top:1px solid var(--line)}
 .section-heading{max-width:var(--prose);margin-bottom:38px}
 .section-heading>span{display:block;margin-bottom:8px;color:var(--signal);font-size:.7rem;letter-spacing:.11em;text-transform:uppercase}
@@ -392,14 +392,30 @@ h1{font-size:clamp(3.5rem,6.2vw,5.8rem);line-height:.96;max-width:690px}
 .hero-status{display:inline-flex;gap:4px;align-items:center;padding:4px 7px;border:1px solid var(--line);background:var(--paper);color:var(--ink-soft)}
 .hero-status b{color:currentColor}
 
+.subpage-header{border-bottom:1px solid var(--line);background:var(--paper-raised)}
+.subpage-intro{max-width:var(--max);width:calc(100% - 56px);margin:0 auto;padding:clamp(54px,8vw,94px) 0 clamp(48px,7vw,76px)}
+.subpage-intro .eyebrow{margin-bottom:17px}
+.subpage-intro h1{max-width:900px;font-size:clamp(3.2rem,6.4vw,5.7rem)}
+.subpage-intro>p:last-child{max-width:760px;margin:24px 0 0;font-size:clamp(1.05rem,1.6vw,1.24rem);line-height:1.58;color:var(--ink-soft)}
+.page-local-nav{display:flex;align-items:center;gap:18px;max-width:var(--max);margin:0 auto;padding:18px 28px;border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:.66rem;letter-spacing:.04em;text-transform:uppercase}
+.page-local-nav span{margin-right:4px;color:var(--ink-faint)}
+.page-local-nav a{color:var(--moss);text-decoration:none;border-bottom:1px solid transparent}
+.page-local-nav a:hover{border-color:currentColor}
+.destination-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);background:var(--line);gap:1px}
+.destination-card{position:relative;min-height:230px;padding:28px 58px 28px 28px;background:var(--paper-raised);color:var(--ink);text-decoration:none}
+.destination-card>span{display:block;margin-bottom:18px;font-family:var(--font-mono);font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--moss)}
+.destination-card>strong{display:block;max-width:18ch;font-family:var(--font-display);font-size:2rem;line-height:1.08;font-weight:400}
+.destination-card>p{max-width:48ch;margin:14px 0 0;font-size:.92rem;line-height:1.58;color:var(--ink-soft)}
+.destination-card>i{position:absolute;right:28px;top:29px;font-style:normal;color:var(--moss);font-size:1.25rem}
+.destination-card:hover{background:#edf1ff}.destination-card:hover>i{transform:translateX(3px)}
+.section-forward{margin:24px 0 0}.section-forward a{font-weight:700;color:var(--moss)}
+.legacy-anchor{display:block;position:relative;top:-64px;visibility:hidden}
+
 .scoreboard-nav{padding:12px 20px;gap:34px;background:rgba(251,251,248,.94);font-family:var(--font-mono);font-size:.64rem;letter-spacing:.08em}
 .scoreboard-nav a{color:var(--ink-soft)}
 .scoreboard-nav a{display:inline-flex;align-items:center;min-height:44px}
 .scoreboard-nav a:hover{color:var(--moss)}
-.view-switch{display:inline-flex;margin-left:auto;border:1px solid var(--line);background:var(--paper)}
-.view-switch button{min-height:40px;border:0;border-left:1px solid var(--line);padding:8px 10px;background:transparent;font:inherit;font-size:.57rem;text-transform:uppercase;color:var(--ink-faint);cursor:pointer}.view-switch button:first-child{border-left:0}
-.view-switch button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-html[data-view="guided"] .research-layer,html[data-view="guided"] .research-nav{display:none!important}
+.scoreboard-nav a[aria-current="page"]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--moss)}
 .scoreboard-section{padding:88px 28px}
 .section-heading{margin-bottom:42px}
 .section-heading>span{font-size:.65rem;color:var(--moss);font-weight:600}
@@ -695,11 +711,14 @@ footer{font-family:var(--font-mono);border-top:1px solid var(--line);font-size:.
   .hero-pulse{display:block}
   .hero-pulse>div{justify-content:flex-start;margin-top:10px}
   .takeoff-model{padding:22px 20px}
+  .subpage-intro{width:calc(100% - 40px);padding:46px 0 50px}.subpage-intro h1{font-size:clamp(3rem,15vw,4.4rem)}.subpage-intro>p:last-child{font-size:1rem}
+  .page-local-nav{overflow-x:auto;gap:14px;padding:15px 18px;white-space:nowrap}.page-local-nav span{display:none}
+  .destination-grid{grid-template-columns:1fr}.destination-card{min-height:0;padding:24px 54px 24px 22px}.destination-card>strong{font-size:1.8rem}
   .scoreboard-section{padding:62px 18px}
   .section-heading h2{font-size:clamp(2.4rem,13vw,3.4rem)}
   .overview-card{padding:24px 20px}
   .checkpoint-grid{grid-template-columns:1fr}.checkpoint-card p{min-height:0}
-  .view-switch{position:sticky;right:0}.latest-observation{grid-template-columns:1fr;padding-inline:18px}.assessment-basis dl>div{grid-template-columns:1fr;gap:4px}
+  .latest-observation{grid-template-columns:1fr;padding-inline:18px}.assessment-basis dl>div{grid-template-columns:1fr;gap:4px}
   .reading-guide{display:grid;gap:8px}
   .health-row{grid-template-columns:58px 1fr}.health-row details{grid-column:2}
   .crux-card>summary{grid-template-columns:28px minmax(0,1fr);padding-inline:8px;gap:8px 10px}.crux-card>summary>.crux-summary-lean,.safety-card>summary>.safety-summary-viz{grid-column:2;width:min(100%,220px);margin-top:4px}.safety-summary-viz .crux-summary-lean{grid-column:auto;width:100%;margin-top:0}.crux-body{padding:0 8px 22px}.crux-poles,.crux-columns{grid-template-columns:1fr}.crux-lean-heading{grid-template-columns:1fr}.crux-lean-heading>span{grid-column:auto}.crux-lean-heading>i{margin-top:2px}.crux-beam-labels{gap:10px}
@@ -725,14 +744,7 @@ footer{font-family:var(--font-mono);border-top:1px solid var(--line);font-size:.
    explicit choice to inspect the underlying lanes. The classes deliberately do
    not prescribe the data model, so question records can evolve independently. */
 .disclosure-hint{margin:12px 0 0;font-size:.72rem;line-height:1.5;color:var(--ink-faint)}
-.guided-only{display:initial}.research-only{display:none}
-html[data-view="guided"] .hero-pulse{display:none}
-html[data-view="guided"]:not(.checkpoints-expanded) .checkpoint-card:nth-child(n+4){display:none}
-.checkpoint-more{margin-top:16px;padding:0;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--moss);font-family:var(--font-mono);font-size:.63rem;font-weight:600;letter-spacing:.03em;cursor:pointer}
-html[data-view="research"] .guided-only{display:none!important}
-html[data-view="research"] .research-only{display:revert}
-html[data-view="research"] .checkpoint-card:nth-child(n+4){display:block}
-html[data-view="research"] .checkpoint-more{display:none}
+.checkpoint-section#forecast-preview .checkpoint-card:nth-child(n+4){display:none}
 
 .question-map{--question-accent:var(--moss);margin-top:34px}
 .question-map-header{display:flex;justify-content:space-between;align-items:end;gap:22px;margin-bottom:16px}
@@ -761,8 +773,6 @@ html[data-view="research"] .checkpoint-more{display:none}
 .question-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}.question-actions a,.question-actions button{padding:7px 9px;border:1px solid var(--line);background:var(--paper);color:var(--moss);font-family:var(--font-mono);font-size:.56rem;font-weight:600;letter-spacing:.03em;text-decoration:none;cursor:pointer}.question-actions a:hover,.question-actions button:hover{border-color:var(--moss);background:#edf1ff}
 .question-actions a,.question-actions button{display:inline-flex;align-items:center;min-height:44px}
 .question-map-more{margin-top:16px;padding:10px 12px;border:1px solid var(--line);background:var(--paper-raised);color:var(--moss);font-family:var(--font-mono);font-size:.61rem;font-weight:600;letter-spacing:.03em;cursor:pointer}.question-map-more:hover{border-color:var(--moss)}
-html[data-view="guided"] .question-map .question-card[data-research-only="true"]{display:none}
-html[data-view="research"] .question-map .question-card[data-research-only="true"]{display:flex}
 
 .section-drawer{border:1px solid var(--line);background:var(--paper-raised)}
 .section-drawer>summary{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:20px 22px;cursor:pointer;list-style:none;color:var(--ink)}
@@ -788,7 +798,6 @@ html[data-view="research"] .question-map .question-card[data-research-only="true
 .rd-explorer{margin-top:32px;border:1px solid #465066}.rd-explorer>summary{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:19px 20px;cursor:pointer;list-style:none}.rd-explorer>summary::-webkit-details-marker{display:none}.rd-explorer>summary span{font-family:var(--font-display);font-size:1.45rem;color:white}.rd-explorer>summary i{font-family:var(--font-mono);font-size:.56rem;text-transform:uppercase;font-style:normal;color:#aabcf8}.rd-explorer>summary i::before{content:'+';margin-right:7px}.rd-explorer[open]>summary i::before{content:'−'}.rd-explorer[open]>summary{border-bottom:1px solid #465066}.rd-explorer .rd-columns{margin-top:0;padding:28px}
 
 @media (max-width:640px){
-  html[data-view="guided"]:not(.checkpoints-expanded) .checkpoint-card:nth-child(n+3){display:none}
   .question-map{margin-top:26px}.question-map-header{display:block}.question-map-key{margin-top:12px}.question-map-grid{grid-template-columns:1fr}.question-card{padding:21px 18px}.question-card .question-number{margin-bottom:17px}.question-card h3{font-size:1.6rem}.question-drawer>summary{font-size:.58rem}.lane{padding:13px}.question-map-more{width:100%}
   .section-drawer>summary{padding:17px 16px}.section-drawer>summary span{font-size:1.2rem}.evidence-drawer>.metric-stack{padding:12px}.question-index>.question-map{padding:12px}
   .rd-focus{padding-inline:18px}.rd-focus-heading,.rd-columns{grid-template-columns:1fr;gap:28px}.rd-summary-grid{grid-template-columns:1fr}.rd-path{grid-template-columns:1fr}.rd-path>i{transform:rotate(90deg);justify-self:start;margin-left:7px}.rd-explorer>summary{align-items:flex-start;padding:16px}.rd-explorer>summary span{font-size:1.2rem}.rd-explorer>summary i{max-width:110px;text-align:right}.rd-explorer .rd-columns{padding:16px}.rd-evidence-card>summary{grid-template-columns:1fr}.rd-evidence-card>summary>span,.rd-evidence-card>summary>strong,.rd-evidence-card>summary>i{grid-column:1}.rd-evidence-card>summary>i{justify-self:start}.rd-evidence-body{padding-left:2px}.rd-claim-list a{grid-template-columns:1fr auto}.rd-claim-list a>span{grid-column:1/-1}
@@ -808,7 +817,7 @@ html{font-size:clamp(17px,calc(16.6px + .08vw),18px)}
 body{font-size:1rem;line-height:1.6}
 small{font-size:.72rem}
 
-.hero-mast,.scoreboard-nav,.view-switch button,.eyebrow,.model-heading span,.model-step,
+.hero-mast,.scoreboard-nav,.eyebrow,.model-heading span,.model-step,
 .model-question span,.hero-pulse,.section-heading>span,.overview-number,.overview-signal span,
 .checkpoint-card>div>span,.checkpoint-card>a,.reading-guide,.health-details>summary,.health-state,
 .health-row details>summary,.crux-summary-lean>i,.crux-poles span,.crux-synthesis>span,
@@ -824,7 +833,7 @@ small{font-size:.72rem}
 .chart-data th,.supporting-drawer>summary span,.supporting-drawer>summary i,.rung-details>summary,
 .chart-heading>span,.chart-legend,.metric-details>summary,.measurement-details>summary,
 .metric-meta dt,.measurement-notes strong,.resolution-copy strong,.status-badge,.camp-chip,
-.claim-prediction dt,.build-provenance,footer,.checkpoint-more,.question-map-key,
+.claim-prediction dt,.build-provenance,footer,.question-map-key,
 .question-card .question-number,.coverage-state,.question-drawer>summary,.lane h4,.lane .lane-label,
 .question-actions a,.question-actions button,.question-map-more,.section-drawer>summary i,
 .rd-reading>span,.rd-summary-grid span,.rd-column-heading span,.rd-aggregate-card>span,
@@ -839,10 +848,9 @@ small{font-size:.72rem}
    scroll tray. The persistent track and fade make additional destinations clear
    without allowing the control to cover an in-between link. */
 @media (max-width:640px){
-  .scoreboard-nav{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0;padding:8px 0 4px 12px;align-items:start}
+  .scoreboard-nav{display:block;padding:8px 12px 4px}
   .nav-links-scroll{display:flex;gap:16px;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;scrollbar-color:var(--moss) var(--paper-warm);scroll-padding-inline:6px;background-image:linear-gradient(90deg,rgba(251,251,248,0) calc(100% - 24px),rgba(251,251,248,.97));background-size:100% 100%;background-repeat:no-repeat}
   .nav-links-scroll::-webkit-scrollbar{height:5px}.nav-links-scroll::-webkit-scrollbar-track{background:var(--paper-warm)}.nav-links-scroll::-webkit-scrollbar-thumb{background:var(--moss);border-radius:99px}
-  .view-switch{position:static;margin:0 8px 0 4px;align-self:start}.view-switch button{min-height:44px;padding-inline:8px}
 }
 .hero-lede{font-size:clamp(1.12rem,1.5vw,1.28rem)}
 .hero-actions a{font-size:.96rem}.hero-scope{font-size:.86rem}
@@ -912,7 +920,11 @@ small{font-size:.72rem}
 <footer class="site-footer">
   <p>Research, data architecture, design, and implementation by <a href="https://ryancombes.com">Ryan Combes</a>, with AI-assisted research.</p>
   <nav class="site-footer-nav" aria-label="Footer navigation">
-    <a href="index.html">Evidence map</a>
+    <a href="index.html">Overview</a>
+    <a href="evidence.html">Evidence</a>
+    <a href="forecasts.html">Forecasts</a>
+    <a href="safety.html">Safety</a>
+    <a href="questions.html">Research map</a>
     <a href="methodology.html">Methodology</a>
     <a href="https://github.com/ryan1499/ai-trajectory" rel="noopener noreferrer">Source</a>
   </nav>
@@ -922,17 +934,6 @@ small{font-size:.72rem}
    question explorer. It intentionally only enhances explicit data hooks: no
    research content is silently removed from the document or hidden from links. */
 (function () {
-  var page = document.documentElement;
-  var compactQuery = window.matchMedia('(max-width: 640px)');
-
-  function currentView() {
-    return page.dataset.view === 'research' ? 'research' : 'guided';
-  }
-
-  function guidedLimit() {
-    return compactQuery.matches ? 2 : 3;
-  }
-
   function makeButton(className) {
     var button = document.createElement('button');
     button.type = 'button';
@@ -943,36 +944,6 @@ small{font-size:.72rem}
   function ensureId(element, fallback) {
     if (!element.id) element.id = fallback;
     return element.id;
-  }
-
-  function setCheckpointControl() {
-    var grid = document.querySelector('.checkpoint-grid');
-    if (!grid || grid.dataset.progressiveReady === 'true') return;
-    var cards = Array.prototype.slice.call(grid.querySelectorAll(':scope > .checkpoint-card'));
-    if (cards.length <= guidedLimit()) return;
-    grid.dataset.progressiveReady = 'true';
-    var control = makeButton('checkpoint-more');
-    control.dataset.checkpointControl = 'true';
-    control.setAttribute('aria-controls', ensureId(grid, 'checkpoint-list'));
-    grid.insertAdjacentElement('afterend', control);
-    control.addEventListener('click', function () {
-      var open = !page.classList.contains('checkpoints-expanded');
-      page.classList.toggle('checkpoints-expanded', open);
-      syncCheckpointControl();
-    });
-    syncCheckpointControl();
-  }
-
-  function syncCheckpointControl() {
-    var control = document.querySelector('[data-checkpoint-control]');
-    var grid = document.querySelector('.checkpoint-grid');
-    if (!control || !grid) return;
-    var count = grid.querySelectorAll(':scope > .checkpoint-card').length;
-    var expanded = page.classList.contains('checkpoints-expanded');
-    var hiddenCount = Math.max(0, count - guidedLimit());
-    control.hidden = currentView() === 'research' || hiddenCount === 0;
-    control.setAttribute('aria-expanded', String(expanded));
-    control.textContent = expanded ? 'Show fewer checkpoints' : 'Show ' + hiddenCount + ' more checkpoints';
   }
 
   function setQuestionMaps() {
@@ -1002,18 +973,16 @@ small{font-size:.72rem}
     var cards = Array.prototype.slice.call(map.querySelectorAll('[data-question-card]'));
     var limit = Number(map.dataset.guidedLimit || 4);
     var expanded = map.classList.contains('questions-expanded');
-    var research = currentView() === 'research';
-    var eligible = cards.filter(function (card) { return card.dataset.researchOnly !== 'true'; });
+    var eligible = cards;
     cards.forEach(function (card) {
-      var researchOnly = card.dataset.researchOnly === 'true';
       var ordinal = eligible.indexOf(card);
-      var hide = !research && (researchOnly || (!expanded && ordinal >= limit));
+      var hide = !expanded && ordinal >= limit;
       card.hidden = hide;
     });
     var control = map.querySelector('[data-question-map-control]');
     if (!control) return;
     var totalExtra = Math.max(0, eligible.length - limit);
-    control.hidden = research || totalExtra === 0;
+    control.hidden = totalExtra === 0;
     control.setAttribute('aria-expanded', String(expanded));
     control.textContent = expanded ? 'Show fewer questions' : 'Show ' + totalExtra + ' more questions';
   }
@@ -1038,21 +1007,17 @@ small{font-size:.72rem}
   function setResponsiveNavigation() {
     var nav = document.querySelector('.scoreboard-nav');
     if (!nav || nav.dataset.responsiveReady === 'true') return;
-    var switcher = nav.querySelector('.view-switch');
-    if (!switcher) return;
     var tray = document.createElement('div');
     tray.className = 'nav-links-scroll';
     tray.setAttribute('aria-label', 'Section navigation');
     Array.prototype.slice.call(nav.children).forEach(function (child) {
-      if (child !== switcher) tray.appendChild(child);
+      tray.appendChild(child);
     });
-    nav.insertBefore(tray, switcher);
+    nav.appendChild(tray);
     nav.dataset.responsiveReady = 'true';
   }
 
   function syncDisclosureState() {
-    setCheckpointControl();
-    syncCheckpointControl();
     setQuestionMaps();
     document.querySelectorAll('[data-progressive-questions]').forEach(syncQuestionMap);
     setDisclosureLabels();
@@ -1075,15 +1040,14 @@ small{font-size:.72rem}
       var safetyDrawer = target.closest('.section-drawer');
       if (safetyDrawer) safetyDrawer.open = true;
     }
+    var disclosure = target.matches && target.matches('details') ? target : target.closest && target.closest('details');
+    while (disclosure) {
+      disclosure.open = true;
+      disclosure = disclosure.parentElement && disclosure.parentElement.closest('details');
+    }
   }
 
-  document.querySelectorAll('[data-view-button]').forEach(function (button) {
-    button.addEventListener('click', function () { window.setTimeout(syncDisclosureState, 0); });
-  });
-  new MutationObserver(function () { syncDisclosureState(); }).observe(page, { attributes: true, attributeFilter: ['data-view'] });
   window.addEventListener('hashchange', revealLinkedDisclosure);
-  if (compactQuery.addEventListener) compactQuery.addEventListener('change', syncDisclosureState);
-  else compactQuery.addListener(syncDisclosureState);
   setResponsiveNavigation();
   syncDisclosureState();
   revealLinkedDisclosure();

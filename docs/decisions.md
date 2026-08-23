@@ -124,6 +124,10 @@ Revisit if: stable observation IDs are introduced; then reference exact observat
 Metric-level canonical links were being asked to carry point-level provenance they could not always establish, especially for composite capex, revenue, policy, and power series. Every observation now declares either a named underlying series or `compiled-no-point-link`; the latter must carry a structured `provenance_gap_reason`. Tables link the former and visibly classify the latter. Crux evidence stores source label and URL separately. Missing citations are published as coverage debt, never backfilled by guesswork.
 Revisit if: every composite point gains a direct filing, law, or announcement citation. Tighten validation rather than hiding the old gaps.
 
+**D28. Split the evidence map by reader task, not data volume. (H — decided 2026-08-23)**
+The single page had grown into twelve major sections and interrupted one forecast journey with evidence-health and safety material. It also used Guided/Research mode to hide entire topic areas, making the density control an alternate information architecture. Replaced that structure with six canonical destinations: Overview, Evidence, Forecasts, Safety, Research map, and Methodology. Forecasts now stays in the sequence Watch next → comparison → milestones → revisions. Evidence owns measurements and source audit trails; Safety and the ten-question Research map remain explicitly separate. Old one-page hashes migrate to the new canonical destinations, and the build validates every generated page and fragment link. This also supersedes D19's original three-question wording: the overview has four questions as established in D24.
+Revisit if: task-based user testing shows readers consistently need two destinations at once. Prefer contextual cross-links or a compact page-local index over recombining the site into one scroll or restoring a global density mode.
+
 ---
 
 ## Known weaknesses (the honest list — attack these first)

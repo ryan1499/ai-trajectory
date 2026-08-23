@@ -25,6 +25,25 @@ safety questions separate from measurement. Not a doom-o-meter and not a single 
 
 The build validates before it renders: invalid data fails rather than producing a wrong page.
 
+## Public information architecture
+
+The generated site has six canonical destinations: `index.html` (Overview), `evidence.html`,
+`forecasts.html`, `safety.html`, `questions.html` (Research map), and `methodology.html`. Keep topics
+grouped by reader task:
+
+- Evidence owns AI R&D evidence, every non-milestone claim card, core measurements, supporting
+  signals, and data coverage.
+- Forecasts owns Watch next, source comparison, milestone claims, and forecast revisions—in that
+  order.
+- Safety owns the eight-question hazard-to-recovery chain; Research map owns the separate
+  ten-question cross-cutting taxonomy.
+
+Use `metric_href`, `claim_href`, and `safety_href` for cross-page links. Milestone claims are
+canonical on Forecasts; all other claim cards are canonical on Evidence. Preserve the legacy-hash
+migration in the overview and keep `scripts/build.py`'s cross-page link/fragment validation green.
+Do not restore the global Guided/Research toggle: page boundaries provide the information hierarchy,
+while `<details>` provides progressive disclosure within a page.
+
 ## Privacy is a hard release requirement
 
 - **Never use, print, save, or commit a personal email address.** This includes Git configuration,

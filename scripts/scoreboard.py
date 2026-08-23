@@ -61,6 +61,21 @@ def esc(value: Any) -> str:
     return html.escape(str(value), quote=True)
 
 
+def metric_href(metric_id: str) -> str:
+    """Canonical public location for a measurement record."""
+    return f'evidence.html#metric-{esc(metric_id)}'
+
+
+def claim_href(claim: dict[str, Any]) -> str:
+    """Keep milestone claims with the forecast ladder and all others with evidence."""
+    page = "forecasts.html" if claim.get("ladder_rung") else "evidence.html"
+    return f'{page}#claim-{esc(claim["id"])}'
+
+
+def safety_href(question_id: str) -> str:
+    return f'safety.html#safety-{esc(question_id)}'
+
+
 def disclosure_label(open_label: str, close_label: str, *, tag: str = "span") -> str:
     """A label whose text follows the native open state of its parent details."""
     return (
@@ -1756,7 +1771,7 @@ window.addEventListener('resize',function(){clearTimeout(rT);rT=setTimeout(draw,
 
 def render_hero_strata(stage_anchors: dict[str, str]) -> str:
     """Explain the causal model without asking a newcomer to decode a chart first."""
-    anchors = {stage: f"metric-{esc(metric_id)}" for stage, metric_id in stage_anchors.items()}
+    anchors = {stage: metric_href(metric_id) for stage, metric_id in stage_anchors.items()}
     return f"""
       <aside class="takeoff-model" aria-labelledby="takeoff-model-title">
         <div class="model-heading">
@@ -1766,15 +1781,15 @@ def render_hero_strata(stage_anchors: dict[str, str]) -> str:
         <ol class="model-flow">
           <li>
             <span class="model-step">01</span>
-            <div><strong>Supply grows</strong><p><a href="#{anchors['compute']}">Compute</a>, <a href="#{anchors['capital']}">capital</a>, and <a href="#{anchors['physical']}">power</a> expand what labs can build.</p></div>
+            <div><strong>Supply grows</strong><p><a href="{anchors['compute']}">Compute</a>, <a href="{anchors['capital']}">capital</a>, and <a href="{anchors['physical']}">power</a> expand what labs can build.</p></div>
           </li>
           <li>
             <span class="model-step">02</span>
-            <div><strong>Systems improve</strong><p>Better <a href="#{anchors['algorithms']}">algorithms</a> turn those inputs into greater <a href="#{anchors['capability']}">capability</a>.</p></div>
+            <div><strong>Systems improve</strong><p>Better <a href="{anchors['algorithms']}">algorithms</a> turn those inputs into greater <a href="{anchors['capability']}">capability</a>.</p></div>
           </li>
           <li>
             <span class="model-step">03</span>
-            <div><strong>Progress may compound</strong><p>If AI can <a href="#{anchors['automation']}">automate AI research</a>, each cycle can help accelerate the next.</p></div>
+            <div><strong>Progress may compound</strong><p>If AI can <a href="{anchors['automation']}">automate AI research</a>, each cycle can help accelerate the next.</p></div>
           </li>
         </ol>
         <p class="model-question"><span>The central uncertainty</span> Does the software feedback loop accelerate faster than chips, power, and institutions can keep up?</p>
@@ -1791,20 +1806,10 @@ def render_hero(
 ) -> str:
     data_label = "Seed data preview" if any(name.endswith(".seed.json") for name in data_files.values()) else "Public research prototype"
     strata_visual = render_hero_strata(stage_anchors)
-    counts = {status: 0 for status in STATUS_ORDER}
-    scored_claims = [claim for claim in claims if is_headline_claim(claim)]
-    excluded_claims = [claim for claim in claims if not is_headline_claim(claim)]
-    for claim in scored_claims:
-        counts[current_resolution(claim)["status"]] += 1
-    segments = "".join(
-        f'<span class="hero-status status-text-{slug(status)}"><b>{counts[status]}</b> {esc("confirmed" if status == "resolved-true" else status)}</span>'
-        for status in STATUS_ORDER
-        if counts[status]
-    )
     return f"""
       <header class="scoreboard-hero" id="scoreboard-top">
         <div class="hero-mast">
-          <a href="#scoreboard-top" class="wordmark">AI Trajectory</a>
+          <a href="index.html" class="wordmark">AI Trajectory</a>
           <span>Evidence dashboard · {esc(data_label)}</span>
         </div>
         <div class="hero-stage">
@@ -1820,10 +1825,6 @@ def render_hero(
           </div>
           {strata_visual}
         </div>
-        <div class="hero-pulse" aria-label="Comparable claim status summary">
-          <strong>{len(claims)} claims tracked · {len(scored_claims)} comparable · {len(excluded_claims)} proxy or context</strong>
-          <div>{segments}</div>
-        </div>
       </header>
     """
 
@@ -1837,7 +1838,7 @@ def render_status(
     def signal(stage: str) -> str:
         metric = tier_one[stage]
         return (
-            f'<a class="overview-signal" href="#metric-{esc(stage_anchors[stage])}">'
+            f'<a class="overview-signal" href="{metric_href(stage_anchors[stage])}">'
             f'<span>{esc(STAGE_COPY[stage][0])}</span>'
             f'<strong>{esc(metric.get("verdict", "Open the evidence"))}</strong>'
             '<i aria-hidden="true">→</i></a>'
@@ -1877,7 +1878,7 @@ def render_status(
     policy_signal = ""
     if policy_metric:
         policy_signal = (
-            f'<a class="overview-signal" href="#metric-{esc(policy_metric["id"])}">'
+            f'<a class="overview-signal" href="{metric_href(policy_metric["id"])}">'
             f'<span>Policy</span><strong>{esc(policy_metric.get("verdict", "Open the evidence"))}</strong>'
             '<i aria-hidden="true">→</i></a>'
         )
@@ -1888,7 +1889,7 @@ def render_status(
         <p>Policy is observable. Alignment, verification, and real-world control remain open questions—not inputs to a pretend safety score.</p>
         <div class="overview-signals">
           {policy_signal}
-          <a class="overview-signal" href="#open-questions"><span>Safety</span><strong>Follow risk from hazard through recovery</strong><i aria-hidden="true">→</i></a>
+          <a class="overview-signal" href="safety.html#open-questions"><span>Safety</span><strong>Follow risk from hazard through recovery</strong><i aria-hidden="true">→</i></a>
         </div>
       </article>
     """
@@ -1897,7 +1898,7 @@ def render_status(
         <div class="section-heading">
           <span>Start here</span>
           <h2 id="status-title">The AI trajectory in four questions.</h2>
-          <p>Each question opens into measurements below. Start with the verdict; open the evidence only when you want to audit it.</p>
+          <p>Each question points to its dedicated evidence or safety section. Start with the current reading; follow a link only when you want to audit it.</p>
         </div>
         <div class="overview-grid">{cards}</div>
         <div class="reading-guide">
@@ -1910,7 +1911,14 @@ def render_status(
     """
 
 
-def render_next_checkpoints(claims_data: dict[str, Any], metrics_data: dict[str, Any]) -> str:
+def render_next_checkpoints(
+    claims_data: dict[str, Any],
+    metrics_data: dict[str, Any],
+    *,
+    limit: int = 6,
+    section_id: str = "checkpoints",
+    preview: bool = False,
+) -> str:
     """A repeat-visit surface: the next heterogeneous claims that reality can adjudicate."""
     sources = source_map(claims_data)
     metrics = {metric["id"]: metric for metric in metrics_data["metrics"]}
@@ -1927,7 +1935,7 @@ def render_next_checkpoints(claims_data: dict[str, Any], metrics_data: dict[str,
         candidates.append((window[1], claim))
     candidates.sort(key=lambda item: (item[0], str(item[1]["predicted"].get("by")), item[1]["id"]))
     cards = []
-    for _deadline, claim in candidates[:6]:
+    for _deadline, claim in candidates[:limit]:
         source = sources[claim["source"]]
         metric = metrics[claim["metric_id"]]
         resolution = current_resolution(claim)
@@ -1936,17 +1944,18 @@ def render_next_checkpoints(claims_data: dict[str, Any], metrics_data: dict[str,
             <div><span>{esc(claim['predicted']['by'])}</span>{status_badge(resolution['status'])}</div>
             <h3>{esc(claim['predicted']['value'])}</h3>
             <p>{esc(source['work'])}</p>
-            <a href="#claim-{esc(claim['id'])}">{esc(metric.get('name', metric['id']))} →</a>
+            <a href="{claim_href(claim)}">{esc(metric.get('name', metric['id']))} →</a>
           </article>
         """)
     return f"""
-      <section class="scoreboard-section checkpoint-section" id="checkpoints" aria-labelledby="checkpoint-title">
+      <section class="scoreboard-section checkpoint-section" id="{esc(section_id)}" aria-labelledby="{esc(section_id)}-title">
         <div class="section-heading">
           <span>Watch next</span>
-          <h2 id="checkpoint-title">The next claims reality can test.</h2>
+          <h2 id="{esc(section_id)}-title">{"Three near-term claims to watch." if preview else "The next claims reality can test."}</h2>
           <p>These are the nearest comparable deadlines still in play. They are checkpoints to revisit—not probabilities that an event will happen.</p>
         </div>
         <div class="checkpoint-grid">{''.join(cards)}</div>
+        {'<p class="section-forward"><a href="forecasts.html#checkpoints">See every tracked checkpoint and forecast →</a></p>' if preview else ''}
       </section>
     """
 
@@ -2073,7 +2082,7 @@ def render_question_map(
 
         if linked_metrics:
             metric_links = "".join(
-                f'<li><a href="#metric-{esc(metric["id"])}">{esc(metric.get("name", metric["id"]))}</a>'
+                f'<li><a href="{metric_href(metric["id"])}">{esc(metric.get("name", metric["id"]))}</a>'
                 f'<span>{esc((metric.get("current") or {}).get("as_of", "observation not dated"))}</span></li>'
                 for metric in linked_metrics
             )
@@ -2093,7 +2102,7 @@ def render_question_map(
                 work_ids.append(claim["source"])
         if work_ids:
             works = "".join(
-                f'<li><a href="#forecast-comparison">{esc(sources[source_id]["work"])}</a>'
+                f'<li><a href="forecasts.html#forecast-comparison">{esc(sources[source_id]["work"])}</a>'
                 f'<span>{esc(sources[source_id]["epistemic_type"].replace("-", " "))}</span></li>'
                 for source_id in work_ids
             )
@@ -2132,7 +2141,7 @@ def render_question_map(
             aggregate_list = ""
 
         safety_links = "".join(
-            f'<a href="#safety-{esc(item["id"])}">{esc(item["title"])} →</a>' for item in linked_safety_questions
+            f'<a href="{safety_href(item["id"])}">{esc(item["title"])} →</a>' for item in linked_safety_questions
         )
         status_label, status_class = state_labels[question["status"]]
         lanes = [
@@ -2148,7 +2157,7 @@ def render_question_map(
             )
         actions = (
             f'<div class="question-actions">{safety_links}'
-            + (f'<a href="#metric-{esc(linked_metrics[0]["id"])}">Open the lead measurement →</a>' if linked_metrics else "")
+            + (f'<a href="{metric_href(linked_metrics[0]["id"])}">Open the lead measurement →</a>' if linked_metrics else "")
             + "</div>"
             if linked_safety_questions or linked_metrics
             else ""
@@ -2223,7 +2232,7 @@ def render_ai_rd_focus(research: dict[str, Any], claims_data: dict[str, Any]) ->
         """)
     rd_claims = [claim for claim in claims_data["claims"] if claim["metric_id"] == "ai-rd-automation"]
     claim_items = "".join(
-        f'<li><a href="#claim-{esc(claim["id"])}"><span>{esc(sources[claim["source"]]["work"])} · {esc(sources[claim["source"]]["epistemic_type"].replace("-", " "))} · {esc(claim["measurement_relation"]["type"])}</span><strong>{esc(claim["predicted"]["value"])}</strong><i>{esc(claim["predicted"]["by"])}</i></a></li>'
+        f'<li><a href="{claim_href(claim)}"><span>{esc(sources[claim["source"]]["work"])} · {esc(sources[claim["source"]]["epistemic_type"].replace("-", " "))} · {esc(claim["measurement_relation"]["type"])}</span><strong>{esc(claim["predicted"]["value"])}</strong><i>{esc(claim["predicted"]["by"])}</i></a></li>'
         for claim in rd_claims
     )
     aggregate_signals = [signal for signal in research["aggregates"]["signals"] if signal["status"] == "verified-snapshot" and any(link["question_id"] == "ai-rd-feedback" for link in signal["question_links"])]
@@ -2261,7 +2270,7 @@ def render_ai_rd_focus(research: dict[str, Any], claims_data: dict[str, Any]) ->
             <div><div class="rd-column-heading"><span>Observed evidence</span><strong>Seven typed observations</strong></div><div class="rd-evidence-list">{''.join(evidence_cards)}</div></div>
             <div>
               <div class="rd-column-heading"><span>Named published views</span><strong>Forecasts stay attributed</strong></div><ol class="rd-claim-list">{claim_items}</ol>
-              <details class="section-drawer rd-forecast-drawer"><summary><span>Shared milestone ladder</span>{disclosure_label("Open date comparison", "Close date comparison", tag="i")}</summary><p>The detailed metric section keeps each author’s original definition, relation, status, evidence, and counterargument.</p><a href="#metric-ai-rd-automation">Explore the AI R&amp;D milestone evidence →</a></details>
+              <details class="section-drawer rd-forecast-drawer"><summary><span>Shared milestone ladder</span>{disclosure_label("Open date comparison", "Close date comparison", tag="i")}</summary><p>The forecast page compares dated milestones; the evidence page keeps each source, status, and counterargument auditable.</p><a href="forecasts.html#milestones">Compare AI R&amp;D milestones →</a></details>
               <div class="rd-column-heading rd-belief-heading"><span>Aggregate expectation</span><strong>A cohort, not a consensus</strong></div>{''.join(aggregate_cards) if aggregate_cards else '<p class="rd-empty">No exact aggregate snapshot has passed the inclusion rule.</p>'}
             </div>
           </div>
@@ -2446,7 +2455,7 @@ def render_forecast_comparison(
                 (claim["metric_id"], ""),
             )[0]
             claim_link_items.append(
-                f'<li><a href="#claim-{esc(claim["id"])}"><span>{esc(stage_label)}</span>'
+                f'<li><a href="{claim_href(claim)}"><span>{esc(stage_label)}</span>'
                 f'<strong>{esc(claim["predicted"]["value"])}</strong>{assessment_marker}</a></li>'
             )
         claim_links = "".join(claim_link_items)
@@ -2703,7 +2712,7 @@ def render_methodology(methodology_text: str, data_files: dict[str, str]) -> str
     return f"""
       <section class="scoreboard-section methodology-section" id="methodology" aria-labelledby="methodology-title">
         <div class="section-heading">
-          <span>05 · Methodology</span>
+          <span>Methodology</span>
           <h1 id="methodology-title">How to read—and challenge—the scoreboard</h1>
         </div>
         <div class="methodology-prose">{markdown_subset(methodology_body)}</div>
@@ -2742,7 +2751,151 @@ def render_unmatched_supporting(
     """
 
 
-def render_scoreboard(metrics_data: dict[str, Any], claims_data: dict[str, Any], refresh_data: dict[str, Any], cruxes_data: dict[str, Any], research: dict[str, Any], methodology_text: str, data_files: dict[str, str]) -> str:
+SITE_NAV_ITEMS = (
+    ("overview", "index.html", "Overview"),
+    ("evidence", "evidence.html", "Evidence"),
+    ("forecasts", "forecasts.html", "Forecasts"),
+    ("safety", "safety.html", "Safety"),
+    ("questions", "questions.html", "Research map"),
+    ("methodology", "methodology.html", "Methodology"),
+)
+
+
+def render_site_nav(active: str) -> str:
+    items = []
+    for key, href, label in SITE_NAV_ITEMS:
+        current = ' aria-current="page"' if key == active else ""
+        items.append(f'<a href="{href}"{current}>{label}</a>')
+    links = "".join(items)
+    return f'<nav class="scoreboard-nav" aria-label="Primary navigation">{links}</nav>'
+
+
+def render_subpage_header(*, label: str, title: str, lede: str) -> str:
+    return f"""
+      <header class="subpage-header">
+        <div class="hero-mast">
+          <a href="index.html" class="wordmark">AI Trajectory</a>
+          <span>{esc(label)}</span>
+        </div>
+        <div class="subpage-intro">
+          <p class="eyebrow">{esc(label)}</p>
+          <h1>{esc(title)}</h1>
+          <p>{esc(lede)}</p>
+        </div>
+      </header>
+    """
+
+
+def render_local_nav(items: tuple[tuple[str, str], ...]) -> str:
+    links = "".join(f'<a href="#{esc(anchor)}">{esc(label)}</a>' for anchor, label in items)
+    return f'<nav class="page-local-nav" aria-label="On this page"><span>On this page</span>{links}</nav>'
+
+
+def render_destination_grid() -> str:
+    destinations = (
+        ("Evidence", "What is measurable now?", "Reality lines, AI R&amp;D evidence, and data coverage.", "evidence.html"),
+        ("Forecasts", "Which claims face a test next?", "Upcoming deadlines, later evidence, milestones, and revisions.", "forecasts.html"),
+        ("Safety", "Where could harm enter the chain?", "Eight questions from hazardous behavior through recovery.", "safety.html"),
+        ("Research map", "Which open question matters to you?", "Ten cross-cutting questions with unlike evidence kept separate.", "questions.html"),
+    )
+    cards = "".join(
+        f'<a class="destination-card" href="{href}"><span>{label}</span><strong>{title}</strong><p>{description}</p><i aria-hidden="true">→</i></a>'
+        for label, title, description, href in destinations
+    )
+    return f"""
+      <section class="scoreboard-section destination-section" id="explore" aria-labelledby="explore-title">
+        <div class="section-heading">
+          <span>Choose a path</span>
+          <h2 id="explore-title">Go directly to the question you have.</h2>
+          <p>The overview stays short. Evidence, forecasts, safety, and the research map now have distinct homes.</p>
+        </div>
+        <div class="destination-grid">{cards}</div>
+      </section>
+    """
+
+
+def render_measurements(cards: str) -> str:
+    return f"""
+      <span class="legacy-anchor" id="loop" aria-hidden="true"></span>
+      <section class="scoreboard-section loop-section" id="measurements" aria-labelledby="measurements-title">
+        <div class="section-heading">
+          <span>Measured reality</span>
+          <h2 id="measurements-title">Six drivers. One reality line for each.</h2>
+          <p>Every measurement begins with the plain-language takeaway and current observation. The charts put published predictions on the same axis as what actually happened.</p>
+        </div>
+        <details class="section-drawer evidence-drawer">
+          <summary><span>Browse the six core measurements</span>{disclosure_label("Open measurements", "Close measurements", tag="i")}</summary>
+          <div class="metric-stack">{cards}</div>
+        </details>
+      </section>
+    """
+
+
+def render_health_runtime() -> str:
+    return """
+      <script>
+      (function(){
+        var now=new Date();
+        var counts={current:0,due:0,stale:0};
+        document.querySelectorAll('[data-review-health]').forEach(function(row){
+          var due=new Date(row.dataset.due+'T23:59:59');
+          var stale=new Date(row.dataset.stale+'T23:59:59');
+          var state=now>stale?'stale':now>due?'due':'current';
+          counts[state]++;
+          var label=row.querySelector('[data-health-label]');
+          label.textContent=state;label.className='health-state health-'+state;
+        });
+        var summary=document.querySelector('[data-health-summary]');
+        if(summary)summary.textContent=counts.current+' current · '+counts.due+' due · '+counts.stale+' stale';
+      }());
+      </script>
+    """
+
+
+def render_legacy_hash_migration(claims: list[dict[str, Any]]) -> str:
+    routes = {
+        "ai-rd-question": "evidence.html#ai-rd-question",
+        "evidence-health": "evidence.html#evidence-health",
+        "loop": "evidence.html#measurements",
+        "measurements": "evidence.html#measurements",
+        "checkpoints": "forecasts.html#checkpoints",
+        "forecast-comparison": "forecasts.html#forecast-comparison",
+        "milestones": "forecasts.html#milestones",
+        "forecast-drift": "forecasts.html#forecast-drift",
+        "open-questions": "safety.html#open-questions",
+        "questions": "questions.html#questions",
+        "methodology": "methodology.html#methodology",
+    }
+    for claim in claims:
+        routes[f'claim-{claim["id"]}'] = claim_href(claim)
+    payload = json.dumps(routes, separators=(",", ":")).replace("</", "<\\/")
+    return f"""
+      <script>
+      (function(){{
+        var hash=location.hash.slice(1);
+        if(!hash||hash==='overview'||hash==='explore'||hash==='forecast-preview')return;
+        var routes={payload};
+        var target=routes[hash];
+        if(!target&&hash.indexOf('metric-')===0)target='evidence.html#'+hash;
+        if(!target&&hash.indexOf('safety-')===0)target='safety.html#'+hash;
+        if(!target&&hash.indexOf('research-question-')===0)target='questions.html#'+hash;
+        if(!target)return;
+        var parts=target.split('#');
+        location.replace(parts[0]+location.search+'#'+parts[1]);
+      }}());
+      </script>
+    """
+
+
+def render_site_pages(
+    metrics_data: dict[str, Any],
+    claims_data: dict[str, Any],
+    refresh_data: dict[str, Any],
+    cruxes_data: dict[str, Any],
+    research: dict[str, Any],
+    methodology_text: str,
+    data_files: dict[str, str],
+) -> dict[str, str]:
     sources = source_map(claims_data)
     claims_by_metric: dict[str, list[dict[str, Any]]] = {}
     for claim in claims_data["claims"]:
@@ -2773,70 +2926,67 @@ def render_scoreboard(metrics_data: dict[str, Any], claims_data: dict[str, Any],
         for index, stage in enumerate(CORE_STAGES, start=1)
     )
     hero = render_hero(stage_anchors, tier_one, claims_data["claims"], data_files)
-    return f"""
-      <script>(function(){{try{{document.documentElement.dataset.view=localStorage.getItem('ai-trajectory-view')||'guided';}}catch(e){{document.documentElement.dataset.view='guided';}}}})();</script>
+    overview = f"""
+      {render_legacy_hash_migration(claims_data['claims'])}
       {hero}
-      <nav class="scoreboard-nav" aria-label="Scoreboard sections">
-        <a href="#overview">Overview</a><a href="#ai-rd-question">AI R&amp;D</a><a href="#questions">Questions</a><a href="#checkpoints">Watch next</a><a class="research-nav" href="#forecast-comparison">Claims</a><a href="#loop">Evidence</a><a href="methodology.html">Methodology</a>
-        <span class="view-switch" role="group" aria-label="Page detail level"><button type="button" data-view-button="guided">Guided</button><button type="button" data-view-button="research">Research</button></span>
-      </nav>
+      {render_site_nav('overview')}
       <main>
         {render_status(claims_data['claims'], tier_one, stage_anchors, policy_metric)}
-        {render_ai_rd_focus(research, claims_data)}
-        {render_question_map(research, metrics_data, claims_data, cruxes_data)}
-        {render_next_checkpoints(claims_data, metrics_data)}
-        {render_evidence_health(metrics_data, refresh_data)}
-        {render_open_questions(research["safety_questions"])}
-        {render_forecast_comparison(claims_data, metrics_data)}
-        <section class="scoreboard-section loop-section" id="loop" aria-labelledby="loop-title">
-          <div class="section-heading">
-            <span>Explore the evidence</span>
-            <h2 id="loop-title">Six drivers. One reality line for each.</h2>
-            <p>Every section begins with the plain-language takeaway and current observation. The charts put published predictions on the same axis as what actually happened.</p>
-          </div>
-          <details class="section-drawer evidence-drawer">
-            <summary><span>Browse the six core measurements</span>{disclosure_label("Open measurements", "Close measurements", tag="i")}</summary>
-            <div class="metric-stack">{cards}</div>
-          </details>
-        </section>
-        {render_unmatched_supporting(unmatched_tier_two, claims_by_metric, sources)}
-        {render_ladder(claims_data, sources)}
-        {render_drift(claims_data)}
+        {render_destination_grid()}
+        {render_next_checkpoints(claims_data, metrics_data, limit=3, section_id='forecast-preview', preview=True)}
         {render_methodology_link()}
       </main>
-      <script>
-      (function(){{
-        var viewButtons=document.querySelectorAll('[data-view-button]');
-        function setView(view){{
-          document.documentElement.dataset.view=view;
-          try{{localStorage.setItem('ai-trajectory-view',view);}}catch(e){{}}
-          viewButtons.forEach(function(button){{button.setAttribute('aria-pressed',String(button.dataset.viewButton===view));}});
-        }}
-        function revealTarget(){{
-          if(!location.hash)return;
-          var target=document.getElementById(location.hash.slice(1));
-          if(!target)return;
-          if(target.closest && target.closest('.research-layer'))setView('research');
-          if(target.tagName==='DETAILS')target.open=true;
-          var parent=target.parentElement;
-          while(parent){{if(parent.tagName==='DETAILS')parent.open=true;parent=parent.parentElement;}}
-        }}
-        window.addEventListener('hashchange',revealTarget);
-        revealTarget();
-        viewButtons.forEach(function(button){{button.addEventListener('click',function(){{setView(button.dataset.viewButton);}});}});
-        setView(document.documentElement.dataset.view==='research'?'research':'guided');
-        var now=new Date();
-        var counts={{current:0,due:0,stale:0}};
-        document.querySelectorAll('[data-review-health]').forEach(function(row){{
-          var due=new Date(row.dataset.due+'T23:59:59');
-          var stale=new Date(row.dataset.stale+'T23:59:59');
-          var state=now>stale?'stale':now>due?'due':'current';
-          counts[state]++;
-          var label=row.querySelector('[data-health-label]');
-          label.textContent=state;label.className='health-state health-'+state;
-        }});
-        var summary=document.querySelector('[data-health-summary]');
-        if(summary)summary.textContent=counts.current+' current · '+counts.due+' due · '+counts.stale+' stale';
-      }})();
-      </script>
     """
+    evidence = f"""
+      {render_subpage_header(label='Evidence', title='Evidence', lede='What is measurable now? Inspect the strongest current signals, their source links, and the gaps that keep each conclusion provisional.')}
+      {render_site_nav('evidence')}
+      <main>
+        {render_local_nav((('ai-rd-question', 'AI R&D'), ('measurements', 'Measurements'), ('evidence-health', 'Data coverage')))}
+        {render_ai_rd_focus(research, claims_data)}
+        {render_measurements(cards)}
+        {render_unmatched_supporting(unmatched_tier_two, claims_by_metric, sources)}
+        {render_evidence_health(metrics_data, refresh_data)}
+      </main>
+      {render_health_runtime()}
+    """
+    forecasts = f"""
+      {render_subpage_header(label='Forecasts', title='Forecasts', lede='Which claims are surviving contact with reality? Follow upcoming tests first, then compare later evidence, shared milestones, and changes in published expectations.')}
+      {render_site_nav('forecasts')}
+      <main>
+        {render_local_nav((('checkpoints', 'Watch next'), ('forecast-comparison', 'Compare claims'), ('milestones', 'Milestones'), ('forecast-drift', 'Revisions')))}
+        {render_next_checkpoints(claims_data, metrics_data)}
+        {render_forecast_comparison(claims_data, metrics_data)}
+        {render_ladder(claims_data, sources)}
+        {render_drift(claims_data)}
+      </main>
+    """
+    safety = f"""
+      {render_subpage_header(label='Safety', title='Safety questions', lede='Where could risk enter—and where could it be contained? Eight distinct questions trace the chain from hazardous behavior through recovery.')}
+      {render_site_nav('safety')}
+      <main>{render_open_questions(research['safety_questions'])}</main>
+    """
+    questions = f"""
+      {render_subpage_header(label='Research map', title='Research map', lede='Ten open questions, organized by the evidence they need. Start here when you want a question rather than a chart, forecast, or safety category.')}
+      {render_site_nav('questions')}
+      <main>{render_question_map(research, metrics_data, claims_data, cruxes_data)}</main>
+    """
+    methodology = f"""
+      <header class="scoreboard-hero methodology-header">
+        <div class="hero-mast"><a href="index.html" class="wordmark">AI Trajectory</a><span>Methodology</span></div>
+      </header>
+      {render_site_nav('methodology')}
+      <main>{render_methodology(methodology_text, data_files)}</main>
+    """
+    return {
+        "index.html": overview,
+        "evidence.html": evidence,
+        "forecasts.html": forecasts,
+        "safety.html": safety,
+        "questions.html": questions,
+        "methodology.html": methodology,
+    }
+
+
+def render_scoreboard(metrics_data: dict[str, Any], claims_data: dict[str, Any], refresh_data: dict[str, Any], cruxes_data: dict[str, Any], research: dict[str, Any], methodology_text: str, data_files: dict[str, str]) -> str:
+    """Backward-compatible entry point for callers that only render the overview."""
+    return render_site_pages(metrics_data, claims_data, refresh_data, cruxes_data, research, methodology_text, data_files)["index.html"]

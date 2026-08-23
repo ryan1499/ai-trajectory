@@ -1,6 +1,6 @@
 # Scoreboard Display Spec v2 — "Verdict First"
 
-**Status: approved by Ryan 2026-07-24. Implementation contract for the rendering layer (scripts/scoreboard.py + template). Data files are NOT to be populated or re-scored by the implementer — rendering only.**
+**Status: component contract approved by Ryan 2026-07-24; one-page information architecture superseded by D28 on 2026-08-23. Data files are NOT to be populated or re-scored by the implementer — rendering only.**
 
 ## Problem
 
@@ -64,7 +64,9 @@ This brings `ai-compute-stock` (populated, 3 claims) onto the page — its `verd
 
 - Allow optional `verdict` (string, ≤80 chars hard limit) on metric objects — both seed and production modes.
 - Add a build WARNING (stderr, non-fatal) when `current.display` exceeds 60 characters — data cleanup follows separately; do not fail the build.
-- No other schema changes. Anchors `#metric-{id}`, `#loop`, `#milestones`, `#forecast-drift` must survive.
+- No other schema changes. Canonical anchors are `evidence.html#metric-{id}`, `evidence.html#measurements`,
+  `forecasts.html#milestones`, and `forecasts.html#forecast-drift`. Old one-page hashes must migrate
+  from `index.html` to their new destinations.
 
 ## 8. Non-goals / constraints
 
@@ -76,9 +78,11 @@ This brings `ai-compute-stock` (populated, 3 claims) onto the page — its `verd
 
 ## Acceptance checks
 
-1. `python3 scripts/build.py` exits 0; writes `dashboard/index.html` AND `dashboard/methodology.html`.
+1. `python3 scripts/build.py` exits 0; writes Overview, Evidence, Forecasts, Safety, Research map,
+   and Methodology pages.
 2. Global tally counts match a manual count of `resolution.status` values in the claims file.
-3. Default-visible word count of index.html (all `<details>` content stripped) ≤ ~600 words. Print this count at build time.
+3. Default-visible word count of index.html (all `<details>` content stripped) ≤ ~600 words. Print
+   per-page counts at build time.
 4. Every claim in the data appears exactly once as a chip; every chip expands to show quote + conditionality + evidence + counterargument.
 5. `ai-compute-stock` renders as a supporting card under the COMPUTE section with its 3 chips.
-6. Anchors listed in §7 resolve.
+6. Every generated internal page and fragment link resolves; the build enforces this contract.

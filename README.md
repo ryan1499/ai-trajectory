@@ -30,9 +30,15 @@ do on their own, is progress beginning to feed on itself, and can safeguards kee
 measurements they predict** and scored — never averaged into a single "risk number." A doomer and a
 skeptic can use the same site because reality, rather than a composite opinion, adjudicates.
 
-The default **Guided** view keeps the four questions, next checkpoints, safety questions, and core
-measurements in focus. **Research** view restores portfolio comparison, evidence health, supporting
-signals, milestone ladders, and revision history.
+The site is organized by reader task rather than as one continuous dashboard:
+
+- **Overview** gives the four-question orientation and three near-term claims to watch.
+- **Evidence** keeps AI R&D evidence, core measurements, supporting signals, and data coverage together.
+- **Forecasts** follows one complete loop: upcoming tests, comparison with later evidence, shared
+  milestones, and revisions.
+- **Safety** gives the eight-question chain from hazardous behavior through recovery.
+- **Research map** organizes ten cross-cutting questions by the evidence each one needs.
+- **Methodology** explains how evidence and assessments are recorded.
 
 A source-first **forecast comparison** shows each major work's coverage and status mix without
 collapsing unlike claims into an accuracy score. Registered sources whose claims have not yet been
@@ -57,7 +63,7 @@ it to static HTML — no framework, no database, no build dependencies. Python 3
 recommended:
 
 ```
-python3 scripts/build.py     # -> dashboard/index.html + dashboard/methodology.html
+python3 scripts/build.py     # -> six generated pages in dashboard/
 ```
 
 - `data/scoreboard/metrics.json` — six Tier-1 metrics (one per force) plus the Tier-2 supporting
