@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version-file: ".python-version"
       - name: Check commit identity and tracked-content privacy
         run: python3 scripts/privacy_check.py --history --tracked
       - name: Validate and render
