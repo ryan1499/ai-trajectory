@@ -15,11 +15,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           # Privacy validation must inspect the public checked-out ref's full
-          # ancestry, not only the shallow checkout supplied by default.
+          # ancestry, not only the shallow checkout supplied by default. On a
+          # pull request, validate the contributor's head rather than GitHub's
+          # synthetic merge commit, whose generated identity is not controlled
+          # by this repository.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version-file: ".python-version"
       - name: Check commit identity and tracked-content privacy
         run: python3 scripts/privacy_check.py --history --tracked
       - name: Validate and render
