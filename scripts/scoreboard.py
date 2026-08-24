@@ -1804,14 +1804,9 @@ def render_hero(
     claims: list[dict[str, Any]],
     data_files: dict[str, str],
 ) -> str:
-    data_label = "Seed data preview" if any(name.endswith(".seed.json") for name in data_files.values()) else "Public research prototype"
     strata_visual = render_hero_strata(stage_anchors)
     return f"""
       <header class="scoreboard-hero" id="scoreboard-top">
-        <div class="hero-mast">
-          <a href="index.html" class="wordmark">AI Trajectory</a>
-          <span>Evidence dashboard · {esc(data_label)}</span>
-        </div>
         <div class="hero-stage">
           <div class="hero-headline">
             <p class="eyebrow">Progress, constraints, forecasts, and safety</p>
@@ -2767,16 +2762,23 @@ def render_site_nav(active: str) -> str:
         current = ' aria-current="page"' if key == active else ""
         items.append(f'<a href="{href}"{current}>{label}</a>')
     links = "".join(items)
-    return f'<nav class="scoreboard-nav" aria-label="Primary navigation">{links}</nav>'
+    return f"""
+      <header class="site-header">
+        <div class="site-header-inner">
+          <a href="index.html" class="wordmark">AI Trajectory</a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+            <span class="nav-toggle-label">Menu</span>
+            <span class="nav-toggle-icon" aria-hidden="true">+</span>
+          </button>
+          <nav class="scoreboard-nav" id="primary-navigation" aria-label="Primary navigation">{links}</nav>
+        </div>
+      </header>
+    """
 
 
 def render_subpage_header(*, label: str, title: str, lede: str) -> str:
     return f"""
       <header class="subpage-header">
-        <div class="hero-mast">
-          <a href="index.html" class="wordmark">AI Trajectory</a>
-          <span>{esc(label)}</span>
-        </div>
         <div class="subpage-intro">
           <p class="eyebrow">{esc(label)}</p>
           <h1>{esc(title)}</h1>
@@ -2928,8 +2930,8 @@ def render_site_pages(
     hero = render_hero(stage_anchors, tier_one, claims_data["claims"], data_files)
     overview = f"""
       {render_legacy_hash_migration(claims_data['claims'])}
-      {hero}
       {render_site_nav('overview')}
+      {hero}
       <main>
         {render_status(claims_data['claims'], tier_one, stage_anchors, policy_metric)}
         {render_destination_grid()}
@@ -2938,8 +2940,8 @@ def render_site_pages(
       </main>
     """
     evidence = f"""
-      {render_subpage_header(label='Evidence', title='Evidence', lede='What is measurable now? Inspect the strongest current signals, their source links, and the gaps that keep each conclusion provisional.')}
       {render_site_nav('evidence')}
+      {render_subpage_header(label='Evidence', title='Evidence', lede='What is measurable now? Inspect the strongest current signals, their source links, and the gaps that keep each conclusion provisional.')}
       <main>
         {render_local_nav((('ai-rd-question', 'AI R&D'), ('measurements', 'Measurements'), ('evidence-health', 'Data coverage')))}
         {render_ai_rd_focus(research, claims_data)}
@@ -2950,8 +2952,8 @@ def render_site_pages(
       {render_health_runtime()}
     """
     forecasts = f"""
-      {render_subpage_header(label='Forecasts', title='Forecasts', lede='Which claims are surviving contact with reality? Follow upcoming tests first, then compare later evidence, shared milestones, and changes in published expectations.')}
       {render_site_nav('forecasts')}
+      {render_subpage_header(label='Forecasts', title='Forecasts', lede='Which claims are surviving contact with reality? Follow upcoming tests first, then compare later evidence, shared milestones, and changes in published expectations.')}
       <main>
         {render_local_nav((('checkpoints', 'Watch next'), ('forecast-comparison', 'Compare claims'), ('milestones', 'Milestones'), ('forecast-drift', 'Revisions')))}
         {render_next_checkpoints(claims_data, metrics_data)}
@@ -2961,19 +2963,16 @@ def render_site_pages(
       </main>
     """
     safety = f"""
-      {render_subpage_header(label='Safety', title='Safety questions', lede='Where could risk enter—and where could it be contained? Eight distinct questions trace the chain from hazardous behavior through recovery.')}
       {render_site_nav('safety')}
+      {render_subpage_header(label='Safety', title='Safety questions', lede='Where could risk enter—and where could it be contained? Eight distinct questions trace the chain from hazardous behavior through recovery.')}
       <main>{render_open_questions(research['safety_questions'])}</main>
     """
     questions = f"""
-      {render_subpage_header(label='Research map', title='Research map', lede='Ten open questions, organized by the evidence they need. Start here when you want a question rather than a chart, forecast, or safety category.')}
       {render_site_nav('questions')}
+      {render_subpage_header(label='Research map', title='Research map', lede='Ten open questions, organized by the evidence they need. Start here when you want a question rather than a chart, forecast, or safety category.')}
       <main>{render_question_map(research, metrics_data, claims_data, cruxes_data)}</main>
     """
     methodology = f"""
-      <header class="scoreboard-hero methodology-header">
-        <div class="hero-mast"><a href="index.html" class="wordmark">AI Trajectory</a><span>Methodology</span></div>
-      </header>
       {render_site_nav('methodology')}
       <main>{render_methodology(methodology_text, data_files)}</main>
     """

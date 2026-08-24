@@ -49,9 +49,8 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-/* the nav is sticky at 41px; without this every in-page jump lands the target's
-   first line underneath it (metric-card stage labels vanished entirely) */
-html{scroll-behavior:smooth;scroll-padding-top:56px;-webkit-text-size-adjust:100%}
+/* Leave room for the compact sticky site header when following deep links. */
+html{scroll-behavior:smooth;scroll-padding-top:78px;-webkit-text-size-adjust:100%}
 body{
   margin:0;background:var(--paper);color:var(--ink);
   font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.55;
@@ -353,11 +352,11 @@ code,.data-label,.stage-label,.eyebrow,.section-heading>span,.hero-mast,.scorebo
 .confidence-tag,.vintage-tag,.rung-details>summary,.model-step,.model-heading span,.model-question span,
 .overview-number,.overview-signal span,.reading-guide,.hero-pulse{font-family:var(--font-mono)}
 
-.scoreboard-hero{max-width:none;height:auto;min-height:100vh;overflow:visible;background:var(--paper-raised);border-bottom:1px solid var(--line)}
+.scoreboard-hero{max-width:none;height:auto;min-height:calc(100vh - 70px);overflow:visible;background:var(--paper-raised);border-bottom:1px solid var(--line)}
 .methodology-header{min-height:0;background:var(--paper)}
 .hero-mast{max-width:var(--max);width:calc(100% - 56px);margin:0 auto;padding:24px 0 18px;background:transparent;border-bottom:1px solid var(--line);font-size:.67rem;color:var(--ink-faint)}
 .wordmark{font-size:.75rem;color:var(--ink);letter-spacing:.13em}
-.hero-stage{position:static;display:grid;grid-template-columns:minmax(0,1.03fr) minmax(420px,.97fr);gap:clamp(44px,7vw,92px);align-items:center;max-width:var(--max);width:calc(100% - 56px);margin:0 auto;padding:clamp(54px,9vh,100px) 0 62px;min-height:calc(100vh - 154px)}
+.hero-stage{position:static;display:grid;grid-template-columns:minmax(0,1.03fr) minmax(420px,.97fr);gap:clamp(44px,7vw,92px);align-items:center;max-width:var(--max);width:calc(100% - 56px);margin:0 auto;padding:clamp(54px,9vh,100px) 0 62px;min-height:calc(100vh - 70px)}
 .hero-headline{position:static;max-width:650px;padding:0}
 .hero-headline .eyebrow{margin-bottom:20px}
 .eyebrow{font-size:.7rem;color:var(--moss);letter-spacing:.1em;font-weight:600}
@@ -411,9 +410,14 @@ h1{font-size:clamp(3.5rem,6.2vw,5.8rem);line-height:.96;max-width:690px}
 .section-forward{margin:24px 0 0}.section-forward a{font-weight:700;color:var(--moss)}
 .legacy-anchor{display:block;position:relative;top:-64px;visibility:hidden}
 
-.scoreboard-nav{padding:12px 20px;gap:34px;background:rgba(251,251,248,.94);font-family:var(--font-mono);font-size:.64rem;letter-spacing:.08em}
+.site-header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(251,251,248,.96);backdrop-filter:blur(12px)}
+.site-header-inner{position:relative;display:flex;align-items:center;gap:36px;max-width:var(--max);width:calc(100% - 56px);min-height:70px;margin:0 auto}
+.site-header .wordmark{flex:none;font-size:.76rem;white-space:nowrap}
+.nav-toggle{display:none}
+.scoreboard-nav{position:static;z-index:auto;display:flex;justify-content:flex-end;min-width:0;margin-left:auto;padding:0;gap:0;border:0;background:transparent;backdrop-filter:none;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.075em}
+.nav-links-scroll{display:flex;align-items:stretch;gap:28px;min-width:0}
 .scoreboard-nav a{color:var(--ink-soft)}
-.scoreboard-nav a{display:inline-flex;align-items:center;min-height:44px}
+.scoreboard-nav a{display:inline-flex;align-items:center;min-height:69px;padding-top:2px}
 .scoreboard-nav a:hover{color:var(--moss)}
 .scoreboard-nav a[aria-current="page"]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--moss)}
 .scoreboard-section{padding:88px 28px}
@@ -843,14 +847,22 @@ small{font-size:.72rem}
 }
 
 .wordmark{font-size:.84rem}
-.scoreboard-nav{justify-content:flex-start;max-width:100vw;overflow:visible}.nav-links-scroll{display:contents}
-/* On a phone, the detail switch stays fixed while destinations get their own
-   scroll tray. The persistent track and fade make additional destinations clear
-   without allowing the control to cover an in-between link. */
+.scoreboard-nav{justify-content:flex-start;overflow:hidden}.nav-links-scroll{display:flex}
+/* On a phone, the brand stays anchored and a conventional menu reveals every
+   destination without clipped labels or a hidden horizontal interaction. */
 @media (max-width:640px){
-  .scoreboard-nav{display:block;padding:8px 12px 4px}
-  .nav-links-scroll{display:flex;gap:16px;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;scrollbar-color:var(--moss) var(--paper-warm);scroll-padding-inline:6px;background-image:linear-gradient(90deg,rgba(251,251,248,0) calc(100% - 24px),rgba(251,251,248,.97));background-size:100% 100%;background-repeat:no-repeat}
-  .nav-links-scroll::-webkit-scrollbar{height:5px}.nav-links-scroll::-webkit-scrollbar-track{background:var(--paper-warm)}.nav-links-scroll::-webkit-scrollbar-thumb{background:var(--moss);border-radius:99px}
+  html{scroll-padding-top:66px}
+  .site-header-inner{display:flex;justify-content:space-between;gap:18px;width:calc(100% - 32px);min-height:64px}
+  .site-header .wordmark{font-size:.67rem}
+  .nav-toggle{display:inline-flex;align-items:center;gap:9px;min-height:40px;padding:0;border:0;background:transparent;color:var(--ink);font-family:var(--font-mono);font-size:.69rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+  .nav-toggle-icon{display:grid;place-items:center;width:22px;height:22px;border:1px solid var(--line);font-size:1rem;line-height:1}
+  .site-header[data-menu-open="true"] .nav-toggle-icon{border-color:var(--ink)}
+  .scoreboard-nav{position:absolute;top:100%;left:-16px;right:-16px;display:none;min-width:0;margin:0;padding:0;overflow:visible;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fbfbf8;box-shadow:0 18px 34px rgba(24,34,54,.1)}
+  .site-header[data-menu-open="true"] .scoreboard-nav{display:block}
+  .nav-links-scroll{display:grid;gap:0;padding:8px 16px 13px}
+  .scoreboard-nav a{justify-content:space-between;min-height:48px;padding:0 4px;border-bottom:1px solid var(--line-soft);font-size:.72rem}
+  .scoreboard-nav a:last-child{border-bottom:0}
+  .scoreboard-nav a[aria-current="page"]{box-shadow:inset 3px 0 0 var(--moss);padding-left:14px;background:#f2f4ee}
 }
 .hero-lede{font-size:clamp(1.12rem,1.5vw,1.28rem)}
 .hero-actions a{font-size:.96rem}.hero-scope{font-size:.86rem}
@@ -1007,14 +1019,44 @@ small{font-size:.72rem}
   function setResponsiveNavigation() {
     var nav = document.querySelector('.scoreboard-nav');
     if (!nav || nav.dataset.responsiveReady === 'true') return;
-    var tray = document.createElement('div');
-    tray.className = 'nav-links-scroll';
-    tray.setAttribute('aria-label', 'Section navigation');
-    Array.prototype.slice.call(nav.children).forEach(function (child) {
-      tray.appendChild(child);
-    });
-    nav.appendChild(tray);
+    var tray = nav.querySelector('.nav-links-scroll');
+    if (!tray) {
+      tray = document.createElement('div');
+      tray.className = 'nav-links-scroll';
+      Array.prototype.slice.call(nav.children).forEach(function (child) {
+        tray.appendChild(child);
+      });
+      nav.appendChild(tray);
+    }
     nav.dataset.responsiveReady = 'true';
+    var header = nav.closest('.site-header');
+    var toggle = header && header.querySelector('.nav-toggle');
+    if (!header || !toggle) return;
+    var label = toggle.querySelector('.nav-toggle-label');
+    var icon = toggle.querySelector('.nav-toggle-icon');
+
+    function setMenu(open) {
+      header.dataset.menuOpen = open ? 'true' : 'false';
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (label) label.textContent = open ? 'Close' : 'Menu';
+      if (icon) icon.textContent = open ? '\u00d7' : '+';
+    }
+
+    toggle.addEventListener('click', function () {
+      setMenu(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    tray.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () { setMenu(false); });
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setMenu(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener('click', function (event) {
+      if (toggle.getAttribute('aria-expanded') === 'true' && !header.contains(event.target)) setMenu(false);
+    });
   }
 
   function syncDisclosureState() {
