@@ -2,11 +2,11 @@
 
 > Historical implementation contract. Its data and component constraints remain relevant, but the
 > single-page delivery requirement was superseded by D28 on 2026-08-23. Current page ownership and
-> navigation rules live in `CLAUDE.md`.
+> navigation rules live in `AGENTS.md`.
 
 **Audience: the executing engineer/model (Codex). This is settled; do not re-open strategy. Strategy lives in [scoreboard-metrics.md](scoreboard-metrics.md) (decisions) and [scoreboard-schema.md](scoreboard-schema.md) (object shapes).**
 
-Read the repo root `CLAUDE.md` first — its data-integrity rules are hard constraints (never rewrite history; generated output never hand-edited; every rendered number traces to a data file).
+Read the repo root `AGENTS.md` first — its data-integrity rules are hard constraints (never rewrite history; generated output never hand-edited; every rendered number traces to a data file).
 
 ## What exists
 

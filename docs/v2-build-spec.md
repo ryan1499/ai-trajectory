@@ -3,7 +3,7 @@
 **Status: archived, not adopted. Retained as design provenance for the superseded composite-index
 proposal in [v2-vision.md](v2-vision.md). Do not use as current implementation guidance.**
 
-Read `CLAUDE.md` (repo root) first — the data-integrity rules there (never rewrite history, evidence needs real dated sources, generated output is never hand-edited) are hard constraints on everything below.
+Read `AGENTS.md` (repo root) first — the data-integrity rules there (never rewrite history, evidence needs real dated sources, generated output is never hand-edited) are hard constraints on everything below.
 
 ## Ground rules
 

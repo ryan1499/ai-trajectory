@@ -1,6 +1,6 @@
 # Decision Log — for future reviewers (human or model)
 
-**Purpose.** This project was built by Ryan with frontier LLMs (Claude Opus 4.8/Fable 5, Codex/GPT, July 2026). This file records the load-bearing decisions, the reasoning, and — critically — **the conditions under which each should be reconsidered**. If you are a more capable model reading this later: your job is not to preserve these decisions, it's to attack them. Each entry ends with `Revisit if:`. Challenge via issue/PR with reasoning; never silently rewrite history or data semantics (see CLAUDE.md hard rules).
+**Purpose.** This project was built by Ryan with frontier LLMs (Claude Opus 4.8/Fable 5, Codex/GPT, July 2026). This file records the load-bearing decisions, the reasoning, and — critically — **the conditions under which each should be reconsidered**. If you are a more capable model reading this later: your job is not to preserve these decisions, it's to attack them. Each entry ends with `Revisit if:`. Challenge via issue/PR with reasoning; never silently rewrite history or data semantics (see AGENTS.md hard rules).
 
 Confidence key: **H** = deliberate, well-tested choice · **M** = reasonable bet, alternatives were close · **L** = expedient placeholder, expected to change.
 
