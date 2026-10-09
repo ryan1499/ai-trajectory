@@ -12,7 +12,7 @@ Read the repo root `AGENTS.md` first — its data-integrity rules are hard const
 
 - v1 site: `data/*.json` → `scripts/build.py` (stdlib only) → `dashboard/index.html` → Vercel (`vercel.json`, do not touch build command/output dir). Keep it working.
 - Design system: Bitter (display) / Source Serif 4 (body) / JetBrains Mono (data); paper `#eef0e9`, moss `#3c5c48`/`#24392d`, signal `#b5432a`, gold `#a8863a`, ink `#1c2b28`.
-- Chosen hero: **"The Argument"** direction (essay-led question decomposing into measurable pieces). Reference mockup: `design-tournament/heroes/candidate-d/index.html` — port its spirit; the organizing idea is **six stages of one feedback loop**.
+- Chosen hero: **"The Argument"** direction (essay-led question decomposing into measurable pieces). Reference mockup was `design-tournament/heroes/candidate-d/index.html` (gitignored scratch, removed 2026-10-09; the shipped hero is the current reference) — port its spirit; the organizing idea is **six stages of one feedback loop**.
 - Seed data (your worked pattern): `data/scoreboard/metrics.seed.json`, `data/scoreboard/claims.seed.json`.
 
 ## Your task (settled engineering only — NOT data population)
