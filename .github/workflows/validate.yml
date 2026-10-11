@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # Privacy validation must inspect the public checked-out ref's full
           # ancestry, not only the shallow checkout supplied by default. On a
@@ -21,7 +21,7 @@ jobs:
           # by this repository.
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version-file: ".python-version"
       - name: Check commit identity and tracked-content privacy
